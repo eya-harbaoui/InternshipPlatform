@@ -1,0 +1,25 @@
+.offres-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.offres-page h1 {
+  font-size: 3rem;
+  margin-bottom: 50px;
+}
+
+.stage-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 -10px;
+}
+
+@media (max-width: 768px) {
+  .stage-cards {
+    flex-direction: column;
+  }
+}
