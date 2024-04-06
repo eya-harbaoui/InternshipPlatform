@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./login.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Input from "../../components/Input/Input";
+import PasswordInput from "../../components/Input/PasswordInput";
 import axios from "axios";
 function Login() {
   const [email, setEmail] = useState("");
@@ -50,42 +50,33 @@ function Login() {
   };
 
   return (
-    <div className="container">
-      <h2 className="heading">Bienvenue ! Connectez-vous pour continuer</h2>
-      <div className="form_container">
-        <div className="left">
-          <img className="img" src="./images/Login.jpg" alt="login" />
+    <div className="login-container">
+      <h2 className="heading-login">
+        Bienvenue ! Connectez-vous pour continuer
+      </h2>
+      <div className="login-form-container">
+        <div className="login-left">
+          <img className="login-img" src="./images/Login.jpg" alt="login" />
         </div>
-        <div className="right">
-          <Input
+        <div className="login-right">
+          <input
+            className="login-input-right"
             type="email"
             value={email}
             onChange={handleEmailChange}
-            width="70%"
-            height="35px"
-            placeholder = "Adresse e-mail"
+            placeholder="Adresse e-mail"
           />
-          <Input
-            type="password"
-            value={password}
+          <PasswordInput
+            placeholder="Mot de passe"
             onChange={handlePasswordChange}
-            width="70%"
-            height="35px"
-            password
-            placeholder="mot de passe"
           />
-          <button className="btn" type="submit" onSubmit={handleSubmit}>
+          <button className="login-btn" type="submit" onSubmit={handleSubmit}>
             Se Connecter
           </button>
-          <p className="text">ou</p>
-          <button className="google_btn">
-            <img src="./images/google.png" alt="google icon" />
-            <span>Se Connecter avec Google</span>
-          </button>
-          <p className="text">
+          <p className="login-text">
             Vous n'avez pas de compte ? <Link to="/signup">Inscrivez-vous</Link>
           </p>
-          <p className="text">
+          <p className="login-text">
             Mot de passe oubliée?{" "}
             <Link to="/reset">Réinitialiser votre mot de passe</Link>
           </p>

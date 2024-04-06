@@ -1,124 +1,160 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Input from "../../components/Input/Input";
-import Navbar from "../../components/Navbar/Navbar";
-import { FaRegLightbulb } from "react-icons/fa";
+import "./Postuler.css"; // CSS pour le style
+import { useLocation } from "react-router-dom"; // Importer useLocation
+import { FaRegLightbulb, FaRegCalendarAlt } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
-import { FaRegCalendarAlt } from "react-icons/fa";
-import "./Postuler.css"
-
-function Postuler({ stageTitle, domainTag, modeTag, durationTag, offerLink }) {
-  const [showForm, setShowForm] = useState(false);
+import Navbar from "../../components/Navbar/Navbar";
+import { NavbarLinks } from "../../components/Navbar/NavbarLinks";
+const Postuler = () => {
+  const location = useLocation(); // Utiliser useLocation pour obtenir l'emplacement actuel
+  const jobDetails = location.state ? location.state.jobDetails : null; // Vérifier si location.state est défini
+  const [showForm,setShowForm] = useState(false);
   const [formData, setFormData] = useState({
-    nom: "",
-    prenom: "",
-    numTel: "",
+    name: "",
+    surname: "",
+    phoneNumber: "",
     email: "",
-    niveauEtude: "",
-    etablissement: "",
-    lettreMotivation: "",
-    cv: null,
+    levelOfStudy: "",
+    institution: "",
+    cvFile: null,
+    coverLetter: "",
   });
 
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormData({ ...formData, cv: file });
+    setFormData({ ...formData, cvFile: e.target.files[0] });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Envoyer les données du formulaire
-    setShowForm(false);
-    toast.success("Candidature envoyée !");
+    // Ajouter la logique pour soumettre le formulaire
   };
+  const handlePostulerForm =(e)=> {
+    e.preventDefault();
+    setShowForm(true);
+  }
+
+  if (!jobDetails) {
+    return null; // Masquer le composant si jobDetails n'est pas fourni
+  }
 
   return (
-    <div className="container">
-      <Navbar />
-      <h1>{stageTitle}</h1>
-      <h2>Informations sur l'offre :</h2>
+    <div className="postuler">
+      <Navbar links={NavbarLinks} />
+      <h2>{jobDetails.stageTitle}</h2>
+      <p>{jobDetails.stageNature}</p>
+      <p>{jobDetails.stageDescription}</p>
       <div className="tags">
         <div className="tag">
-          <FaRegLightbulb /> {domainTag}
+          <FaRegLightbulb /> {jobDetails.domainTag}
         </div>
         <div className="tag">
-          <FiHome /> {modeTag}
+          <FiHome /> {jobDetails.modeTag}
         </div>
         <div className="tag">
-          <FaRegCalendarAlt /> {durationTag}
+          <FaRegCalendarAlt /> {jobDetails.durationTag}
         </div>
       </div>
-      <h2>Postuler :</h2>
-      {!showForm && <button onClick={() => setShowForm(true)}>Postuler</button>}
+      <div>
+        <p>Les compétences demandées : </p>
+        {jobDetails.competences &&
+          Object.entries(jobDetails.competences).map(([competence, niveau]) => (
+            <p key={competence}>
+              {competence}: {niveau}
+            </p>
+          ))}
+      </div>
+      <button onClick={handlePostulerForm}>Postuler</button>
       {showForm && (
         <form onSubmit={handleSubmit}>
-          <Input
-            label="Nom"
-            name="nom"
-            value={formData.nom}
-            onChange={handleInputChange}
-            required
-          />
-          <Input
-            label="Prénom"
-            name="prenom"
-            value={formData.prenom}
-            onChange={handleInputChange}
-            required
-          />
-          <Input
-            label="Numéro de téléphone"
-            name="numTel"
-            value={formData.numTel}
-            onChange={handleInputChange}
-            required
-          />
-          <Input
-            label="Adresse email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-          <Input
-            label="Niveau d'étude"
-            name="niveauEtude"
-            value={formData.niveauEtude}
-            onChange={handleInputChange}
-            required
-          />
-          <Input
-            label="Établissement"
-            name="etablissement"
-            value={formData.etablissement}
-            onChange={handleInputChange}
-            required
-          />
-          <Input
-            label="Lettre de motivation"
-            name="lettreMotivation"
-            value={formData.lettreMotivation}
-            onChange={handleInputChange}
-            required
-          />
-          <Input
-            type="file"
-            label="CV"
-            name="cv"
-            onChange={handleFileChange}
-            required
-          />
-          <button type="submit">Envoyer ma candidature</button>
+          <div className="form-row">
+            <input
+              type="text"
+              name="name"
+              placeholder="Nom"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="surname"
+              placeholder="Prénom"
+              value={formData.surname}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="tel"
+              name="phoneNumber"
+              placeholder="Numéro de téléphone"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-row">
+            <input
+              type="email"
+              name="email"
+              placeholder="Adresse email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="levelOfStudy"
+              placeholder="Niveau d'étude"
+              value={formData.levelOfStudy}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="institution"
+              placeholder="Établissement"
+              value={formData.institution}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-row">
+            <label htmlFor="cvFile">Ajouter mon CV (format PDF)</label>
+            <input
+              type="file"
+              id="cvFile"
+              name="cvFile"
+              accept="application/pdf"
+              onChange={handleFileChange}
+              required
+            />
+            {formData.cvFile && (
+              <span className="cv-added">
+                CV ajouté: {formData.cvFile.name}
+              </span>
+            )}
+          </div>
+          <div className="form-row">
+            <textarea
+              name="coverLetter"
+              placeholder="Lettre de motivation"
+              value={formData.coverLetter}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-row">
+            <button type="submit">Envoyer ma candidature</button>
+          </div>
         </form>
       )}
     </div>
   );
-}
+};
 
 export default Postuler;

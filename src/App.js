@@ -9,7 +9,7 @@ import Offres from "./pages/Offres/Offres";
 import Postuler from "./pages/Postuler/Postuler";
 import { useParams } from "react-router-dom";
 
-function App() {
+const App = () =>{
   const isLoggedIn = window.localStorage.getItem("loggedIn");
   // Function to check if the user is logged in
   const isUserLoggedIn = () => {
@@ -25,12 +25,12 @@ function App() {
   };
   return (
     <BrowserRouter>
-      <div className="App">
+      <div>
         <Routes>
           <Route path="/signup" exact element={<Signup />} />
           <Route path="/login" exact element={<Login />} />
           <Route path="/Offres" exact element={<Offres />} />
-          
+          <Route path="/Offres/:id" element={<Postuler />} />
         </Routes>
       </div>
       <ToastContainer position="top-center"></ToastContainer>

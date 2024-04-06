@@ -12,13 +12,15 @@ const StageCard = ({
   modeTag,
   durationTag,
   offerLink,
+  competences,
 }) => {
 const navigate = useNavigate();
   
- 
 const handlePostulerClick = () => {
- navigate(`/Offres/${offerLink}`);
+  navigate(`/Offres/${offerLink}`, { state: { jobDetails: { stageTitle, stageNature, stageDescription, domainTag, modeTag, durationTag,competences } } });
 };
+
+
   return (
     <div className="stage-card">
       <div className="content">
