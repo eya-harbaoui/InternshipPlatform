@@ -1,11 +1,9 @@
-import "./Navbar.css";
+// Navbar.js
 import React, { useState } from "react";
-import { AiOutlineBars } from "react-icons/ai";
+import { useLocation, Link } from "react-router-dom";
 import { GrClose } from "react-icons/gr";
-import { CgProfile } from "react-icons/cg";
-import { AiOutlineLogout } from "react-icons/ai";
-import { Link, useLocation } from "react-router-dom";
-
+import { AiOutlineBars, AiOutlineLogout } from "react-icons/ai";
+import "./Navbar.css";
 function Navbar({ links }) {
   const [clicked, setClicked] = useState(false);
   const location = useLocation();
@@ -37,6 +35,12 @@ function Navbar({ links }) {
             </Link>
           </li>
         ))}
+        <li>
+          <button className="logout-button">
+            <AiOutlineLogout className="icon-nav" />
+            Logout
+          </button>
+        </li>
       </ul>
     </nav>
   );

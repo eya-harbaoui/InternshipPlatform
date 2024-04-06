@@ -1,9 +1,9 @@
 export const NavbarLinks = [
+  { title: "Offres", url: "/Offres", cName: "nav-links" },
   {
-    title: "My Profile",
+    title: "Mon Profil",
     url: "/userDetails",
     cName: "nav-links",
-    icon: "CgProfile",
   },
-  { title: "Log out", url: "/", cName: "nav-links", icon: "AiOutlineLogout" },
+  { title: "Mes candidatures", url: "/Mes_candidatures", cName: "nav-links" },
 ];

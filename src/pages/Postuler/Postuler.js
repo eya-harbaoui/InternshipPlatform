@@ -1,14 +1,20 @@
 import React, { useState } from "react";
-import "./Postuler.css"; // CSS pour le style
-import { useLocation } from "react-router-dom"; // Importer useLocation
-import { FaRegLightbulb, FaRegCalendarAlt } from "react-icons/fa";
-import { FiHome } from "react-icons/fi";
+import "./Postuler.css"; 
+import { useLocation } from "react-router-dom"; 
+import {
+  FaRegLightbulb,
+  FaRegCalendarAlt,
+  FaTrash,
+  FaUpload,
+} from "react-icons/fa"; 
+import { FiHome } from "react-icons/fi"; 
 import Navbar from "../../components/Navbar/Navbar";
 import { NavbarLinks } from "../../components/Navbar/NavbarLinks";
+
 const Postuler = () => {
-  const location = useLocation(); // Utiliser useLocation pour obtenir l'emplacement actuel
-  const jobDetails = location.state ? location.state.jobDetails : null; // Vérifier si location.state est défini
-  const [showForm,setShowForm] = useState(false);
+  const location = useLocation(); 
+  const jobDetails = location.state ? location.state.jobDetails : null; 
+  const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -16,9 +22,13 @@ const Postuler = () => {
     email: "",
     levelOfStudy: "",
     institution: "",
+    address: "",
+    city: "",
+    postalCode: "",
     cvFile: null,
     coverLetter: "",
   });
+  const [fileInputKey, setFileInputKey] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,14 +39,19 @@ const Postuler = () => {
     setFormData({ ...formData, cvFile: e.target.files[0] });
   };
 
+  const handleDeleteFile = () => {
+    setFormData({ ...formData, cvFile: null });
+    setFileInputKey((prevKey) => prevKey + 1); // Pour forcer le re-render de l'input file
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Ajouter la logique pour soumettre le formulaire
   };
-  const handlePostulerForm =(e)=> {
-    e.preventDefault();
+
+  const handlePostulerForm = () => {
     setShowForm(true);
-  }
+  };
 
   if (!jobDetails) {
     return null; // Masquer le composant si jobDetails n'est pas fourni
@@ -60,7 +75,7 @@ const Postuler = () => {
         </div>
       </div>
       <div>
-        <p>Les compétences demandées : </p>
+        <h3>Les compétences demandées : </h3>
         {jobDetails.competences &&
           Object.entries(jobDetails.competences).map(([competence, niveau]) => (
             <p key={competence}>
@@ -68,7 +83,11 @@ const Postuler = () => {
             </p>
           ))}
       </div>
-      <button onClick={handlePostulerForm}>Postuler</button>
+      {!showForm && (
+        <button className="postuler-button" onClick={handlePostulerForm}>
+          Postuler
+        </button>
+      )}
       {showForm && (
         <form onSubmit={handleSubmit}>
           <div className="form-row">
@@ -88,6 +107,8 @@ const Postuler = () => {
               onChange={handleChange}
               required
             />
+          </div>
+          <div className="form-row">
             <input
               type="tel"
               name="phoneNumber"
@@ -96,8 +117,6 @@ const Postuler = () => {
               onChange={handleChange}
               required
             />
-          </div>
-          <div className="form-row">
             <input
               type="email"
               name="email"
@@ -106,6 +125,9 @@ const Postuler = () => {
               onChange={handleChange}
               required
             />
+          </div>
+
+          <div className="form-row">
             <input
               type="text"
               name="levelOfStudy"
@@ -123,21 +145,39 @@ const Postuler = () => {
               required
             />
           </div>
+
           <div className="form-row">
-            <label htmlFor="cvFile">Ajouter mon CV (format PDF)</label>
             <input
-              type="file"
-              id="cvFile"
-              name="cvFile"
-              accept="application/pdf"
-              onChange={handleFileChange}
+              type="text"
+              name="address"
+              placeholder="Adresse postale"
+              value={formData.address}
+              onChange={handleChange}
               required
             />
-            {formData.cvFile && (
-              <span className="cv-added">
-                CV ajouté: {formData.cvFile.name}
-              </span>
-            )}
+            <button
+              className="CV-button"
+              type="button"
+              onClick={handleDeleteFile}
+            >
+              {formData.cvFile ? (
+                <>
+                  <FaTrash /> {formData.cvFile.name}
+                </>
+              ) : (
+                <>
+                  <FaUpload /> Ajouter votre CV (PDF)
+                </>
+              )}
+            </button>
+            <input
+              key={fileInputKey}
+              type="file"
+              accept="application/pdf"
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+              ref={(fileInput) => fileInput && fileInput.click()}
+            />
           </div>
           <div className="form-row">
             <textarea
@@ -146,10 +186,14 @@ const Postuler = () => {
               value={formData.coverLetter}
               onChange={handleChange}
               required
+              style={{ height: "200px" }}
+              className="cover-letter"
             />
           </div>
           <div className="form-row">
-            <button type="submit">Envoyer ma candidature</button>
+            <button type="submit" className="candidature-button">
+              Envoyer ma candidature
+            </button>
           </div>
         </form>
       )}

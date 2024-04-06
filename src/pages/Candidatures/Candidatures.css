@@ -1,0 +1,21 @@
+.candidatures-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 50px 0;
+  text-align: center;
+}
+
+
+.candidature-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 -10px;
+}
+
+@media (max-width: 768px) {
+  .candidature-cards {
+    flex-direction: column;
+  }
+}

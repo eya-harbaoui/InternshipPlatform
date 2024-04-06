@@ -7,9 +7,9 @@ import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import Offres from "./pages/Offres/Offres";
 import Postuler from "./pages/Postuler/Postuler";
-import { useParams } from "react-router-dom";
+import Candidatures from "./pages/Candidatures/Candidatures";
 
-const App = () =>{
+const App = () => {
   const isLoggedIn = window.localStorage.getItem("loggedIn");
   // Function to check if the user is logged in
   const isUserLoggedIn = () => {
@@ -31,10 +31,11 @@ const App = () =>{
           <Route path="/login" exact element={<Login />} />
           <Route path="/Offres" exact element={<Offres />} />
           <Route path="/Offres/:id" element={<Postuler />} />
+          <Route path="/Mes_candidatures" element={<Candidatures />}></Route>
         </Routes>
       </div>
       <ToastContainer position="top-center"></ToastContainer>
     </BrowserRouter>
   );
-}
+};
 export default App;
