@@ -1,4 +1,4 @@
-.stage-card {
+.candidature-card {
   display: flex;
   flex-direction: row; /* Nouvelle ligne ajoutée */
   justify-content: space-between; /* Espacement entre les éléments */
@@ -13,59 +13,26 @@
   text-align: left; /* Alignement du texte à droite */
 }
 
-.stage-card h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
-}
-
-.stage-card p {
+.candidature-card p {
   margin-bottom: 20px;
-  color: #666;
+  color:#2F4F5A;
 }
 
-.stage-card .tags {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.stage-card .tag {
+.candidature-card .tag_status {
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f2f2f2;
-  padding: 5px 10px;
-  border-radius: 20px;
-  margin-right: 10px;
-  font-size: 14px;
+  font-size: 20px;
+  font-weight: bold;
   text-transform: uppercase;
-  color: #333;
 }
 
-.stage-card .tag i {
-  margin-right: 5px;
-}
 
-.stage-card .read-more {
-  display: inline-block;
-  width: 35%;
-  background-color: #2c444e;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 3px;
-  text-decoration: none;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
 
-.stage-card .read-more:hover {
-  background-color: #fff;
-  color: #2c444e;
-}
 
 @media (max-width: 768px) {
-  .stage-card {
+  .candidature-cards {
     max-width: 100%;
   }
 }

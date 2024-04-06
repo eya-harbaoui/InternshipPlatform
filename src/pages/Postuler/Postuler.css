@@ -7,7 +7,7 @@
 }
 
 .postuler h2 {
-  margin-top: 0;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 
@@ -19,7 +19,22 @@
   display: flex;
   margin-bottom: 10px;
 }
-
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+.title-postuler {
+  margin-top: 50px;
+  margin-bottom: 10px;
+  color: #ff735c;
+}
+.icon-postuler {
+  font-size: 40px; /* Taille de l'icône */
+  color: #ff735c; /* Couleur de l'icône */
+}
 .tag {
   padding: 5px 10px;
   border-radius: 3px;
@@ -114,7 +129,10 @@ form {
   .form-row textarea {
     width: 100%;
   }
-  .postuler-button,.candidature-button{width: 100%;}
+  .postuler-button,
+  .candidature-button {
+    width: 100%;
+  }
 }
 .upload-icon {
   margin-right: 5px;

@@ -1,21 +1,57 @@
+/* Candidatures.css */
 .candidatures-page {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   margin-top: 20px;
   padding: 50px 0;
   text-align: center;
 }
 
-
-.candidature-cards {
+.candidature-cards{
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+
+.candidature-card{
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.095);
+  padding: 20px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+
+.title-candidature {
+    margin-top: 50px;
+  margin-bottom: 10px;
+  color : #FF735C;
+
+}
+.candidature-card p {
+  margin-bottom: 20px;
+  color: #2F4F5A ;
+}
+.candidature-icon{
+     font-size: 40px; /* Taille de l'icône */
+  color: #FF735C; /* Couleur de l'icône */
+}
+.tag_status {
+  display: flex;
+  align-items: center;
   justify-content: center;
-  margin: 0 -10px;
+  background-color: #f2f2f2;
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-top: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: #333;
 }
 
 @media (max-width: 768px) {
-  .candidature-cards {
-    flex-direction: column;
+  .candidature-card {
+    width: 80%;
   }
 }

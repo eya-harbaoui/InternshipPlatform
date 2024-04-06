@@ -7,6 +7,7 @@ import {
   FaTrash,
   FaUpload,
 } from "react-icons/fa"; 
+import { GrDocumentUser } from "react-icons/gr";
 import { FiHome } from "react-icons/fi"; 
 import Navbar from "../../components/Navbar/Navbar";
 import { NavbarLinks } from "../../components/Navbar/NavbarLinks";
@@ -60,6 +61,10 @@ const Postuler = () => {
   return (
     <div className="postuler">
       <Navbar links={NavbarLinks} />
+      <div className="centered-container">
+        <h2 className="title-postuler">Postuler vers cette offre !</h2>
+        <GrDocumentUser className="icon-postuler" />
+      </div>
       <h2>{jobDetails.stageTitle}</h2>
       <p>{jobDetails.stageNature}</p>
       <p>{jobDetails.stageDescription}</p>

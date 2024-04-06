@@ -1,3 +1,4 @@
+// CandidatureCard.js
 import React from "react";
 import { Tag } from "antd";
 import "./CandidatureCard.css";
@@ -33,13 +34,13 @@ const CandidatureCard = ({
   }
 
   return (
-    <div className="stage-card">
+    <div className="candidature-card">
       <div className="content">
         <h3>{stageTitle}</h3>
         <p>{candidatureDate}</p>
       </div>
-      <div className="tag">
-        <Tag color={tagColor}>{tagText}</Tag>
+      <div className="tag_status">
+        <Tag color={tagColor} >{tagText}</Tag>
       </div>
     </div>
   );
