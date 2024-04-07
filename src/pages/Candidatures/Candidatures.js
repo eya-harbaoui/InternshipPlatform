@@ -1,18 +1,20 @@
 // Candidatures.js
-import React from "react";
-import { NavbarLinks } from "../../components/Navbar/NavbarLinks";
+import React , {useState} from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import CandidatureCard from "../../components/CandidatureCard/CandidatureCard";
 import { CandidatureData } from "./CandidaturesData";
 import { MdOutlineWorkHistory } from "react-icons/md";
 import "./Candidatures.css";
+import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks";
+import { useRowStyle } from "antd/es/grid/style";
 
 const Candidatures = () => {
+ 
   return (
     <div className="candidatures-page">
-      <Navbar links={NavbarLinks} />
+      <Navbar links={RHNavbarLinks} />
       <h2 className="title-candidature">Mes candidatures</h2>
-      <MdOutlineWorkHistory className="candidature-icon"/>
+      <MdOutlineWorkHistory className="candidature-icon" />
       <div className="candidature-cards">
         {CandidatureData.map((candidature, index) => (
           <CandidatureCard
@@ -23,6 +25,7 @@ const Candidatures = () => {
           />
         ))}
       </div>
+      
     </div>
   );
 };

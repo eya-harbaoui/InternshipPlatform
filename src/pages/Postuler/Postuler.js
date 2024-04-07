@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import "./Postuler.css"; 
-import { useLocation } from "react-router-dom"; 
 import {
   FaRegLightbulb,
   FaRegCalendarAlt,
   FaTrash,
   FaUpload,
-} from "react-icons/fa"; 
+} from "react-icons/fa";
 import { GrDocumentUser } from "react-icons/gr";
-import { FiHome } from "react-icons/fi"; 
+import { FiHome } from "react-icons/fi";
+import { useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import { NavbarLinks } from "../../components/Navbar/NavbarLinks";
+import "./Postuler.css";
 
 const Postuler = () => {
-  const location = useLocation(); 
-  const jobDetails = location.state ? location.state.jobDetails : null; 
+  const location = useLocation();
+  const jobDetails = location.state ? location.state.jobDetails : null;
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -29,7 +29,7 @@ const Postuler = () => {
     cvFile: null,
     coverLetter: "",
   });
-  const [fileInputKey, setFileInputKey] = useState(0);
+  const [fileInputKey, setFileInputKey] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,10 +40,10 @@ const Postuler = () => {
     setFormData({ ...formData, cvFile: e.target.files[0] });
   };
 
-  const handleDeleteFile = () => {
-    setFormData({ ...formData, cvFile: null });
-    setFileInputKey((prevKey) => prevKey + 1); // Pour forcer le re-render de l'input file
-  };
+   const handleDeleteFile = () => {
+     setFormData({ ...formData, cvFile: null });
+     setFileInputKey(Date.now()); // Pour forcer le re-render de l'input file
+   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -160,29 +160,34 @@ const Postuler = () => {
               onChange={handleChange}
               required
             />
-            <button
-              className="CV-button"
-              type="button"
-              onClick={handleDeleteFile}
-            >
-              {formData.cvFile ? (
-                <>
-                  <FaTrash /> {formData.cvFile.name}
-                </>
-              ) : (
-                <>
+            {!formData.cvFile ? (
+              <>
+                <button
+                  className="CV-button"
+                  type="button"
+                  onClick={() => document.getElementById("fileInput").click()}
+                >
                   <FaUpload /> Ajouter votre CV (PDF)
-                </>
-              )}
-            </button>
-            <input
-              key={fileInputKey}
-              type="file"
-              accept="application/pdf"
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-              ref={(fileInput) => fileInput && fileInput.click()}
-            />
+                </button>
+                <input
+                  id="fileInput"
+                  key={fileInputKey}
+                  type="file"
+                  accept="application/pdf"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
+              </>
+            ) : (
+              <button
+                className="CV-button"
+                type="button"
+                onClick={handleDeleteFile}
+              >
+                <FaTrash /> {formData.cvFile.name}
+              </button>
+            )}
+            
           </div>
           <div className="form-row">
             <textarea

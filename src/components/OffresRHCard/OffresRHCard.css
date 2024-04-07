@@ -1,0 +1,101 @@
+/* OffresRHCard.css */
+.Offer-RH-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 80%;
+  background-color: #ffffffba;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.095);
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 50px;
+  text-align: left;
+}
+
+.Offer-RH-card h2,
+.Offer-RH-card p {
+  color: #333;
+}
+
+.Offer-RH-card .title-and-publish {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.Offer-RH-card .content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.Offer-RH-card .tags {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.Offer-RH-card .tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2f2f2;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-right: 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #333;
+}
+
+.Offer-RH-card .tag svg {
+  margin-right: 5px;
+}
+
+.Offer-RH-card .actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: auto;
+}
+
+.Offer-RH-card .action {
+  background: #e6e6e6;
+  padding: 8px 12px;
+  border-radius: 2px;
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.Offer-RH-card .action-icon {
+  margin-right: 5px;
+}
+
+.status-tag {
+  align-self: flex-end;
+  background: #e6e6e6;
+  border-radius: 2px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.Offer-RH-card .small-button {
+  background-color: #2c444e;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.Offer-RH-card .small-button:hover {
+  background-color: #fff;
+  color: #2c444e;
+}

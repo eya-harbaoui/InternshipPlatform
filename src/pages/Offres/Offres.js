@@ -9,6 +9,7 @@ import {
   modeOptions,
   natureOptions,
 } from "./FilterOptions";
+import { MdOutlineContentPasteSearch } from "react-icons/md";
 import {NavbarLinks} from "../../components/Navbar/NavbarLinks";
 import { stageData } from "./stageData";
 const { Option } = Select;
@@ -42,7 +43,8 @@ const Offres = () => {
   return (
     <div className="offres-page">
       <Navbar links={NavbarLinks} />
-      <h1>Nos offres de stage</h1>
+      <h2 className="title-offre">Nos offres de stage</h2>
+      <MdOutlineContentPasteSearch className="icon-offre"/>
       <div className="filter-container">
         <Select
           placeholder="Domaine de stage"

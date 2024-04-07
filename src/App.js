@@ -8,7 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Offres from "./pages/Offres/Offres";
 import Postuler from "./pages/Postuler/Postuler";
 import Candidatures from "./pages/Candidatures/Candidatures";
-
+import InternDetails from "./pages/InternDetails/InternDetails";
+import Acceuil from "./pages/Acceuil/Acceuil";
+import OffresRH from "./pages/OffresRH/OffresRH";
 const App = () => {
   const isLoggedIn = window.localStorage.getItem("loggedIn");
   // Function to check if the user is logged in
@@ -27,11 +29,14 @@ const App = () => {
     <BrowserRouter>
       <div>
         <Routes>
+          <Route path="/" exact element={<Acceuil />}></Route>
           <Route path="/signup" exact element={<Signup />} />
           <Route path="/login" exact element={<Login />} />
           <Route path="/Offres" exact element={<Offres />} />
           <Route path="/Offres/:id" element={<Postuler />} />
           <Route path="/Mes_candidatures" element={<Candidatures />}></Route>
+          <Route path="/UserDetails" element={<InternDetails />}></Route>
+          <Route path="/RH_Offres" element={<OffresRH />}></Route>
         </Routes>
       </div>
       <ToastContainer position="top-center"></ToastContainer>
