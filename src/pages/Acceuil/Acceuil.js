@@ -1,49 +1,53 @@
-import React from 'react'
-import "./Acceuil.css";
-const Acceuil = () => {
+import React from "react";
+import { Link } from "react-router-dom";
+//import "./Acceuil.css";
+import Navbar from "../../components/Navbar/Navbar";
+import { AcceuilNavbarLinks } from "../../components/Navbar/AcceuilNavbarLinks";
+function Acceuil() {
   return (
-    <div className="container">
-      <div className="header">
-        <h1 className="welcome">
-          Bienvenue sur la plateforme de stage de l'entreprise X !
-        </h1>
+    <div className="homepage">
+      <Navbar links={AcceuilNavbarLinks}></Navbar>
+      <div className="section">
+        <div className="text">
+          <h2>Texte à gauche</h2>
+          <p>Description du texte...</p>
+        </div>
+        <div className="image">
+          <img src="chemin/vers/image.jpg" alt="Image à droite" />
+        </div>
       </div>
-
-      <div className="cta">
-        <button>Explorer les opportunités</button>
-        <button>Postulez facilement</button>
+      <div className="section">
+        <div className="image">
+          <img src="chemin/vers/image.jpg" alt="Image à gauche" />
+        </div>
+        <div className="text">
+          <h2>Texte à droite</h2>
+          <p>Description du texte...</p>
+        </div>
       </div>
-
-      <div className="subtext">
-        Clients Satisfaits, Ils nous adorent ! C'est évident !
+      <div className="section">
+        <div className="text">
+          <h2>Texte à gauche</h2>
+          <p>Description du texte...</p>
+        </div>
+        <div className="image">
+          <img src="chemin/vers/image.jpg" alt="Image à droite" />
+        </div>
       </div>
-
       <div className="testimonials">
-        <p>Témoignage 1: [Nom du Stagiaire]</p>
-        <p>Témoignage 2: [Nom du Stagiaire]</p>
-        <p>Témoignage 3: [Nom du Stagiaire]</p>
+        <div className="testimonial">Témoignage 1</div>
+        <div className="testimonial">Témoignage 2</div>
+        <div className="testimonial">Témoignage 3</div>
       </div>
-
-      <div className="subtext">Témoignages de Stagiaires</div>
-
-      <div className="subtext">Parcourez les stages par domaine, durée,...</div>
-
-      <div className="subtext">
-        Soumettez votre candidature avec votre CV et une brève lettre de
-        motivation.
+      <div className="cta">
+        <p>Rejoignez-nous!</p>
+        <Link to="/signup">
+          <button>S'inscrire</button>
+        </Link>
       </div>
-
-      <div className="subtext">
-        Découvrez des opportunités de stage passionnantes avec l'entreprise X.
-        Explorez les stages, postulez facilement et suivez vos candidatures, le
-        tout au même endroit.
-      </div>
-
-      <div className="footer">
-        <p>(c) 2024 Example, Inc</p>
-        <button>S'inscrire</button>
-      </div>
+      <footer>Pied de page</footer>
     </div>
   );
 }
-export default Acceuil
+
+export default Acceuil;

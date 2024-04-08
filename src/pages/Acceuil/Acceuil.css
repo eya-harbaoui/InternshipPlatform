@@ -1,54 +1,54 @@
-/* App.css */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.container {
+.homepage {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-.header {
-  text-align: center;
+.section {
+  display: flex;
   margin-bottom: 20px;
+}
+
+.text {
+  flex: 1;
+  padding: 20px;
+  background-color: #f0f0f0;
 }
 
 .image {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
+  flex: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
 }
 
-.welcome {
-  font-size: 24px;
-  font-weight: bold;
+.testimonials {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
-.subtext {
-  font-size: 18px;
-  margin-bottom: 20px;
+.testimonial {
+  flex: 1;
+  padding: 20px;
+  background-color: #f0f0f0;
+  margin-right: 10px;
 }
 
 .cta {
   text-align: center;
-  margin-top: 40px;
+  margin-bottom: 20px;
 }
 
-.cta button {
-  background-color: #FF735C;
-  color: white;
-  border: none;
+button {
   padding: 10px 20px;
-  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
   cursor: pointer;
 }
 
-.cta button:hover {
-  background-color: #E65C3C;
+footer {
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 10px;
 }

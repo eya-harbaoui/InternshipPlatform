@@ -26,6 +26,11 @@ const OffresRH = () => {
   const handleFilterChange = (key, value) => {
     setFilter({ ...filter, [key]: value });
   };
+  const competenceOptions = [
+    { value: "HTML", label: "HTML" },
+    { value: "CSS", label: "CSS" },
+    { value: "JavaScript", label: "JavaScript" },
+  ];
 
   const filteredStageData = RHOfferData.filter((stage) => {
     return (
@@ -50,6 +55,34 @@ const OffresRH = () => {
     setIsModalOpen(false);
   };
 
+  const [competences, setCompetences] = useState([]);
+  const [niveauCompetence, setNiveauCompetence] = useState({});
+
+  const [selectedOffer, setSelectedOffer] = useState(null);
+
+  const handleOfferChange = (key, value) => {
+    setSelectedOffer({ ...selectedOffer, [key]: value });
+  };
+
+  const handleCompetenceChange = (competence, niveau) => {
+    setSelectedOffer({
+      ...selectedOffer,
+      competences: [...selectedOffer.competences, competence],
+      niveauCompetence: {
+        ...selectedOffer.niveauCompetence,
+        [competence]: niveau,
+      },
+    });
+  };
+
+  const handleCompetenceLevelChange = (index, niveau) => {
+    const newNiveauCompetence = [...selectedOffer.niveauCompetence];
+    newNiveauCompetence[index] = niveau;
+    setSelectedOffer({
+      ...selectedOffer,
+      niveauCompetence: newNiveauCompetence,
+    });
+  };
   return (
     <div className="offres-RH-page">
       <Navbar links={NavbarLinks} />
@@ -188,34 +221,40 @@ const OffresRH = () => {
             </Select>
             <div className="competences-container">
               <h3>Compétences demandées :</h3>
-              <div className="competence-input">
-                <span>HTML</span>
-                <Select defaultValue="Intermédiaire">
-                  <Option value="Débutant">Débutant</Option>
-                  <Option value="Intermédiaire">Intermédiaire</Option>
-                  <Option value="Avancé">Avancé</Option>
-                </Select>
-              </div>
-              <div className="competence-input">
-                <span>CSS</span>
-                <Select defaultValue="Débutant">
-                  <Option value="Débutant">Débutant</Option>
-                  <Option value="Intermédiaire">Intermédiaire</Option>
-                  <Option value="Avancé">Avancé</Option>
-                </Select>
-              </div>
-              <div className="competence-input">
-                <span>JavaScript</span>
-                <Select defaultValue="Avancé">
-                  <Option value="Débutant">Débutant</Option>
-                  <Option value="Intermédiaire">Intermédiaire</Option>
-                  <Option value="Avancé">Avancé</Option>
-                </Select>
-              </div>
+              {competences.map((competence) => (
+                <div key={competence} className="competence-input">
+                  <span>{competence}</span>
+                  <Select
+                    defaultValue={niveauCompetence[competence]}
+                    onChange={(value) =>
+                      setNiveauCompetence({
+                        ...niveauCompetence,
+                        [competence]: value,
+                      })
+                    }
+                  >
+                    <Option value="Débutant">Débutant</Option>
+                    <Option value="Intermédiaire">Intermédiaire</Option>
+                    <Option value="Avancé">Avancé</Option>
+                  </Select>
+                </div>
+              ))}
+              <Select
+                placeholder="Ajouter une compétence"
+                style={{ width: "100%" }}
+                onChange={(value) => handleCompetenceChange(value, "Débutant")}
+              >
+                {competenceOptions.map((option) => (
+                  <Option key={option.value} value={option.value}>
+                    {option.label}
+                  </Option>
+                ))}
+              </Select>
             </div>
           </div>
         </Modal>
       )}
+      
     </div>
   );
 };
