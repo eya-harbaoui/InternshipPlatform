@@ -1,8 +1,7 @@
 import React from "react";
 import { FaRegLightbulb, FaRegCalendarAlt } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
-import "./StageCard.css";
-import { useNavigate } from "react-router-dom";
+import "./OffresCard.css";
 
 const StageCard = ({
   stageTitle,
@@ -11,20 +10,18 @@ const StageCard = ({
   domainTag,
   modeTag,
   durationTag,
-  offerLink,
-  competences,
+  buttonName,
+  handleButtonFunction,
 }) => {
-const navigate = useNavigate();
-  
-const handlePostulerClick = () => {
-  navigate(`/Offres/${offerLink}`, { state: { jobDetails: { stageTitle, stageNature, stageDescription, domainTag, modeTag, durationTag,competences } } });
-};
-
-
   return (
-    <div className="stage-card">
-      <div className="content">
+    <>
+      <div className="title-and-publish">
         <h2>{stageTitle}</h2>
+        <button className="small-button" onClick={handleButtonFunction}>
+          {buttonName}
+        </button>
+      </div>
+      <div className="content">
         <p>{stageNature}</p>
         <p>{stageDescription}</p>
         <div className="tags">
@@ -39,10 +36,7 @@ const handlePostulerClick = () => {
           </div>
         </div>
       </div>
-      <button className="read-more" onClick={handlePostulerClick}>
-        Voir offre
-      </button>
-    </div>
+    </>
   );
 };
 

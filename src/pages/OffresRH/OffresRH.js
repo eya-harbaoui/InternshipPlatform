@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import OffresRHCard from "../../components/OffresRHCard/OffresRHCard.js";
+import OffresRHCard from "../../components/OffresCard/OffresRHCard.js";
 import "./OffresRH.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { Select, Button, Modal } from "antd";
@@ -8,9 +8,10 @@ import {
   durationOptions,
   modeOptions,
   natureOptions,
-} from "../Offres/FilterOptions.js";
+} from "../../components/Filter/FilterOptions.js";
+import Filter from "../../components/Filter/Filter";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
-import { NavbarLinks } from "../../components/Navbar/NavbarLinks";
+import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks";
 import { RHOfferData } from "./RHOfferData.js";
 const { Option } = Select;
 
@@ -20,17 +21,26 @@ const OffresRH = () => {
     domain: "",
     duration: "",
     mode: "",
-    nature: "", // Changed from "stageNature" to "nature"
+    nature: "",
   });
-
-  const handleFilterChange = (key, value) => {
-    setFilter({ ...filter, [key]: value });
+  const handleClearFilter = () => {
+    setFilter({
+      searchTerm: "",
+      domain: "",
+      duration: "",
+      mode: "",
+      nature: "",
+    });
   };
   const competenceOptions = [
     { value: "HTML", label: "HTML" },
     { value: "CSS", label: "CSS" },
     { value: "JavaScript", label: "JavaScript" },
   ];
+
+  const handleFilterChange = (key, value) => {
+    setFilter({ ...filter, [key]: value });
+  };
 
   const filteredStageData = RHOfferData.filter((stage) => {
     return (
@@ -58,34 +68,14 @@ const OffresRH = () => {
   const [competences, setCompetences] = useState([]);
   const [niveauCompetence, setNiveauCompetence] = useState({});
 
-  const [selectedOffer, setSelectedOffer] = useState(null);
-
-  const handleOfferChange = (key, value) => {
-    setSelectedOffer({ ...selectedOffer, [key]: value });
-  };
-
   const handleCompetenceChange = (competence, niveau) => {
-    setSelectedOffer({
-      ...selectedOffer,
-      competences: [...selectedOffer.competences, competence],
-      niveauCompetence: {
-        ...selectedOffer.niveauCompetence,
-        [competence]: niveau,
-      },
-    });
+    setCompetences([...competences, competence]);
+    setNiveauCompetence({ ...niveauCompetence, [competence]: niveau });
   };
 
-  const handleCompetenceLevelChange = (index, niveau) => {
-    const newNiveauCompetence = [...selectedOffer.niveauCompetence];
-    newNiveauCompetence[index] = niveau;
-    setSelectedOffer({
-      ...selectedOffer,
-      niveauCompetence: newNiveauCompetence,
-    });
-  };
   return (
     <div className="offres-RH-page">
-      <Navbar links={NavbarLinks} />
+      <Navbar links={RHNavbarLinks} />
       <h2 className="title-offre-RH">Gestion des offres</h2>
       <MdOutlineContentPasteSearch className="icon-offre-RH" />
       <div className="button-container">
@@ -93,69 +83,11 @@ const OffresRH = () => {
           Ajouter une offre
         </button>
       </div>
-      <div className="filter-container">
-        <Select
-          placeholder="Domaine de stage"
-          value={filter.domain}
-          onChange={(value) => handleFilterChange("domain", value)}
-          style={{ width: 150, marginRight: 10 }}
-        >
-          {domainOptions.map((option) => (
-            <Option key={option.value} value={option.value}>
-              {option.label}
-            </Option>
-          ))}
-        </Select>
-        <Select
-          placeholder="Durée de stage"
-          value={filter.duration}
-          onChange={(value) => handleFilterChange("duration", value)}
-          style={{ width: 150, marginRight: 10 }}
-        >
-          {durationOptions.map((option) => (
-            <Option key={option.value} value={option.value}>
-              {option.label}
-            </Option>
-          ))}
-        </Select>
-        <Select
-          placeholder="Mode de stage"
-          value={filter.mode}
-          onChange={(value) => handleFilterChange("mode", value)}
-          style={{ width: 150, marginRight: 10 }}
-        >
-          {modeOptions.map((option) => (
-            <Option key={option.value} value={option.value}>
-              {option.label}
-            </Option>
-          ))}
-        </Select>
-        <Select
-          placeholder="Nature de stage"
-          value={filter.nature}
-          onChange={(value) => handleFilterChange("nature", value)}
-          style={{ width: 150, marginRight: 10 }}
-        >
-          {natureOptions.map((option) => (
-            <Option key={option.value} value={option.value}>
-              {option.label}
-            </Option>
-          ))}
-        </Select>
-        <Button
-          onClick={() =>
-            setFilter({
-              searchTerm: "",
-              domain: "",
-              duration: "",
-              mode: "",
-              nature: "",
-            })
-          }
-        >
-          Effacer
-        </Button>
-      </div>
+      <Filter
+        filter={filter}
+        setFilter={setFilter}
+        handleClear={handleClearFilter}
+      />
       <div className="stage-cards-RH">
         {filteredStageData.map((stage, index) => (
           <OffresRHCard key={index} {...stage} />
@@ -164,7 +96,7 @@ const OffresRH = () => {
       {isModalOpen && (
         <Modal
           title="Ajouter une offre de stage"
-          open={isModalOpen}
+          visible={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
         >
@@ -173,7 +105,12 @@ const OffresRH = () => {
             <input
               type="text"
               placeholder="Titre de stage"
-              className="modal-input"
+              className="input-text-design"
+            />
+            <textarea
+              type="text"
+              placeholder="description de stage"
+              className="textarea-design"
             />
             <Select
               placeholder="Domaine de stage"
@@ -225,6 +162,7 @@ const OffresRH = () => {
                 <div key={competence} className="competence-input">
                   <span>{competence}</span>
                   <Select
+                    className="modal-input"
                     defaultValue={niveauCompetence[competence]}
                     onChange={(value) =>
                       setNiveauCompetence({
@@ -240,6 +178,7 @@ const OffresRH = () => {
                 </div>
               ))}
               <Select
+                className="modal-input"
                 placeholder="Ajouter une compétence"
                 style={{ width: "100%" }}
                 onChange={(value) => handleCompetenceChange(value, "Débutant")}
@@ -254,7 +193,6 @@ const OffresRH = () => {
           </div>
         </Modal>
       )}
-      
     </div>
   );
 };

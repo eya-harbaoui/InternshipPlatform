@@ -6,7 +6,7 @@
   text-align: center;
 }
 
-.title-offre-RH{
+.title-offre-RH {
   margin-top: 50px;
   margin-bottom: 10px;
   color: #ff735c;
@@ -48,6 +48,7 @@
 }
 
 .modal-input {
+  width: 90% !important;
   margin-bottom: 10px;
 }
 
@@ -70,4 +71,34 @@
     width: 90%;
     margin: 0 auto;
   }
+}
+.input-text-design {
+  width: 90%;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.input-text-design:focus {
+  border-color: #ff735c;
+}
+
+.textarea-design {
+  width: 90%;
+  height: 150px; /* Hauteur du textarea */
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.textarea-design:focus {
+  border-color: #ff735c;
 }

@@ -1,0 +1,38 @@
+.ma-carte {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.ma-carte .tag {
+  margin-bottom: 10px;
+}
+
+.ma-carte h2 {
+  margin-bottom: 0;
+}
+
+.ma-carte .user-icon {
+  align-self: flex-end;
+  font-size: 24px;
+  color: #2f4f5a;
+}
+
+@media (min-width: 768px) {
+  .ma-carte {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ma-carte .tag {
+    margin-bottom: 0;
+    margin-right: 10px; /* Ajout de marges entre les éléments */
+  }
+
+  .ma-carte h2 {
+    margin-bottom: 10px; /* Ajout d'une marge entre le tag et le nombre de candidats */
+  }
+}

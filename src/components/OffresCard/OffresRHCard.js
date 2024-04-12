@@ -7,9 +7,10 @@ import {
   FaArchive,
 } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
-import "./OffresRHCard.css";
+import "./OffresCard.css";
 import { Tag, Modal, Select } from "antd";
 import { useNavigate } from "react-router-dom";
+import StageCard from "./StageCard";
 
 const { Option } = Select;
 const competenceOptions = [
@@ -17,6 +18,7 @@ const competenceOptions = [
   { value: "CSS", label: "CSS" },
   { value: "JavaScript", label: "JavaScript" },
 ];
+
 const OffresRHCard = ({
   stageTitle,
   stageNature,
@@ -29,15 +31,28 @@ const OffresRHCard = ({
   OfferStatus,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [selectedOffer, setSelectedOffer] = useState({
+    title: stageTitle,
+    nature: stageNature,
+    mode: modeTag,
+    domain: domainTag,
+    stageDescription: stageDescription,
+    // Initialise les niveaux à "Débutant" pour chaque compétence
+  });
+
   const showModal = () => {
     setIsModalOpen(true);
   };
+
   const handleOk = () => {
     setIsModalOpen(false);
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
   const navigate = useNavigate();
   let tagColor = "";
   let tagText = "";
@@ -62,19 +77,6 @@ const OffresRHCard = ({
       tagColor = "default";
       tagText = "Statut inconnu";
   }
-
-  const domainOptions = [
-    { value: "web", label: "Web" },
-    { value: "mobile", label: "Mobile" },
-    { value: "data", label: "Data" },
-  ];
-
-  const [selectedOffer, setSelectedOffer] = useState({
-    title: "",
-    domain: "",
-    competences: [],
-    niveauCompetence: [],
-  });
 
   const handleOfferChange = (key, value) => {
     setSelectedOffer({ ...selectedOffer, [key]: value });
@@ -116,30 +118,34 @@ const OffresRHCard = ({
     // Implement your archive logic here
     console.log("Archive clicked");
   };
+  const domainOptions = [
+    { value: "Développement web", label: "Développement web" },
+    // Add more domain options here
+  ];
 
+  const modeOptions = [
+    { value: "Hybride", label: "Hybride" },
+    { value: "Remote", label: "Remote" },
+    { value: "Présentiel", label: "Présentiel" },
+  ];
+
+  const natureOptions = [
+    { value: "PFE", label: "PFE" },
+    { value: "PFA", label: "PFA" },
+    { value: "Initiation", label: "Initiation" },
+  ];
   return (
-    <div className="Offer-RH-card">
-      <div className="title-and-publish">
-        <h2>{stageTitle}</h2>
-        <button className="small-button" onClick={handlePublishClick}>
-          Publier
-        </button>
-      </div>
-      <div className="content">
-        <p>{stageNature}</p>
-        <p>{stageDescription}</p>
-        <div className="tags">
-          <div className="tag">
-            <FaRegLightbulb /> {domainTag}
-          </div>
-          <div className="tag">
-            <FiHome /> {modeTag}
-          </div>
-          <div className="tag">
-            <FaRegCalendarAlt /> {durationTag}
-          </div>
-        </div>
-      </div>
+    <div className="stage-card">
+      <StageCard
+        stageTitle={stageTitle}
+        stageNature={stageNature}
+        stageDescription={stageDescription}
+        modeTag={modeTag}
+        domainTag={domainTag}
+        durationTag={durationTag}
+        buttonName={"publier"}
+        handleButtonFunction={handlePublishClick}
+      />
       <div className="actions">
         <span className="action" onClick={showModal}>
           <FaEdit className="action-icon" />
@@ -171,9 +177,14 @@ const OffresRHCard = ({
             <input
               type="text"
               placeholder="Titre de stage"
-              className="modal-input"
+              className="input-text-design"
               value={selectedOffer.title}
-              onChange={(e) => handleOfferChange("title", e.target.value)}
+            />
+            <textarea
+              type="text"
+              placeholder="description de stage"
+              className="textarea-design"
+              value={selectedOffer.stageDescription}
             />
             <Select
               placeholder="Domaine de stage"
@@ -188,36 +199,32 @@ const OffresRHCard = ({
                 </Option>
               ))}
             </Select>
-            {/* Other Select components for nature, mode, duration */}
-            <div className="competences-container">
-              <h3>Compétences demandées :</h3>
-              {selectedOffer.competences.map((competence, index) => (
-                <div key={index} className="competence-input">
-                  <span>{competence}</span>
-                  <Select
-                    defaultValue={selectedOffer.niveauCompetence[index]}
-                    onChange={(value) =>
-                      handleCompetenceLevelChange(index, value)
-                    }
-                  >
-                    <Option value="Débutant">Débutant</Option>
-                    <Option value="Intermédiaire">Intermédiaire</Option>
-                    <Option value="Avancé">Avancé</Option>
-                  </Select>
-                </div>
+            <Select
+              placeholder="Mode de stage"
+              className="modal-input"
+              style={{ width: "100%" }}
+              value={selectedOffer.mode}
+              onChange={(value) => handleOfferChange("mode", value)}
+            >
+              {modeOptions.map((option) => (
+                <Option key={option.value} value={option.value}>
+                  {option.label}
+                </Option>
               ))}
-              <Select
-                placeholder="Ajouter une compétence"
-                style={{ width: "100%" }}
-                onChange={(value) => handleCompetenceChange(value, "Débutant")}
-              >
-                {competenceOptions.map((option) => (
-                  <Option key={option.value} value={option.value}>
-                    {option.label}
-                  </Option>
-                ))}
-              </Select>
-            </div>
+            </Select>
+            <Select
+              placeholder="Nature de stage"
+              className="modal-input"
+              style={{ width: "100%" }}
+              value={selectedOffer.nature}
+              onChange={(value) => handleOfferChange("nature", value)}
+            >
+              {natureOptions.map((option) => (
+                <Option key={option.value} value={option.value}>
+                  {option.label}
+                </Option>
+              ))}
+            </Select>
           </div>
         </Modal>
       )}

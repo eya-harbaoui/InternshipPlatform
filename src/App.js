@@ -11,6 +11,7 @@ import Candidatures from "./pages/Candidatures/Candidatures";
 import InternDetails from "./pages/InternDetails/InternDetails";
 import Acceuil from "./pages/Acceuil/Acceuil";
 import OffresRH from "./pages/OffresRH/OffresRH";
+import ListeCandidatures from "./pages/ListeCandidatures/ListeCandidatures";
 const App = () => {
   const isLoggedIn = window.localStorage.getItem("loggedIn");
   // Function to check if the user is logged in
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/Mes_candidatures" element={<Candidatures />}></Route>
           <Route path="/UserDetails" element={<InternDetails />}></Route>
           <Route path="/RH_Offres" element={<OffresRH />}></Route>
+          <Route path="/Liste_Candidatures" element={<ListeCandidatures/>}></Route>
         </Routes>
       </div>
       <ToastContainer position="top-center"></ToastContainer>

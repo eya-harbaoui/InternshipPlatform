@@ -1,5 +1,5 @@
 /* OffresRHCard.css */
-.Offer-RH-card {
+.stage-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -13,30 +13,30 @@
   text-align: left;
 }
 
-.Offer-RH-card h2,
-.Offer-RH-card p {
+.stage-card h2,
+.stage-card p {
   color: #333;
 }
 
-.Offer-RH-card .title-and-publish {
+.stage-card .title-and-publish {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
 
-.Offer-RH-card .content {
+.stage-card .content {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.Offer-RH-card .tags {
+.stage-card .tags {
   display: flex;
   margin-bottom: 20px;
 }
 
-.Offer-RH-card .tag {
+.stage-card .tag {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,18 +49,18 @@
   color: #333;
 }
 
-.Offer-RH-card .tag svg {
+.stage-card .tag svg {
   margin-right: 5px;
 }
 
-.Offer-RH-card .actions {
+.stage-card .actions {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   margin-top: auto;
 }
 
-.Offer-RH-card .action {
+.stage-card .action {
   background: #e6e6e6;
   padding: 8px 12px;
   border-radius: 2px;
@@ -72,7 +72,7 @@
   align-items: center;
 }
 
-.Offer-RH-card .action-icon {
+.stage-card .action-icon {
   margin-right: 5px;
 }
 
@@ -85,7 +85,7 @@
   font-weight: bold;
 }
 
-.Offer-RH-card .small-button {
+.stage-card .small-button {
   background-color: #2c444e;
   color: #fff;
   padding: 10px 20px;
@@ -95,7 +95,12 @@
   transition: background-color 0.3s ease;
 }
 
-.Offer-RH-card .small-button:hover {
+.stage-card .small-button:hover {
   background-color: #fff;
   color: #2c444e;
+}
+@media (max-width: 768px) {
+  .stage-card {
+    max-width: 100%;
+  }
 }

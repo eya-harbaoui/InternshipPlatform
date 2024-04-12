@@ -1,0 +1,78 @@
+.liste-candidature-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 75%;
+  background-color: #ffffffba;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.095);
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 50px;
+  position: relative;
+}
+
+.liste-candidature-card p {
+  margin-bottom: 20px;
+  color: #2f4f5a;
+}
+
+.liste-candidature-card .actions {
+  position: absolute;
+  bottom:0;
+  left: 0;
+  margin-bottom: 20px; /* Ajout de la marge */
+  margin-left: 10px; /* Ajout de la marge */
+}
+.liste-candidature-card .content-candidat {
+  margin-bottom: 20px; /* Ajout de la marge */
+}
+
+.liste-candidature-card .action {
+  background: #e6e6e6;
+  padding: 8px 12px;
+  border-radius: 2px;
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.liste-candidature-card .action-icon {
+  margin-right: 5px;
+}
+
+.liste-candidature-card .status-tag {
+  background: #e6e6e6;
+  border-radius: 2px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin-top: 10px; /* Ajout de la marge */
+  margin-right: 10px; /* Ajout de la marge */
+}
+
+@media (max-width: 768px) {
+  .liste-candidature-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .actions {
+    position: static;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 0; /* Réinitialisation de la marge */
+  }
+
+  .status-tag {
+    position: static;
+    margin-top: 10px;
+    margin-right: 0; /* Réinitialisation de la marge */
+  }
+}
