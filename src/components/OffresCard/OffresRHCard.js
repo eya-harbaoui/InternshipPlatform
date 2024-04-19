@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import {
-  FaRegLightbulb,
-  FaRegCalendarAlt,
   FaEdit,
   FaTrash,
   FaArchive,
 } from "react-icons/fa";
-import { FiHome } from "react-icons/fi";
 import "./OffresCard.css";
 import { Tag, Modal, Select } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -137,6 +134,7 @@ const OffresRHCard = ({
   return (
     <div className="stage-card">
       <StageCard
+      student={false}
         stageTitle={stageTitle}
         stageNature={stageNature}
         stageDescription={stageDescription}

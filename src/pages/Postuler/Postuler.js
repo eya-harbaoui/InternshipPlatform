@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaRegLightbulb,
   FaRegCalendarAlt,
@@ -7,56 +7,126 @@ import {
 } from "react-icons/fa";
 import { GrDocumentUser } from "react-icons/gr";
 import { FiHome } from "react-icons/fi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import { NavbarLinks } from "../../components/Navbar/NavbarLinks";
 import "./Postuler.css";
-
+import StudentForm from "../../components/StudentForm/StudentForm";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Postuler = () => {
   const location = useLocation();
   const jobDetails = location.state ? location.state.jobDetails : null;
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
+    id: "",
+    firstName: "",
+    lastName: "",
     phoneNumber: "",
     email: "",
-    levelOfStudy: "",
-    institution: "",
+    studyLevel: "",
+    establishment: "",
     address: "",
-    city: "",
-    postalCode: "",
-    cvFile: null,
-    coverLetter: "",
+    cv: null,
+    recommendationLetter: "",
   });
   const [fileInputKey, setFileInputKey] = useState(null);
+  const [editing, setEditing] = useState(false);
+
+  const fetchProfileInfo = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/user");
+      if (response.data) {
+        console.log("responseeee", response.data);
+        setFormData(response.data[0]);
+      }
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération des informations de profil :",
+        error
+      );
+    }
+  };
+
+  useEffect(() => {
+    fetchProfileInfo();
+  }, []);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log("netbadeeeel", formData);
+    console.log("jobDetails", jobDetails);
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, cvFile: e.target.files[0] });
+    const file = e.target.files[0];
+    if (file.type === "application/pdf") {
+      setFormData({ ...formData, cv: file });
+    } else {
+      alert("Veuillez sélectionner un fichier PDF.");
+    }
   };
 
-   const handleDeleteFile = () => {
-     setFormData({ ...formData, cvFile: null });
-     setFileInputKey(Date.now()); // Pour forcer le re-render de l'input file
-   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Ajouter la logique pour soumettre le formulaire
+  const handleDeleteFile = () => {
+    setFormData({ ...formData, cv: null });
+    setFileInputKey(Date.now()); // Pour forcer le re-render de l'input file
   };
 
   const handlePostulerForm = () => {
     setShowForm(true);
   };
 
+  const handleEdit = () => {
+    setEditing(true);
+  };
+
   if (!jobDetails) {
     return null; // Masquer le composant si jobDetails n'est pas fourni
   }
+
+  const getCurrentDate = () => {
+    const date = new Date();
+    return date.toISOString();
+  };
+
+  const handleSubmitApplication = async (e) => {
+    const candidatureDate = getCurrentDate(); // Obtenez la date actuelle
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/Student_Application",
+        {
+          id: formData.id,
+          OfferId: jobDetails.id,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phoneNumber: formData.phoneNumber,
+          email: formData.email,
+          studyLevel: formData.studyLevel,
+          establishment: formData.establishment,
+          address: formData.address,
+          cv: formData.cv,
+          recommendationLetter: formData.recommendationLetter,
+          candidatureStatus: "en cours",
+          candidatureDate: candidatureDate, // Utilisez la date actuelle
+        }
+      );
+      console.log("Réponse du backend:", response.data);
+      toast.success(
+        "Candidature soumise avec succès. Vous recevrez un email de confirmation."
+      );
+      setShowForm(false);
+      // Gérer la réponse du backend, par exemple afficher un message de succès
+    } catch (error) {
+      console.error("Erreur lors de l'envoi de la candidature :", error);
+      toast.error("Erreur lors de l'envoi de la candidature.");
+
+      // Gérer les erreurs, par exemple afficher un message d'erreur
+    }
+  };
 
   return (
     <div className="postuler">
@@ -94,118 +164,23 @@ const Postuler = () => {
         </button>
       )}
       {showForm && (
-        <form onSubmit={handleSubmit}>
-          <div className="form-row">
-            <input
-              type="text"
-              name="name"
-              placeholder="Nom"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="surname"
-              placeholder="Prénom"
-              value={formData.surname}
-              onChange={handleChange}
-              required
+        <>
+          <button className="postuler-button" onClick={handleEdit}>
+            Modifier Mes Infos
+          </button>
+          <div>
+            <StudentForm
+              formData={formData}
+              handleChange={handleChange}
+              handleDeleteFile={handleDeleteFile}
+              handleFileChange={handleFileChange}
+              fileInputKey={fileInputKey}
+              buttonName={"Envoyer ma candidature"}
+              handleOnClickButtonForm={handleSubmitApplication}
+              disabled={!editing}
             />
           </div>
-          <div className="form-row">
-            <input
-              type="tel"
-              name="phoneNumber"
-              placeholder="Numéro de téléphone"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Adresse email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="form-row">
-            <input
-              type="text"
-              name="levelOfStudy"
-              placeholder="Niveau d'étude"
-              value={formData.levelOfStudy}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="institution"
-              placeholder="Établissement"
-              value={formData.institution}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="form-row">
-            <input
-              type="text"
-              name="address"
-              placeholder="Adresse postale"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-            {!formData.cvFile ? (
-              <>
-                <button
-                  className="CV-button"
-                  type="button"
-                  onClick={() => document.getElementById("fileInput").click()}
-                >
-                  <FaUpload /> Ajouter votre CV (PDF)
-                </button>
-                <input
-                  id="fileInput"
-                  key={fileInputKey}
-                  type="file"
-                  accept="application/pdf"
-                  style={{ display: "none" }}
-                  onChange={handleFileChange}
-                />
-              </>
-            ) : (
-              <button
-                className="CV-button"
-                type="button"
-                onClick={handleDeleteFile}
-              >
-                <FaTrash /> {formData.cvFile.name}
-              </button>
-            )}
-            
-          </div>
-          <div className="form-row">
-            <textarea
-              name="coverLetter"
-              placeholder="Lettre de motivation"
-              value={formData.coverLetter}
-              onChange={handleChange}
-              required
-              style={{ height: "200px" }}
-              className="cover-letter"
-            />
-          </div>
-          <div className="form-row">
-            <button type="submit" className="candidature-button">
-              Envoyer ma candidature
-            </button>
-          </div>
-        </form>
+        </>
       )}
     </div>
   );

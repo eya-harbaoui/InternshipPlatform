@@ -2,6 +2,7 @@ import React from "react";
 import { FaRegLightbulb, FaRegCalendarAlt } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
 import "./OffresCard.css";
+import { MdUpdate } from "react-icons/md";
 
 const StageCard = ({
   stageTitle,
@@ -10,6 +11,8 @@ const StageCard = ({
   domainTag,
   modeTag,
   durationTag,
+  publicationDate,
+  student,
   buttonName,
   handleButtonFunction,
 }) => {
@@ -34,6 +37,11 @@ const StageCard = ({
           <div className="tag">
             <FaRegCalendarAlt /> {durationTag}
           </div>
+          {student && (
+            <div className="tag">
+              <MdUpdate /> {publicationDate}
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -1,61 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  FaEdit,
+  FaTrash,
+} from "react-icons/fa";
 import { Tag } from "antd";
-import "./ListeCandidatureCard.css";
-import { BiMailSend } from "react-icons/bi";
-import { ImProfile } from "react-icons/im";
 
-const ListeCandidatureCard = ({
-  CandidateName,
-  CandidatSurName,
-  CandidatureStatus,
-  CandidatureDate,
-}) => {
+
+const ListeCandidatureCard = ({ firstName, lastName, candidatureStatus,candidatureDate,firstButtonName,secondButtonName }) => {
   let tagColor = "";
   let tagText = "";
-
-  switch (CandidatureStatus.toLowerCase()) {
-    case "en cours":
+  switch (candidatureStatus) {
+    case "en cours de validation":
       tagColor = "blue";
-      tagText = "en cours";
+      tagText = "en cours de validation";
       break;
-    case "entretien technique/rh programmé":
+    case "publié":
       tagColor = "green";
-      tagText = "entretien programmé";
+      tagText = "publié";
       break;
-    case "refusé":
+    case "brouillon":
       tagColor = "red";
-      tagText = "refusé";
+      tagText = "brouillon";
       break;
-    case "accepté":
-      tagColor = "green";
-      tagText = "accepté";
+    case "archivé":
+      tagColor = "purple";
+      tagText = "Archivé";
       break;
     default:
       tagColor = "default";
-      tagText = "statut inconnu";
+      tagText = "Statut inconnu";
   }
 
   return (
-    <div className="liste-candidature-card">
-      <div className="content-candidat">
+    <div className="stage-card">
+      <div className="title-and-publish">
         <h3>
-          {CandidateName} {CandidatSurName}
+          {firstName} {lastName}
         </h3>
-        <div className="actions">
-          <span className="action">
-            <BiMailSend className="action-icon" />
-            Programmer un entretien
-          </span>
-          <span className="action">
-            <ImProfile className="action-icon" />
-            Voir profil
-          </span>
-        </div>
-        <p> A postulé le : {CandidatureDate}</p>
+        <Tag color={tagColor} className="status-tag">
+          {tagText}
+        </Tag>
       </div>
-      <Tag color={tagColor} className="status-tag">
-        {tagText}
-      </Tag>
+      <div className="content">
+        <p>A postulé le : {candidatureDate}</p>
+      </div>
+      <div className="actions">
+        <span className="action">
+          <FaEdit className="action-icon" />
+          {firstButtonName}
+        </span>
+        <span className="action">
+          <FaTrash className="action-icon" />
+          {secondButtonName}
+        </span>
+      </div>
     </div>
   );
 };

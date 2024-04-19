@@ -2,26 +2,31 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import StageCard from "../../components/OffresCard/StageCard";
 import "./Offres.css";
-import "../../components/OffresCard/OffresCard.css"
+import "../../components/OffresCard/OffresCard.css";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import Filter from "../../components/Filter/Filter";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
 import { NavbarLinks } from "../../components/Navbar/NavbarLinks";
+
 const Offres = () => {
+  const navigate = useNavigate();
+
   const handlePostulerClick = (
-    offerId,
+    id,
     stageTitle,
     stageNature,
     stageDescription,
     domainTag,
     modeTag,
     durationTag,
-    competences
+    competences,
+    publicationDate,
   ) => {
-    navigate(`/Offres/${offerId}`, {
+    navigate(`/Offres/${id}`, {
       state: {
         jobDetails: {
+          id,
           stageTitle,
           stageNature,
           stageDescription,
@@ -29,10 +34,12 @@ const Offres = () => {
           modeTag,
           durationTag,
           competences,
+          publicationDate,
         },
       },
     });
   };
+
   const [filter, setFilter] = useState({
     searchTerm: "",
     domain: "",
@@ -40,9 +47,6 @@ const Offres = () => {
     mode: "",
     nature: "",
   });
-  const navigate = useNavigate();
-
-  // your existing code for fetching data and handling postuler click
 
   const handleClearFilter = () => {
     setFilter({
@@ -53,13 +57,16 @@ const Offres = () => {
       nature: "",
     });
   };
+
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8000/offers");
-      setData(response.data);
-      console.log("data", data);
+      const sortedData = response.data.sort((a, b) => {
+        return new Date(b.publicationDate) - new Date(a.publicationDate);
+      });
+      setData(sortedData);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -68,8 +75,6 @@ const Offres = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-
 
   const filteredStageData = data.filter((stage) => {
     return (
@@ -95,9 +100,9 @@ const Offres = () => {
       />
       <div className="stage-cards">
         {filteredStageData.map((stage, index) => (
-          <div className="stage-card">
+          <div className="stage-card" key={index}>
             <StageCard
-              key={index}
+              student={true}
               {...stage}
               buttonName={"Voir plus"}
               handleButtonFunction={() =>

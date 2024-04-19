@@ -6,7 +6,6 @@ import { CandidatureData } from "./CandidaturesData";
 import { MdOutlineWorkHistory } from "react-icons/md";
 import "./Candidatures.css";
 import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks";
-import { useRowStyle } from "antd/es/grid/style";
 
 const Candidatures = () => {
  

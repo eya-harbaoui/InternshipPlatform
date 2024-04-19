@@ -83,10 +83,13 @@ const ListeCandidatures = () => {
       {filteredCandidats.map((candidat) => (
         <ListeCandidatureCard
           key={candidat.id}
-          CandidateName={candidat.nom}
-          CandidatSurName={candidat.prenom}
+          firstName={candidat.nom}
+          lastName={candidat.prenom}
           CandidatureStatus={candidat.statut}
           CandidatureDate={candidat.date}
+          showActions={true}
+          FirstButtonName={"programmer un entretien"}
+          SecondButtonName={"voir profil"}
         />
       ))}
     </div>
