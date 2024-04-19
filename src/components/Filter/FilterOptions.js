@@ -1,10 +1,3 @@
-export const domainOptions = [
-  { value: "", label: "Tous les domaines" },
-  { value: "Développement web", label: "Développement web" },
-  { value: "Marketing digital", label: "Marketing digital" },
-  { value: "Design graphique", label: "Design graphique" },
-];
-
 export const durationOptions = [
   { value: "", label: "Toutes les durées" },
   { value: "6 mois", label: "6 mois" },

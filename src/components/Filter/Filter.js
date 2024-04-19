@@ -1,18 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Select, Button } from "antd";
-import {
-  domainOptions,
-  durationOptions,
-  modeOptions,
-  natureOptions,
-} from "./FilterOptions";
-
+import { durationOptions, modeOptions, natureOptions } from "./FilterOptions";
 const { Option } = Select;
 
 const Filter = ({ filter, setFilter, handleClear }) => {
   const handleFilterChange = (key, value) => {
     setFilter((prevState) => ({ ...prevState, [key]: value }));
   };
+
+  const [domainOptions, setDomainOptions] = useState([]);
+  const fetchDomains = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/Domaines");
+      if (response.data) {
+        console.log("responseeee", response.data);
+        const domains = response.data.map((domain) => ({
+          value: domain.domainName,
+          label: domain.domainName,
+        }));
+        setDomainOptions([
+          { value: "", label: "Tous les domaines" },
+          ...domains,
+        ]);
+      }
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération des informations de profil :",
+        error
+      );
+    }
+  };
+  useEffect(() => {
+    fetchDomains();
+  }, []);
 
   return (
     <div className="filter-container">
