@@ -1,6 +1,7 @@
 //import
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaArchive } from "react-icons/fa";
+import { FaUserGroup } from "react-icons/fa6";
 import "./OffresCard.css";
 import { Tag, Modal, Select } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -11,9 +12,13 @@ import {
   modeOptions,
   natureOptions,
 } from "../../components/Filter/FilterOptions.js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const { Option } = Select;
 
 const OffresRHCard = ({
+  id,
+  offerLink,
   stageTitle,
   stageNature,
   stageDescription,
@@ -29,6 +34,7 @@ const OffresRHCard = ({
   const [domains, setDomains] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState({
+    id: id,
     stageTitle: stageTitle,
     stageNature: stageNature,
     modeTag: modeTag,
@@ -36,13 +42,21 @@ const OffresRHCard = ({
     durationTag: durationTag,
     stageDescription: stageDescription,
     competences: competences,
-    // Initialise les niveaux à "Débutant" pour chaque compétence
+    OfferStatus: OfferStatus,
+    publicationDate: publicationDate,
+    offerLink: offerLink,
   });
+  const [domaineSelectionne, setDomaineSelectionne] = useState(
+    selectedOffer.domainTag
+  );
+  const [competencesDomaine, setCompetencesDomaine] = useState(
+    selectedOffer.competences
+  );
+  const [changeCompetences, setChangeCompetences] = useState(false);
   const fetchDomains = async () => {
     try {
       const response = await axios.get("http://localhost:8000/Domaines");
       if (response.data) {
-        console.log("responseeee", response.data);
         setDomains(response.data);
         const domains = response.data.map((domain) => ({
           value: domain.domainName,
@@ -67,12 +81,12 @@ const OffresRHCard = ({
   const handleOk = () => {
     setIsModalOpen(false);
   };
-
+  const handleCandidatures = () => {
+    console.log("shiw candidatures")
+  };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const [domaineSelectionne, setDomaineSelectionne] = useState("");
-  const [competencesDomaine, setCompetencesDomaine] = useState({});
 
   const navigate = useNavigate();
   let tagColor = "";
@@ -99,42 +113,66 @@ const OffresRHCard = ({
       tagText = "Statut inconnu";
   }
 
-  const handleCompetenceLevelChange = (index, niveau) => {
-    const newNiveauCompetence = [...selectedOffer.niveauCompetence];
-    newNiveauCompetence[index] = niveau;
-    setSelectedOffer({
-      ...selectedOffer,
-      niveauCompetence: newNiveauCompetence,
-    });
+  const handlePublishClick = async () => {
+    try {
+      // Implement your publish logic here
+      await axios.put(`http://localhost:8000/offers/${selectedOffer.id}`, {
+        ...selectedOffer,
+        OfferStatus: "en cours de validation",
+      });
+      toast.success("Offre en cours de validation");
+    } catch (error) {
+      console.error("Erreur lors de la publication de l'offre :", error);
+    }
   };
 
-  const handlePublishClick = () => {
-    // Implement your publish logic here
-    console.log("Publish clicked");
+  const handleEditClick = async () => {
+    try {
+      console.log(selectedOffer, "selectedOffer puuuuut");
+      await axios.put(
+        `http://localhost:8000/offers/${selectedOffer.id}`,
+        selectedOffer
+      );
+      setIsModalOpen(false);
+      toast.success("Offre modifiée");
+    } catch (error) {
+      console.error(
+        "Erreur lors de l'envoi des informations de profil :",
+        error
+      );
+    }
   };
 
-  const handleEditClick = () => {
-    // Implement your edit logic here
-    console.log("Edit clicked");
+  const handleDeleteClick = async () => {
+    try {
+      await axios.delete(`http://localhost:8000/offers/${selectedOffer.id}`);
+      toast.success("Offre supprimée");
+    } catch (error) {
+      console.error("Erreur lors de la suppression de l'offre :", error);
+    }
   };
 
-  const handleDeleteClick = () => {
-    // Implement your delete logic here
-    console.log("Delete clicked");
+  const handleArchiveClick = async () => {
+    try {
+      await axios.put(`http://localhost:8000/offers/${selectedOffer.id}`, {
+        ...selectedOffer,
+        OfferStatus: "archivé",
+      });
+      toast.success("Offre archivée avec succès");
+    } catch (error) {
+      console.error("Erreur lors de l'archivage de l'offre :", error);
+    }
   };
 
-  const handleArchiveClick = () => {
-    // Implement your archive logic here
-    console.log("Archive clicked");
-  };
   const handleDomaineChange = (domaine) => {
     setDomaineSelectionne(domaine);
+    setChangeCompetences(true);
     setSelectedOffer({ ...selectedOffer, domainTag: domaine });
     const competences =
-      domains.find((d) => d.domainName === domaine)?.competencesList || [];
+      domains.find((d) => d.domainName === domaine)?.competences || [];
     setCompetencesDomaine({ ...competencesDomaine, [domaine]: competences });
+    setSelectedOffer({ ...selectedOffer, competences: competencesDomaine });
   };
-
   const handleCompetenceChange = (competence, niveau) => {
     const updatedCompetences = {
       ...selectedOffer.competences,
@@ -147,150 +185,166 @@ const OffresRHCard = ({
     fetchDomains();
   }, []);
   return (
-    <div className="stage-card">
-      <StageCard
-        student={false}
-        stageTitle={stageTitle}
-        stageNature={stageNature}
-        stageDescription={stageDescription}
-        modeTag={modeTag}
-        domainTag={domainTag}
-        durationTag={durationTag}
-        buttonName={"publier"}
-        handleButtonFunction={handlePublishClick}
-      />
-      <div className="actions">
-        <span className="action" onClick={showModal}>
-          <FaEdit className="action-icon" />
-          Modifier
-        </span>
-        <span className="action" onClick={handleDeleteClick}>
-          <FaTrash className="action-icon" />
-          Supprimer
-        </span>
-        <span className="action" onClick={handleArchiveClick}>
-          <FaArchive className="action-icon" />
-          Archiver
-        </span>
-      </div>
+    <>
+      <div className="stage-card">
+        <StageCard
+          student={false}
+          stageTitle={stageTitle}
+          stageNature={stageNature}
+          stageDescription={stageDescription}
+          modeTag={modeTag}
+          domainTag={domainTag}
+          durationTag={durationTag}
+          buttonName={"publier"}
+          handleButtonFunction={handlePublishClick}
+        />
+        <div className="actions">
+          <span className="action" onClick={showModal}>
+            <FaEdit className="action-icon" />
+            Modifier
+          </span>
+          <span className="action" onClick={handleDeleteClick}>
+            <FaTrash className="action-icon" />
+            Supprimer
+          </span>
+          <span className="action" onClick={handleArchiveClick}>
+            <FaArchive className="action-icon" />
+            Archiver
+          </span>
+          <span className="action" onClick={handleCandidatures}>
+            <FaUserGroup className="action-icon" />
+            Candidatures
+          </span>
+        </div>
 
-      <Tag color={tagColor} className="status-tag">
-        {tagText}
-      </Tag>
+        <Tag color={tagColor} className="status-tag">
+          {tagText}
+        </Tag>
 
-      {isModalOpen && (
-        <Modal
-          title="Modifier l'offre"
-          visible={isModalOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <div className="modal-content">
-            <h3>Modifier les informations de l'offre</h3>
-            <input
-              type="text"
-              placeholder="Titre de stage"
-              className="input-text-design"
-              value={selectedOffer.stageTitle}
-              onChange={(e) =>
-                setSelectedOffer({
-                  ...selectedOffer,
-                  stageTitle: e.target.value,
-                })
-              }
-            />
-            <textarea
-              type="text"
-              placeholder="description de stage"
-              className="textarea-design"
-              value={selectedOffer.stageDescription}
-              onChange={(e) =>
-                setSelectedOffer({
-                  ...selectedOffer,
-                  stageDescription: e.target.value,
-                })
-              }
-            />
-            <Select
-              placeholder="Domaine de stage"
-              className="modal-input"
-              style={{ width: "100%" }}
-              value={selectedOffer.domainTag}
-              onChange={handleDomaineChange}
-            >
-              {domainOptions.map((option) => (
-                <Option key={option.value} value={option.value}>
-                  {option.label}
-                </Option>
-              ))}
-            </Select>
-            <Select
-              placeholder="Mode de stage"
-              className="modal-input"
-              style={{ width: "100%" }}
-              value={selectedOffer.modeTag}
-              onChange={(e) => {
-                setSelectedOffer({ ...selectedOffer, modeTag: e.target.value });
-              }}
-            >
-              {modeOptions.map((option) => (
-                <Option key={option.value} value={option.value}>
-                  {option.label}
-                </Option>
-              ))}
-            </Select>
-            <Select
-              placeholder="Durée de stage"
-              className="modal-input"
-              style={{ width: "100%" }}
-              value={selectedOffer.durationTag}
-              onChange={(value) =>
-                setSelectedOffer({ ...selectedOffer, durationTag: value })
-              }
-            >
-              {durationOptions.map((option) => (
-                <Option key={option.value} value={option.value}>
-                  {option.label}
-                </Option>
-              ))}
-            </Select>
-            <Select
-              placeholder="Nature de stage"
-              className="modal-input"
-              style={{ width: "100%" }}
-              value={selectedOffer.stageNature}
-              onChange={(value) =>
-                setSelectedOffer({ ...selectedOffer, stageNature: value })
-              }
-            >
-              {natureOptions.map((option) => (
-                <Option key={option.value} value={option.value}>
-                  {option.label}
-                </Option>
-              ))}
-            </Select>
-            <div className="competences-container">
-              <h3>Compétences demandées :</h3>
-              {competencesDomaine[domaineSelectionne]?.map((competence) => (
-                <div key={competence} className="competence-input">
-                  <span>{competence}</span>
-                  <Select
-                    className="modal-input"
-                    onChange={(value) =>
-                      handleCompetenceChange(competence, value)
-                    }
-                  >
-                    <Option value="Débutant">Débutant</Option>
-                    <Option value="Intermédiaire">Intermédiaire</Option>
-                    <Option value="Avancé">Avancé</Option>
-                  </Select>
-                </div>
-              ))}
+        {isModalOpen && (
+          <Modal
+            title="Modifier l'offre"
+            visible={isModalOpen}
+            onOk={handleEditClick}
+            onCancel={handleCancel}
+          >
+            <div className="modal-content">
+              <h3>Modifier les informations de l'offre</h3>
+              <input
+                type="text"
+                placeholder="Titre de stage"
+                className="input-text-design"
+                value={selectedOffer.stageTitle}
+                onChange={(e) =>
+                  setSelectedOffer({
+                    ...selectedOffer,
+                    stageTitle: e.target.value,
+                  })
+                }
+              />
+              <textarea
+                type="text"
+                placeholder="description de stage"
+                className="textarea-design"
+                value={selectedOffer.stageDescription}
+                onChange={(e) =>
+                  setSelectedOffer({
+                    ...selectedOffer,
+                    stageDescription: e.target.value,
+                  })
+                }
+              />
+              <Select
+                placeholder="Domaine de stage"
+                className="modal-input"
+                style={{ width: "100%" }}
+                value={domaineSelectionne}
+                onChange={handleDomaineChange}
+              >
+                {domainOptions.map((option) => (
+                  <Option key={option.value} value={option.value}>
+                    {option.label}
+                  </Option>
+                ))}
+              </Select>
+              <Select
+                placeholder="Mode de stage"
+                className="modal-input"
+                style={{ width: "100%" }}
+                value={selectedOffer.modeTag}
+                onChange={(value) => {
+                  setSelectedOffer({ ...selectedOffer, modeTag: value });
+                }}
+              >
+                {modeOptions.map((option) => (
+                  <Option key={option.value} value={option.value}>
+                    {option.label}
+                  </Option>
+                ))}
+              </Select>
+              <Select
+                placeholder="Durée de stage"
+                className="modal-input"
+                style={{ width: "100%" }}
+                value={selectedOffer.durationTag}
+                onChange={(value) =>
+                  setSelectedOffer({ ...selectedOffer, durationTag: value })
+                }
+              >
+                {durationOptions.map((option) => (
+                  <Option key={option.value} value={option.value}>
+                    {option.label}
+                  </Option>
+                ))}
+              </Select>
+              <Select
+                placeholder="Nature de stage"
+                className="modal-input"
+                style={{ width: "100%" }}
+                value={selectedOffer.stageNature}
+                onChange={(value) =>
+                  setSelectedOffer({ ...selectedOffer, stageNature: value })
+                }
+              >
+                {natureOptions.map((option) => (
+                  <Option key={option.value} value={option.value}>
+                    {option.label}
+                  </Option>
+                ))}
+              </Select>
+              <div className="competences-container">
+                <h3>Compétences demandées :</h3>
+                {!changeCompetences &&
+                  selectedOffer.competences &&
+                  Object.entries(selectedOffer.competences).map(
+                    ([competence, niveau]) => (
+                      <p key={competence}>
+                        {competence}: {niveau}
+                      </p>
+                    )
+                  )}
+                {changeCompetences &&
+                  competencesDomaine[domaineSelectionne]?.map((competence) => (
+                    <div key={competence} className="competence-input">
+                      <span>{competence}</span>
+                      <Select
+                        className="modal-input"
+                        onChange={(value) =>
+                          handleCompetenceChange(competence, value)
+                        }
+                      >
+                        <Option value="Débutant">Débutant</Option>
+                        <Option value="Intermédiaire">Intermédiaire</Option>
+                        <Option value="Avancé">Avancé</Option>
+                      </Select>
+                    </div>
+                  ))}
+              </div>
             </div>
-          </div>
-        </Modal>
-      )}
-    </div>
+          </Modal>
+        )}
+      </div>
+    </>
   );
 };
 

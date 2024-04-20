@@ -132,7 +132,7 @@ const OffresRH = () => {
   useEffect(() => {
     fetchData();
     fetchDomains();
-  }, []);
+  });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -154,7 +154,7 @@ const OffresRH = () => {
     setDomaineSelectionne(domaine);
     setOffer({ ...offer, domainTag: domaine });
     const competences =
-      domains.find((d) => d.domainName === domaine)?.competencesList || [];
+      domains.find((d) => d.domainName === domaine)?.competences || [];
     setCompetencesDomaine({ ...competencesDomaine, [domaine]: competences });
   };
 
@@ -271,7 +271,6 @@ const OffresRH = () => {
                   <span>{competence}</span>
                   <Select
                     className="modal-input"
-                    defaultValue={niveauCompetence[competence]}
                     onChange={(value) =>
                       handleCompetenceChange(competence, value)
                     }

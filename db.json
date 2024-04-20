@@ -20,36 +20,36 @@
     {
       "id": "2",
       "stageTitle": "Stage en marketing digital",
-      "stageNature": "PFE",
-      "stageDescription": "Vous êtes passionné(e) par le marketing digital et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en marketing digital. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en marketing. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
+      "stageNature": "PFA",
+      "modeTag": "Hybride",
       "domainTag": "Marketing digital",
-      "modeTag": "Présentiel",
-      "durationTag": "6 mois",
-      "offerLink": "offre-de-stage-2",
+      "durationTag": "4 mois",
+      "stageDescription": "Vous êtes passionné(e) par le marketing digital et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en marketing digital. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en marketing. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.111111",
       "competences": {
         "marketing": "Avancé",
         "communication": "Intermédiaire",
         "analytics": "Débutant"
       },
+      "OfferStatus": "en cours de validation",
       "publicationDate": "2024-04-12",
-      "OfferStatus": "en cours de validation"
+      "offerLink": "offre-de-stage-2"
     },
     {
       "id": "3",
       "stageTitle": "Stage en design graphique",
       "stageNature": "Initiation",
-      "stageDescription": "Vous êtes passionné(e) par le design graphique et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en design graphique. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en design. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
-      "domainTag": "Design graphique",
       "modeTag": "Remote",
+      "domainTag": "Design graphique",
       "durationTag": "4 mois",
-      "offerLink": "offre-de-stage-3",
+      "stageDescription": "Vous êtes passionné(e) par le design graphique et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en design graphique. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en design. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
       "competences": {
         "design": "Avancé",
         "photoshop": "Intermédiaire",
         "illustrator": "Débutant"
       },
+      "OfferStatus": "en cours de validation",
       "publicationDate": "2024-03-18",
-      "OfferStatus": "publié"
+      "offerLink": "offre-de-stage-3"
     },
     {
       "id": "4",
@@ -67,57 +67,6 @@
       },
       "publicationDate": "2024-04-01",
       "OfferStatus": "archivé"
-    },
-    {
-      "id": "5",
-      "stageTitle": "Stage en data science",
-      "stageNature": "PFE",
-      "stageDescription": "Vous êtes passionné(e) par la data science et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en data science. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en data analysis. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
-      "domainTag": "Data science",
-      "modeTag": "Remote",
-      "durationTag": "6 mois",
-      "offerLink": "offre-de-stage-5",
-      "competences": {
-        "python": "Avancé",
-        "machineLearning": "Intermédiaire",
-        "statistics": "Débutant"
-      },
-      "publicationDate": "2024-02-19",
-      "OfferStatus": "archivé"
-    },
-    {
-      "id": "6",
-      "stageTitle": "Stage en gestion de projet",
-      "stageNature": "PFA",
-      "stageDescription": "Vous êtes passionné(e) par la gestion de projet et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en gestion de projet. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en gestion. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
-      "domainTag": "Gestion de projet",
-      "modeTag": "Hybride",
-      "durationTag": "4 mois",
-      "offerLink": "offre-de-stage-6",
-      "competences": {
-        "projectManagement": "Avancé",
-        "communication": "Intermédiaire",
-        "leadership": "Débutant"
-      },
-      "publicationDate": "2024-04-13",
-      "OfferStatus": "archivé"
-    },
-    {
-      "id": "7",
-      "stageTitle": "Stage en intelligence artificielle",
-      "stageNature": "PFE",
-      "stageDescription": "Vous êtes passionné(e) par l'intelligence artificielle et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en intelligence artificielle. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en IA. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
-      "domainTag": "Intelligence artificielle",
-      "modeTag": "Remote",
-      "durationTag": "6 mois",
-      "offerLink": "offre-de-stage-7",
-      "competences": {
-        "machineLearning": "Avancé",
-        "deepLearning": "Intermédiaire",
-        "neuralNetworks": "Débutant"
-      },
-      "publicationDate": "2024-02-10",
-      "OfferStatus": "brouillon"
     },
     {
       "id": "8",
@@ -152,57 +101,6 @@
       },
       "publicationDate": "2024-03-23",
       "OfferStatus": "publié"
-    },
-    {
-      "id": "10",
-      "stageTitle": "Stage en développement logiciel",
-      "stageNature": "PFE",
-      "stageDescription": "Vous êtes passionné(e) par le développement logiciel et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en développement logiciel. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en programmation. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
-      "domainTag": "Développement logiciel",
-      "modeTag": "Hybride",
-      "durationTag": "6 mois",
-      "offerLink": "offre-de-stage-10",
-      "competences": {
-        "java": "Avancé",
-        "cSharp": "Intermédiaire",
-        "softwareEngineering": "Débutant"
-      },
-      "publicationDate": "2024-03-12",
-      "OfferStatus": "publié"
-    },
-    {
-      "id": "a713fa30-421b-444a-badc-4681252be374",
-      "stageTitle": "kkkkkkk",
-      "stageNature": "PFA",
-      "stageDescription": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
-      "domainTag": "Administration système",
-      "modeTag": "Présentiel",
-      "durationTag": "6 mois",
-      "publicationDate": "",
-      "offerStatus": "brouillon",
-      "competences": {
-        "Linux": "Débutant",
-        "Windows Server": "Intermédiaire",
-        "Virtualisation": "Avancé"
-      },
-      "offerLink": "offre-de-stage-a713fa30-421b-444a-badc-4681252be374"
-    },
-    {
-      "id": "9f48de9b-eab2-47d6-bdc4-9ad82f2725d2",
-      "stageTitle": ",knknknknk",
-      "stageNature": "PFE",
-      "stageDescription": "llllllllllllll",
-      "domainTag": "Développement mobile",
-      "modeTag": "Hybride",
-      "durationTag": "",
-      "publicationDate": "",
-      "OfferStatus": "brouillon",
-      "competences": {
-        "Android": "Intermédiaire",
-        "iOS": "Avancé",
-        "React Native": "Intermédiaire"
-      },
-      "offerLink": "offre-de-stage-9f48de9b-eab2-47d6-bdc4-9ad82f2725d2"
     }
   ],
   "user": [
@@ -240,7 +138,7 @@
   "Domaines": [
     {
       "domainName": "Développement web",
-      "competencesList": [
+      "competences": [
         "HTML",
         "CSS",
         "JavaScript"
@@ -248,7 +146,7 @@
     },
     {
       "domainName": "Data Science",
-      "competencesList": [
+      "competences": [
         "Python",
         "Machine Learning",
         "Data Visualization"
@@ -256,7 +154,7 @@
     },
     {
       "domainName": "Design graphique",
-      "competencesList": [
+      "competences": [
         "Adobe Photoshop",
         "Adobe Illustrator",
         "UI/UX Design"
@@ -264,7 +162,7 @@
     },
     {
       "domainName": "Développement mobile",
-      "competencesList": [
+      "competences": [
         "Android",
         "iOS",
         "React Native"
@@ -272,7 +170,7 @@
     },
     {
       "domainName": "Administration système",
-      "competencesList": [
+      "competences": [
         "Linux",
         "Windows Server",
         "Virtualisation"
@@ -280,23 +178,15 @@
     },
     {
       "domainName": "Marketing digital",
-      "competencesList": [
+      "competences": [
         "SEO",
         "SEM",
         "Social Media Marketing"
       ]
     },
     {
-      "domainName": "Réseaux informatiques",
-      "competencesList": [
-        "TCP/IP",
-        "DNS",
-        "Firewalls"
-      ]
-    },
-    {
       "domainName": "Développement logiciel",
-      "competencesList": [
+      "competences": [
         "Java",
         "C++",
         "Version Control (Git)"

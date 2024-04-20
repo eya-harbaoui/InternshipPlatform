@@ -8,7 +8,7 @@ import StudentForm from "../../components/StudentForm/StudentForm";
 
 const InternDetails = () => {
   const [formData, setFormData] = useState({
-    id:"",
+    id: "",
     firstName: "",
     lastName: "",
     phoneNumber: "",
@@ -18,7 +18,7 @@ const InternDetails = () => {
     address: "",
     cv: null,
     recommendationLetter: "",
-    role:"",
+    role: "",
   });
   const [fileInputKey, setFileInputKey] = useState(null);
   const [editing, setEditing] = useState(false);
@@ -27,7 +27,7 @@ const InternDetails = () => {
     try {
       const response = await axios.get("http://localhost:8000/user");
       if (response.data) {
-        console.log("responseeee",response.data)
+        console.log("responseeee", response.data);
         setFormData(response.data[0]);
       }
     } catch (error) {
@@ -66,7 +66,7 @@ const InternDetails = () => {
 
   const handleSave = async () => {
     try {
-      console.log(formData,"formData puuuuut");
+      console.log(formData, "formData puuuuut");
       await axios.put(`http://localhost:8000/user/${formData.id}`, formData);
       setEditing(false);
     } catch (error) {
@@ -82,16 +82,13 @@ const InternDetails = () => {
       <Navbar links={NavbarLinks} />
       <div className="centered-container-user-intern">
         <h2 className="title-user-intern">Bonjour {formData.firstName}!</h2>
-        <FaUserEdit className="icon-user-intern"/>
+        <FaUserEdit className="icon-user-intern" />
         <p>
           Je renseigne mon identité et mes paramètres de connexion (Tous les
           champs sont obligatoires)
         </p>
       </div>
-      <div
-        className="form-intern-details"
-        
-      >
+      <div className="form-intern-details">
         <StudentForm
           formData={formData}
           handleChange={handleChange}

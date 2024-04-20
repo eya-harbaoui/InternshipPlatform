@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaRegLightbulb, FaRegCalendarAlt } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
 import "./OffresCard.css";
@@ -16,6 +16,18 @@ const StageCard = ({
   buttonName,
   handleButtonFunction,
 }) => {
+  const maxWords = 20; // Nombre maximum de mots à afficher initialement
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
+  const getDescriptionPreview = () => {
+    const words = stageDescription.split(" ");
+    return words.slice(0, maxWords).join(" ");
+  };
+
   return (
     <>
       <div className="title-and-publish">
@@ -26,7 +38,26 @@ const StageCard = ({
       </div>
       <div className="content">
         <p>{stageNature}</p>
-        <p>{stageDescription}</p>
+        <p>
+          {showFullDescription ? stageDescription : getDescriptionPreview()}
+          {stageDescription.split(" ").length > maxWords && (
+            <span>
+              {" "}
+              {/* Espace avant le lien "Read More" */}
+              <span
+                className="read-more-link"
+                onClick={toggleDescription}
+                style={{
+                  color: "#FF735C",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+              >
+                {showFullDescription ? "Show Less" : "Read More"}
+              </span>
+            </span>
+          )}
+        </p>
         <div className="tags">
           <div className="tag">
             <FaRegLightbulb /> {domainTag}
