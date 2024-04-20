@@ -1,20 +1,17 @@
-import React, { useState } from "react";
-import {
-  FaEdit,
-  FaTrash,
-  FaArchive,
-} from "react-icons/fa";
+//import
+import React, { useState, useEffect } from "react";
+import { FaEdit, FaTrash, FaArchive } from "react-icons/fa";
 import "./OffresCard.css";
 import { Tag, Modal, Select } from "antd";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import StageCard from "./StageCard";
-
+import {
+  durationOptions,
+  modeOptions,
+  natureOptions,
+} from "../../components/Filter/FilterOptions.js";
 const { Option } = Select;
-const competenceOptions = [
-  { value: "HTML", label: "HTML" },
-  { value: "CSS", label: "CSS" },
-  { value: "JavaScript", label: "JavaScript" },
-];
 
 const OffresRHCard = ({
   stageTitle,
@@ -23,21 +20,46 @@ const OffresRHCard = ({
   domainTag,
   modeTag,
   durationTag,
-  offerLink,
-  competences,
   OfferStatus,
+  competences,
+  publicationDate,
 }) => {
+  //Define the states and functions
+  const [domainOptions, setDomainOptions] = useState([]);
+  const [domains, setDomains] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [selectedOffer, setSelectedOffer] = useState({
-    title: stageTitle,
-    nature: stageNature,
-    mode: modeTag,
-    domain: domainTag,
+    stageTitle: stageTitle,
+    stageNature: stageNature,
+    modeTag: modeTag,
+    domainTag: domainTag,
+    durationTag: durationTag,
     stageDescription: stageDescription,
+    competences: competences,
     // Initialise les niveaux à "Débutant" pour chaque compétence
   });
-
+  const fetchDomains = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/Domaines");
+      if (response.data) {
+        console.log("responseeee", response.data);
+        setDomains(response.data);
+        const domains = response.data.map((domain) => ({
+          value: domain.domainName,
+          label: domain.domainName,
+        }));
+        setDomainOptions([
+          { value: "", label: "Tous les domaines" },
+          ...domains,
+        ]);
+      }
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération des informations de profil :",
+        error
+      );
+    }
+  };
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -49,6 +71,8 @@ const OffresRHCard = ({
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const [domaineSelectionne, setDomaineSelectionne] = useState("");
+  const [competencesDomaine, setCompetencesDomaine] = useState({});
 
   const navigate = useNavigate();
   let tagColor = "";
@@ -74,18 +98,6 @@ const OffresRHCard = ({
       tagColor = "default";
       tagText = "Statut inconnu";
   }
-
-  const handleOfferChange = (key, value) => {
-    setSelectedOffer({ ...selectedOffer, [key]: value });
-  };
-
-  const handleCompetenceChange = (competence, niveau) => {
-    setSelectedOffer({
-      ...selectedOffer,
-      competences: [...selectedOffer.competences, competence],
-      niveauCompetence: [...selectedOffer.niveauCompetence, niveau],
-    });
-  };
 
   const handleCompetenceLevelChange = (index, niveau) => {
     const newNiveauCompetence = [...selectedOffer.niveauCompetence];
@@ -115,26 +127,29 @@ const OffresRHCard = ({
     // Implement your archive logic here
     console.log("Archive clicked");
   };
-  const domainOptions = [
-    { value: "Développement web", label: "Développement web" },
-    // Add more domain options here
-  ];
+  const handleDomaineChange = (domaine) => {
+    setDomaineSelectionne(domaine);
+    setSelectedOffer({ ...selectedOffer, domainTag: domaine });
+    const competences =
+      domains.find((d) => d.domainName === domaine)?.competencesList || [];
+    setCompetencesDomaine({ ...competencesDomaine, [domaine]: competences });
+  };
 
-  const modeOptions = [
-    { value: "Hybride", label: "Hybride" },
-    { value: "Remote", label: "Remote" },
-    { value: "Présentiel", label: "Présentiel" },
-  ];
+  const handleCompetenceChange = (competence, niveau) => {
+    const updatedCompetences = {
+      ...selectedOffer.competences,
+      [competence]: niveau,
+    };
+    setSelectedOffer({ ...selectedOffer, competences: updatedCompetences });
+  };
 
-  const natureOptions = [
-    { value: "PFE", label: "PFE" },
-    { value: "PFA", label: "PFA" },
-    { value: "Initiation", label: "Initiation" },
-  ];
+  useEffect(() => {
+    fetchDomains();
+  }, []);
   return (
     <div className="stage-card">
       <StageCard
-      student={false}
+        student={false}
         stageTitle={stageTitle}
         stageNature={stageNature}
         stageDescription={stageDescription}
@@ -176,20 +191,32 @@ const OffresRHCard = ({
               type="text"
               placeholder="Titre de stage"
               className="input-text-design"
-              value={selectedOffer.title}
+              value={selectedOffer.stageTitle}
+              onChange={(e) =>
+                setSelectedOffer({
+                  ...selectedOffer,
+                  stageTitle: e.target.value,
+                })
+              }
             />
             <textarea
               type="text"
               placeholder="description de stage"
               className="textarea-design"
               value={selectedOffer.stageDescription}
+              onChange={(e) =>
+                setSelectedOffer({
+                  ...selectedOffer,
+                  stageDescription: e.target.value,
+                })
+              }
             />
             <Select
               placeholder="Domaine de stage"
               className="modal-input"
               style={{ width: "100%" }}
-              value={selectedOffer.domain}
-              onChange={(value) => handleOfferChange("domain", value)}
+              value={selectedOffer.domainTag}
+              onChange={handleDomaineChange}
             >
               {domainOptions.map((option) => (
                 <Option key={option.value} value={option.value}>
@@ -201,10 +228,27 @@ const OffresRHCard = ({
               placeholder="Mode de stage"
               className="modal-input"
               style={{ width: "100%" }}
-              value={selectedOffer.mode}
-              onChange={(value) => handleOfferChange("mode", value)}
+              value={selectedOffer.modeTag}
+              onChange={(e) => {
+                setSelectedOffer({ ...selectedOffer, modeTag: e.target.value });
+              }}
             >
               {modeOptions.map((option) => (
+                <Option key={option.value} value={option.value}>
+                  {option.label}
+                </Option>
+              ))}
+            </Select>
+            <Select
+              placeholder="Durée de stage"
+              className="modal-input"
+              style={{ width: "100%" }}
+              value={selectedOffer.durationTag}
+              onChange={(value) =>
+                setSelectedOffer({ ...selectedOffer, durationTag: value })
+              }
+            >
+              {durationOptions.map((option) => (
                 <Option key={option.value} value={option.value}>
                   {option.label}
                 </Option>
@@ -214,8 +258,10 @@ const OffresRHCard = ({
               placeholder="Nature de stage"
               className="modal-input"
               style={{ width: "100%" }}
-              value={selectedOffer.nature}
-              onChange={(value) => handleOfferChange("nature", value)}
+              value={selectedOffer.stageNature}
+              onChange={(value) =>
+                setSelectedOffer({ ...selectedOffer, stageNature: value })
+              }
             >
               {natureOptions.map((option) => (
                 <Option key={option.value} value={option.value}>
@@ -223,6 +269,24 @@ const OffresRHCard = ({
                 </Option>
               ))}
             </Select>
+            <div className="competences-container">
+              <h3>Compétences demandées :</h3>
+              {competencesDomaine[domaineSelectionne]?.map((competence) => (
+                <div key={competence} className="competence-input">
+                  <span>{competence}</span>
+                  <Select
+                    className="modal-input"
+                    onChange={(value) =>
+                      handleCompetenceChange(competence, value)
+                    }
+                  >
+                    <Option value="Débutant">Débutant</Option>
+                    <Option value="Intermédiaire">Intermédiaire</Option>
+                    <Option value="Avancé">Avancé</Option>
+                  </Select>
+                </div>
+              ))}
+            </div>
           </div>
         </Modal>
       )}

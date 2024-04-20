@@ -169,6 +169,40 @@
       },
       "publicationDate": "2024-03-12",
       "OfferStatus": "publié"
+    },
+    {
+      "id": "a713fa30-421b-444a-badc-4681252be374",
+      "stageTitle": "kkkkkkk",
+      "stageNature": "PFA",
+      "stageDescription": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+      "domainTag": "Administration système",
+      "modeTag": "Présentiel",
+      "durationTag": "6 mois",
+      "publicationDate": "",
+      "offerStatus": "brouillon",
+      "competences": {
+        "Linux": "Débutant",
+        "Windows Server": "Intermédiaire",
+        "Virtualisation": "Avancé"
+      },
+      "offerLink": "offre-de-stage-a713fa30-421b-444a-badc-4681252be374"
+    },
+    {
+      "id": "9f48de9b-eab2-47d6-bdc4-9ad82f2725d2",
+      "stageTitle": ",knknknknk",
+      "stageNature": "PFE",
+      "stageDescription": "llllllllllllll",
+      "domainTag": "Développement mobile",
+      "modeTag": "Hybride",
+      "durationTag": "",
+      "publicationDate": "",
+      "OfferStatus": "brouillon",
+      "competences": {
+        "Android": "Intermédiaire",
+        "iOS": "Avancé",
+        "React Native": "Intermédiaire"
+      },
+      "offerLink": "offre-de-stage-9f48de9b-eab2-47d6-bdc4-9ad82f2725d2"
     }
   ],
   "user": [
@@ -203,7 +237,6 @@
       "candidatureDate": "2024-04-14T01:49:29.066Z"
     }
   ],
-  
   "Domaines": [
     {
       "domainName": "Développement web",
@@ -271,5 +304,3 @@
     }
   ]
 }
-
-
