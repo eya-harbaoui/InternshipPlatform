@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select, Button, Row, Col } from "antd";
 import { FaRegUser } from "react-icons/fa";
 import CandidatsCard from "../../components/CandidatsCard/CandidatsCard";
@@ -7,54 +7,39 @@ import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks";
 import Navbar from "../../components/Navbar/Navbar";
 import { BsSend } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-
+import axios from "axios";
+import { useParams } from "react-router-dom";
 const ListeCandidatures = () => {
   const { Option } = Select;
-  const candidatures = [
+  const [candidatures, setCandidatures] = useState([
     { status: "en cours", nombreCandidats: 10 },
     { status: "entretien technique/RH programmé", nombreCandidats: 12 },
     { status: "refusé", nombreCandidats: 8 },
     { status: "accepté", nombreCandidats: 3 },
-  ];
+  ]);
 
-  const candidats = [
-    {
-      id: 1,
-      nom: "Eya",
-      prenom: "Harbaoui",
-      statut: "accepté",
-      date: "10/12/2023",
-    },
-    { id: 2, nom: "John", prenom: "Doe", statut: "refusé", date: "11/12/2023" },
-    {
-      id: 3,
-      nom: "Alice",
-      prenom: "Smith",
-      statut: "en cours",
-      date: "12/12/2023",
-    },
-    {
-      id: 4,
-      nom: "Bob",
-      prenom: "Johnson",
-      statut: "entretien technique/RH programmé",
-      date: "13/12/2023",
-    },
-    {
-      id: 5,
-      nom: "ali",
-      prenom: "mohssen",
-      statut: "entretien technique/RH programmé",
-      date: "17/12/2023",
-    },
-    {
-      id: 6,
-      nom: "ahmed",
-      prenom: "ben mostfa",
-      statut: "entretien technique/RH programmé",
-      date: "18/12/2023",
-    },
-  ];
+  const [candidats, setCandidats] = useState([]);
+  const { id } = useParams();
+  const getStudentApplicationsForOffer = async () => {
+    try {
+      console.log("id",id);
+      const response = await axios.get(
+        `http://localhost:8000/Student_Application?OfferId=${id}`
+      );
+      console.log("Réponse du backend :", response.data);
+      setCandidats(response.data); // Mettre à jour les candidats avec les données reçues du backend
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération des candidatures étudiantes :",
+        error
+      );
+    }
+  };
+
+  // Appeler la fonction pour récupérer les candidatures étudiantes pour l'offre spécifique
+  useEffect(() => {
+    getStudentApplicationsForOffer();
+  },[]);
 
   return (
     <div className="offres-page">
@@ -74,9 +59,9 @@ const ListeCandidatures = () => {
       {candidats.map((candidat) => (
         <ListeCandidatureCard
           key={candidat.id}
-          Title={`${candidat.nom} ${candidat.prenom}`}
-          candidatureStatus={candidat.statut}
-          candidatureDate={candidat.date}
+          Title={`${candidat.firstName} ${candidat.lastName}`}
+          candidatureStatus={candidat.candidatureStatus}
+          candidatureDate={candidat.candidatureDate}
           showActions={true}
           firstButtonName="programmer un entretien"
           secondButtonName="voir profil"

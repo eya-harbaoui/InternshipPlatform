@@ -133,64 +133,247 @@
       "recommendationLetter": "llllllllllljsjjsjs",
       "candidatureStatus": "en cours",
       "candidatureDate": "2024-04-14T01:49:29.066Z"
+    },
+    {
+      "id": "2",
+      "OfferId": 2,
+      "firstName": "John",
+      "lastName": "Doe",
+      "phoneNumber": "123456789",
+      "email": "john.doe@example.com",
+      "studyLevel": "Master",
+      "establishment": "Example University",
+      "address": "123 Main St",
+      "cv": "CVs/CV_John_Doe.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "accepté",
+      "candidatureDate": "2024-04-15T09:21:17.052Z"
+    },
+    {
+      "id": "3",
+      "OfferId": 3,
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "phoneNumber": "987654321",
+      "email": "jane.smith@example.com",
+      "studyLevel": "PhD",
+      "establishment": "Another Example University",
+      "address": "456 Elm St",
+      "cv": "CVs/CV_Jane_Smith.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "refusé",
+      "candidatureDate": "2024-04-16T14:37:05.189Z"
+    },
+    {
+      "id": "4",
+      "OfferId": 4,
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "phoneNumber": "555123456",
+      "email": "alice.johnson@example.com",
+      "studyLevel": "Bachelor",
+      "establishment": "Example College",
+      "address": "789 Oak St",
+      "cv": "CVs/CV_Alice_Johnson.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "entretien technique programmé",
+      "candidatureDate": "2024-04-17T18:45:12.321Z"
+    },
+    {
+      "id": "5",
+      "OfferId": 5,
+      "firstName": "Michael",
+      "lastName": "Brown",
+      "phoneNumber": "555987654",
+      "email": "michael.brown@example.com",
+      "studyLevel": "Master",
+      "establishment": "University of Example222222222",
+      "address": "321 Pine St",
+      "cv": "CVs/CV_Michael_Brown.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "en cours",
+      "candidatureDate": "2024-04-18T10:12:03.415Z"
+    },
+    {
+      "id": "6",
+      "OfferId": 6,
+      "firstName": "Emily",
+      "lastName": "Davis",
+      "phoneNumber": "555456789",
+      "email": "emily.davis@example.com",
+      "studyLevel": "PhD",
+      "establishment": "Example Institute",
+      "address": "555 Maple St",
+      "cv": "CVs/CV_Emily_Davis.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "entretien RH programmé",
+      "candidatureDate": "2024-04-19T15:30:24.555Z"
+    },
+    {
+      "id": "1",
+      "OfferId": 1,
+      "firstName": "John",
+      "lastName": "Doe",
+      "phoneNumber": "123456789",
+      "email": "john.doe@example.com",
+      "studyLevel": "Master",
+      "establishment": "Example University",
+      "address": "123 Main St",
+      "cv": "CVs/CV_John_Doe.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "en cours",
+      "candidatureDate": "2024-04-14T01:49:29.066Z"
+    },
+    {
+      "id": "2",
+      "OfferId": 1,
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "phoneNumber": "987654321",
+      "email": "alice.smith@example.com",
+      "studyLevel": "Bachelor",
+      "establishment": "Another University",
+      "address": "456 Elm St",
+      "cv": "CVs/CV_Alice_Smith.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "entretien RH programmé",
+      "candidatureDate": "2024-04-15T09:21:17.052Z"
+    },
+    {
+      "id": "3",
+      "OfferId": 1,
+      "firstName": "Emily",
+      "lastName": "Johnson",
+      "phoneNumber": "555123456",
+      "email": "emily.johnson@example.com",
+      "studyLevel": "PhD",
+      "establishment": "Example Institute",
+      "address": "789 Oak St",
+      "cv": "CVs/CV_Emily_Johnson.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "entretien technique confirmé",
+      "candidatureDate": "2024-04-16T14:37:05.189Z"
+    },
+    {
+      "id": "4",
+      "OfferId": 2,
+      "firstName": "Michael",
+      "lastName": "Brown",
+      "phoneNumber": "555987654",
+      "email": "michael.brown@example.com",
+      "studyLevel": "Master",
+      "establishment": "University of Example222222222",
+      "address": "321 Pine St",
+      "cv": "CVs/CV_Michael_Brown.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "en cours",
+      "candidatureDate": "2024-04-18T10:12:03.415Z"
+    },
+    {
+      "id": "5",
+      "OfferId": 2,
+      "firstName": "Sarah",
+      "lastName": "Davis",
+      "phoneNumber": "555456789",
+      "email": "sarah.davis@example.com",
+      "studyLevel": "PhD",
+      "establishment": "Example College",
+      "address": "555 Maple St",
+      "cv": "CVs/CV_Sarah_Davis.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "entretien RH confirmé",
+      "candidatureDate": "2024-04-19T15:30:24.555Z"
+    },
+    {
+      "id": "6",
+      "OfferId": 2,
+      "firstName": "Emma",
+      "lastName": "Wilson",
+      "phoneNumber": "555123456",
+      "email": "emma.wilson@example.com",
+      "studyLevel": "Bachelor",
+      "establishment": "Example University",
+      "address": "123 Main St",
+      "cv": "CVs/CV_Emma_Wilson.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "entretien RH confirmé",
+      "candidatureDate": "2024-04-17T18:45:12.321Z"
+    },
+    {
+      "id": "7",
+      "OfferId": 3,
+      "firstName": "David",
+      "lastName": "Martinez",
+      "phoneNumber": "555987654",
+      "email": "david.martinez@example.com",
+      "studyLevel": "Master",
+      "establishment": "University of Example333333333",
+      "address": "789 Oak St",
+      "cv": "CVs/CV_David_Martinez.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "en cours",
+      "candidatureDate": "2024-04-20T12:30:45.789Z"
+    },
+    {
+      "id": "8",
+      "OfferId": 3,
+      "firstName": "Sophia",
+      "lastName": "Anderson",
+      "phoneNumber": "555654321",
+      "email": "sophia.anderson@example.com",
+      "studyLevel": "PhD",
+      "establishment": "Another University",
+      "address": "456 Elm St",
+      "cv": "CVs/CV_Sophia_Anderson.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "accepté",
+      "candidatureDate": "2024-04-21T09:45:30.123Z"
+    },
+    {
+      "id": "9",
+      "OfferId": 3,
+      "firstName": "Oliver",
+      "lastName": "Garcia",
+      "phoneNumber": "555456789",
+      "email": "oliver.garcia@example.com",
+      "studyLevel": "Bachelor",
+      "establishment": "Example College",
+      "address": "555 Maple St",
+      "cv": "CVs/CV_Oliver_Garcia.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "refusé",
+      "candidatureDate": "2024-04-22T15:20:10.456Z"
     }
   ],
+
   "Domaines": [
     {
       "domainName": "Développement web",
-      "competences": [
-        "HTML",
-        "CSS",
-        "JavaScript"
-      ]
+      "competences": ["HTML", "CSS", "JavaScript"]
     },
     {
       "domainName": "Data Science",
-      "competences": [
-        "Python",
-        "Machine Learning",
-        "Data Visualization"
-      ]
+      "competences": ["Python", "Machine Learning", "Data Visualization"]
     },
     {
       "domainName": "Design graphique",
-      "competences": [
-        "Adobe Photoshop",
-        "Adobe Illustrator",
-        "UI/UX Design"
-      ]
+      "competences": ["Adobe Photoshop", "Adobe Illustrator", "UI/UX Design"]
     },
     {
       "domainName": "Développement mobile",
-      "competences": [
-        "Android",
-        "iOS",
-        "React Native"
-      ]
+      "competences": ["Android", "iOS", "React Native"]
     },
     {
       "domainName": "Administration système",
-      "competences": [
-        "Linux",
-        "Windows Server",
-        "Virtualisation"
-      ]
+      "competences": ["Linux", "Windows Server", "Virtualisation"]
     },
     {
       "domainName": "Marketing digital",
-      "competences": [
-        "SEO",
-        "SEM",
-        "Social Media Marketing"
-      ]
+      "competences": ["SEO", "SEM", "Social Media Marketing"]
     },
     {
       "domainName": "Développement logiciel",
-      "competences": [
-        "Java",
-        "C++",
-        "Version Control (Git)"
-      ]
+      "competences": ["Java", "C++", "Version Control (Git)"]
     }
   ]
 }

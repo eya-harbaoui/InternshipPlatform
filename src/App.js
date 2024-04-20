@@ -38,7 +38,10 @@ const App = () => {
           <Route path="/Mes_candidatures" element={<Candidatures />}></Route>
           <Route path="/UserDetails" element={<InternDetails />}></Route>
           <Route path="/RH_Offres" element={<OffresRH />}></Route>
-          <Route path="/Liste_Candidatures" element={<ListeCandidatures/>}></Route>
+          <Route
+            path="/liste_candidatures/:id"
+            element={<ListeCandidatures />}
+          />
         </Routes>
       </div>
       <ToastContainer position="top-center"></ToastContainer>

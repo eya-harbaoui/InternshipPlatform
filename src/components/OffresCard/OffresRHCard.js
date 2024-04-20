@@ -80,9 +80,12 @@ const OffresRHCard = ({
   const handleOk = () => {
     setIsModalOpen(false);
   };
+
+
   const handleCandidatures = () => {
-    console.log("shiw candidatures");
+    navigate(`/liste_candidatures/${selectedOffer.id}`);
   };
+
 
   const handleCancel = () => {
     setSelectedOffer({
