@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  max-width: 80%;
+  max-width: 1000px;
   background-color: #ffffffba;
   border-radius: 4px;
   box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.095);
