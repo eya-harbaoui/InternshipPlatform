@@ -4,18 +4,18 @@
       "id": "1",
       "stageTitle": "Stage en développement web",
       "stageNature": "PFA",
-      "stageDescription": "Vous êtes passionné(e) par le développement web et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en développement web. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en programmation. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
-      "domainTag": "Développement web",
       "modeTag": "Hybride",
+      "domainTag": "Développement web",
       "durationTag": "4 mois",
-      "offerLink": "offre-de-stage-1",
+      "stageDescription": "Vous êtes passionné(e) par le développement web et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en développement web. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en programmation. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
       "competences": {
         "html": "Intermédiaire",
         "css": "Avancé",
         "javascript": "Débutant"
       },
+      "OfferStatus": "archivé",
       "publicationDate": "2024-04-05",
-      "OfferStatus": "en cours de validation"
+      "offerLink": "offre-de-stage-1"
     },
     {
       "id": "2",
@@ -38,18 +38,18 @@
       "id": "4",
       "stageTitle": "Stage en développement mobile",
       "stageNature": "PFA",
-      "stageDescription": "Vous êtes passionné(e) par le développement mobile et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en développement mobile. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en programmation mobile. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
-      "domainTag": "Développement mobile",
       "modeTag": "Présentiel",
+      "domainTag": "Développement mobile",
       "durationTag": "6 mois",
-      "offerLink": "offre-de-stage-4",
+      "stageDescription": "Vous êtes passionné(e) par le développement mobile et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en développement mobile. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en programmation mobile. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
       "competences": {
         "android": "Avancé",
         "ios": "Intermédiaire",
         "reactNative": "Débutant"
       },
+      "OfferStatus": "archivé",
       "publicationDate": "2024-04-01",
-      "OfferStatus": "archivé"
+      "offerLink": "offre-de-stage-4"
     },
     {
       "id": "8",
@@ -84,23 +84,6 @@
       "OfferStatus": "archivé",
       "publicationDate": "2024-03-23",
       "offerLink": "offre-de-stage-9"
-    },
-    {
-      "id": "95be7d8c-1498-4328-ad30-94343af7c7b5",
-      "stageTitle": "aaaaaaaaaaaaaaaaaaaaaaa111",
-      "stageNature": "PFE",
-      "modeTag": "Hybride",
-      "domainTag": "Data Science",
-      "durationTag": "6 mois",
-      "stageDescription": "aaaaaaaaaaaaaaaaaaaaa111",
-      "competences": {
-        "Python": "Intermédiaire",
-        "Machine Learning": "Débutant",
-        "Data Visualization": "Débutant"
-      },
-      "OfferStatus": "brouillon",
-      "publicationDate": "",
-      "offerLink": "offre-de-stage-95be7d8c-1498-4328-ad30-94343af7c7b5"
     }
   ],
   "user": [
@@ -266,7 +249,7 @@
       "address": "321 Pine St",
       "cv": "CVs/CV_Michael_Brown.pdf",
       "recommendationLetter": "llllllllllljsjjsjs",
-      "candidatureStatus": "en cours",
+      "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-18T10:12:03.415Z"
     },
     {
@@ -345,35 +328,129 @@
       "candidatureDate": "2024-04-22T15:20:10.456Z"
     }
   ],
-
+  "Interviews": [
+    {
+      "id": "",
+      "CandidatId": "",
+      "date": "",
+      "mode": "",
+      "address": "",
+      "link": ""
+    },
+    {
+      "id": "",
+      "CandidatId": "",
+      "type": "RH",
+      "date": "2024-04-03T23:00:00.000Z",
+      "heure": "04:17",
+      "mode": "en ligne",
+      "address": "",
+      "link": "https://meet.google.com/zbi-yinv-sjo"
+    },
+    {
+      "id": "",
+      "CandidatId": "",
+      "type": "technique",
+      "date": "2024-05-01T23:00:00.000Z",
+      "heure": "15:00",
+      "mode": "en ligne",
+      "address": "",
+      "link": "meet",
+      "technicalValidatorId": "2"
+    }
+  ],
+  "TechnicalValidators": [
+    {
+      "id": "1",
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "email": "alice.johnson@example.com",
+      "phone": "456-789-0123",
+      "department": "Information Technology",
+      "position": "Tech Lead"
+    },
+    {
+      "id": "2",
+      "firstName": "Bob",
+      "lastName": "Williams",
+      "email": "bob.williams@example.com",
+      "phone": "789-012-3456",
+      "department": "Software Development",
+      "position": "Senior Developer"
+    },
+    {
+      "id": "3",
+      "firstName": "Eve",
+      "lastName": "Brown",
+      "email": "eve.brown@example.com",
+      "phone": "012-345-6789",
+      "department": "Engineering",
+      "position": "Systems Architect"
+    }
+  ],
   "Domaines": [
     {
       "domainName": "Développement web",
-      "competences": ["HTML", "CSS", "JavaScript"]
+      "competences": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "id": "dbbb"
     },
     {
       "domainName": "Data Science",
-      "competences": ["Python", "Machine Learning", "Data Visualization"]
+      "competences": [
+        "Python",
+        "Machine Learning",
+        "Data Visualization"
+      ],
+      "id": "0154"
     },
     {
       "domainName": "Design graphique",
-      "competences": ["Adobe Photoshop", "Adobe Illustrator", "UI/UX Design"]
+      "competences": [
+        "Adobe Photoshop",
+        "Adobe Illustrator",
+        "UI/UX Design"
+      ],
+      "id": "3175"
     },
     {
       "domainName": "Développement mobile",
-      "competences": ["Android", "iOS", "React Native"]
+      "competences": [
+        "Android",
+        "iOS",
+        "React Native"
+      ],
+      "id": "8bd9"
     },
     {
       "domainName": "Administration système",
-      "competences": ["Linux", "Windows Server", "Virtualisation"]
+      "competences": [
+        "Linux",
+        "Windows Server",
+        "Virtualisation"
+      ],
+      "id": "5fb7"
     },
     {
       "domainName": "Marketing digital",
-      "competences": ["SEO", "SEM", "Social Media Marketing"]
+      "competences": [
+        "SEO",
+        "SEM",
+        "Social Media Marketing"
+      ],
+      "id": "d11a"
     },
     {
       "domainName": "Développement logiciel",
-      "competences": ["Java", "C++", "Version Control (Git)"]
+      "competences": [
+        "Java",
+        "C++",
+        "Version Control (Git)"
+      ],
+      "id": "df53"
     }
   ]
 }

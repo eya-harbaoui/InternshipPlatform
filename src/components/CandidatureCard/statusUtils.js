@@ -1,4 +1,12 @@
-// statusUtils.js
+export const CandidaturesStatusList = [
+  "en cours",
+  "entretien technique programmé",
+  "entretien RH programmé",
+  "entretien technique confirmé",
+  "entretien RH confirmé",
+  "refusé",
+  "accepté",
+];
 
 export function getStatusTag(status) {
   let tagColor, tagText;

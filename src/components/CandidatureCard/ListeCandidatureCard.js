@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CandidatureCard from "./CandidatureCard";
+import { Popover } from "antd";
 import "./ListeCandidatureCard.css";
 const ListeCandidatureCard = ({
   Title,
@@ -9,7 +10,11 @@ const ListeCandidatureCard = ({
   secondButtonName,
   FirstIcon: FirstIcon,
   SecondIcon: SecondIcon,
+  firstButtonFunction,
+  isProgramInterviewDisabled,
+  
 }) => {
+  
   return (
     <div className="candidature-card">
       <CandidatureCard
@@ -18,7 +23,11 @@ const ListeCandidatureCard = ({
         candidatureStatus={candidatureStatus}
       ></CandidatureCard>
       <div className="actions">
-        <span className="action">
+        <span
+          className="action"
+          onClick={firstButtonFunction}
+          disabled={isProgramInterviewDisabled}
+        >
           {FirstIcon && <FirstIcon className="action-icon" />}
           {firstButtonName}
         </span>
@@ -26,6 +35,7 @@ const ListeCandidatureCard = ({
           {SecondIcon && <SecondIcon className="action-icon" />}
           {secondButtonName}
         </span>
+        
       </div>
     </div>
   );
