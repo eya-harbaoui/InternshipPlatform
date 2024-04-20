@@ -1,4 +1,3 @@
-//import
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaArchive } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
@@ -12,7 +11,7 @@ import {
   modeOptions,
   natureOptions,
 } from "../../components/Filter/FilterOptions.js";
-import { ToastContainer, toast } from "react-toastify";
+import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const { Option } = Select;
 
@@ -82,12 +81,26 @@ const OffresRHCard = ({
     setIsModalOpen(false);
   };
   const handleCandidatures = () => {
-    console.log("shiw candidatures")
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
+    console.log("shiw candidatures");
   };
 
+  const handleCancel = () => {
+    setSelectedOffer({
+      id: id,
+      stageTitle: stageTitle,
+      stageNature: stageNature,
+      modeTag: modeTag,
+      domainTag: domainTag,
+      durationTag: durationTag,
+      stageDescription: stageDescription,
+      competences: competences,
+      OfferStatus: OfferStatus,
+      publicationDate: publicationDate,
+      offerLink: offerLink,
+    });
+    setIsModalOpen(false);
+    setChangeCompetences(false);
+  };
   const navigate = useNavigate();
   let tagColor = "";
   let tagText = "";
@@ -133,6 +146,7 @@ const OffresRHCard = ({
         `http://localhost:8000/offers/${selectedOffer.id}`,
         selectedOffer
       );
+      setChangeCompetences(false);
       setIsModalOpen(false);
       toast.success("Offre modifiée");
     } catch (error) {
@@ -166,12 +180,15 @@ const OffresRHCard = ({
 
   const handleDomaineChange = (domaine) => {
     setDomaineSelectionne(domaine);
+    setSelectedOffer({
+      ...selectedOffer,
+      domainTag: domaine,
+      competences: {},
+    });
     setChangeCompetences(true);
-    setSelectedOffer({ ...selectedOffer, domainTag: domaine });
     const competences =
       domains.find((d) => d.domainName === domaine)?.competences || [];
     setCompetencesDomaine({ ...competencesDomaine, [domaine]: competences });
-    setSelectedOffer({ ...selectedOffer, competences: competencesDomaine });
   };
   const handleCompetenceChange = (competence, niveau) => {
     const updatedCompetences = {
@@ -197,13 +214,30 @@ const OffresRHCard = ({
           durationTag={durationTag}
           buttonName={"publier"}
           handleButtonFunction={handlePublishClick}
+          OfferStatus={OfferStatus}
         />
         <div className="actions">
-          <span className="action" onClick={showModal}>
+          <span
+            className="action"
+            onClick={showModal}
+            disabled={OfferStatus === "publié"}
+            style={{
+              pointerEvents: OfferStatus === "publié" ? "none" : "auto",
+              opacity: OfferStatus === "publié" ? 0.5 : 1,
+            }}
+          >
             <FaEdit className="action-icon" />
             Modifier
           </span>
-          <span className="action" onClick={handleDeleteClick}>
+          <span
+            className="action"
+            onClick={handleDeleteClick}
+            disabled={OfferStatus === "publié"}
+            style={{
+              pointerEvents: OfferStatus === "publié" ? "none" : "auto",
+              opacity: OfferStatus === "publié" ? 0.5 : 1,
+            }}
+          >
             <FaTrash className="action-icon" />
             Supprimer
           </span>
@@ -227,6 +261,8 @@ const OffresRHCard = ({
             visible={isModalOpen}
             onOk={handleEditClick}
             onCancel={handleCancel}
+            okText="Modifier cette offre"
+            cancelText="Annuler la modification"
           >
             <div className="modal-content">
               <h3>Modifier les informations de l'offre</h3>

@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import {
-  FaEdit,
-  FaTrash,
-} from "react-icons/fa";
-import { Tag } from "antd";
+import CandidatureCard from "./CandidatureCard";
+import "./ListeCandidatureCard.css";
 
-
-const ListeCandidatureCard = ({ firstName, lastName, candidatureStatus,candidatureDate,firstButtonName,secondButtonName }) => {
+const ListeCandidatureCard = ({
+  Title,
+  candidatureStatus,
+  candidatureDate,
+  firstButtonName,
+  secondButtonName,
+  FirstIcon: FirstIcon,
+  SecondIcon: SecondIcon,
+}) => {
   let tagColor = "";
   let tagText = "";
   switch (candidatureStatus) {
@@ -32,25 +36,19 @@ const ListeCandidatureCard = ({ firstName, lastName, candidatureStatus,candidatu
   }
 
   return (
-    <div className="stage-card">
-      <div className="title-and-publish">
-        <h3>
-          {firstName} {lastName}
-        </h3>
-        <Tag color={tagColor} className="status-tag">
-          {tagText}
-        </Tag>
-      </div>
-      <div className="content">
-        <p>A postulé le : {candidatureDate}</p>
-      </div>
+    <div className="candidature-card">
+      <CandidatureCard
+        Title={Title}
+        candidatureDate={candidatureDate}
+        candidatureStatus={candidatureStatus}
+      ></CandidatureCard>
       <div className="actions">
         <span className="action">
-          <FaEdit className="action-icon" />
+          {FirstIcon && <FirstIcon className="action-icon" />}
           {firstButtonName}
         </span>
         <span className="action">
-          <FaTrash className="action-icon" />
+          {SecondIcon && <SecondIcon className="action-icon" />}
           {secondButtonName}
         </span>
       </div>

@@ -1,10 +1,11 @@
 // CandidatureCard.js
 import React from "react";
 import { Tag } from "antd";
-import "./CandidatureCard.css";
+import "./ListeCandidatureCard.css";
 
 const CandidatureCard = ({
-  stageTitle,
+  icon,
+  Title,
   candidatureDate,
   candidatureStatus,
 }) => {
@@ -34,15 +35,13 @@ const CandidatureCard = ({
   }
 
   return (
-    <div className="candidature-card">
-      <div className="content">
-        <h3>{stageTitle}</h3>
-        <p>{candidatureDate}</p>
+    <>
+      <div className="title-and-tag">
+        <h3>{Title}</h3>
+        <Tag color={tagColor} className="status_tag">{tagText}</Tag>
       </div>
-      <div className="tag_status">
-        <Tag color={tagColor} >{tagText}</Tag>
-      </div>
-    </div>
+      <p> Date de candidature : {candidatureDate}</p>
+    </>
   );
 };
 

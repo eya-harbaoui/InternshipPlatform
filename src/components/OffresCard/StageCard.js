@@ -53,7 +53,7 @@ const StageCard = ({
                   cursor: "pointer",
                 }}
               >
-                {showFullDescription ? "Show Less" : "Read More"}
+                {showFullDescription ? "Voir Moins" : "Voir Plus"}
               </span>
             </span>
           )}

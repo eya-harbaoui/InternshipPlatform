@@ -35,23 +35,6 @@
       "offerLink": "offre-de-stage-2"
     },
     {
-      "id": "3",
-      "stageTitle": "Stage en design graphique",
-      "stageNature": "Initiation",
-      "modeTag": "Remote",
-      "domainTag": "Design graphique",
-      "durationTag": "4 mois",
-      "stageDescription": "Vous êtes passionné(e) par le design graphique et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en design graphique. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en design. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
-      "competences": {
-        "design": "Avancé",
-        "photoshop": "Intermédiaire",
-        "illustrator": "Débutant"
-      },
-      "OfferStatus": "en cours de validation",
-      "publicationDate": "2024-03-18",
-      "offerLink": "offre-de-stage-3"
-    },
-    {
       "id": "4",
       "stageTitle": "Stage en développement mobile",
       "stageNature": "PFA",
@@ -72,35 +55,52 @@
       "id": "8",
       "stageTitle": "Stage en sécurité informatique",
       "stageNature": "Initiation",
-      "stageDescription": "Vous êtes passionné(e) par la sécurité informatique et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en sécurité informatique. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en sécurité. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
-      "domainTag": "Sécurité informatique",
       "modeTag": "Présentiel",
+      "domainTag": "Sécurité informatique",
       "durationTag": "6 mois",
-      "offerLink": "offre-de-stage-8",
+      "stageDescription": "Vous êtes passionné(e) par la sécurité informatique et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en sécurité informatique. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en sécurité. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
       "competences": {
         "networkSecurity": "Avancé",
         "cyberSecurity": "Intermédiaire",
         "penetrationTesting": "Débutant"
       },
+      "OfferStatus": "en cours de validation",
       "publicationDate": "2024-03-30",
-      "OfferStatus": "publié"
+      "offerLink": "offre-de-stage-8"
     },
     {
       "id": "9",
       "stageTitle": "Stage en communication digitale",
       "stageNature": "PFA",
-      "stageDescription": "Vous êtes passionné(e) par la communication digitale et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en communication digitale. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en communication. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
-      "domainTag": "Communication digitale",
       "modeTag": "Remote",
+      "domainTag": "Communication digitale",
       "durationTag": "4 mois",
-      "offerLink": "offre-de-stage-9",
+      "stageDescription": "Vous êtes passionné(e) par la communication digitale et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en communication digitale. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en communication. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
       "competences": {
         "digitalMarketing": "Avancé",
         "socialMedia": "Intermédiaire",
         "contentCreation": "Débutant"
       },
+      "OfferStatus": "archivé",
       "publicationDate": "2024-03-23",
-      "OfferStatus": "publié"
+      "offerLink": "offre-de-stage-9"
+    },
+    {
+      "id": "95be7d8c-1498-4328-ad30-94343af7c7b5",
+      "stageTitle": "aaaaaaaaaaaaaaaaaaaaaaa111",
+      "stageNature": "PFE",
+      "modeTag": "Hybride",
+      "domainTag": "Data Science",
+      "durationTag": "6 mois",
+      "stageDescription": "aaaaaaaaaaaaaaaaaaaaa111",
+      "competences": {
+        "Python": "Intermédiaire",
+        "Machine Learning": "Débutant",
+        "Data Visualization": "Débutant"
+      },
+      "OfferStatus": "brouillon",
+      "publicationDate": "",
+      "offerLink": "offre-de-stage-95be7d8c-1498-4328-ad30-94343af7c7b5"
     }
   ],
   "user": [

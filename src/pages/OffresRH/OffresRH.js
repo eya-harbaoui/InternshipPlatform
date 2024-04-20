@@ -14,6 +14,7 @@ import Filter from "../../components/Filter/Filter";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
 import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "react-toastify";
 const { Option } = Select;
 
 const OffresRH = () => {
@@ -114,6 +115,7 @@ const OffresRH = () => {
         offerWithIdAndLink
       );
       console.log("Offre ajoutée avec succès:", response.data);
+      toast.success("Offre ajoutée avec succès !");
       setIsModalOpen(false);
       setOffer({
         stageTitle: "",
@@ -142,8 +144,18 @@ const OffresRH = () => {
     setIsModalOpen(false);
     sendOffer();
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
+    setOffer({
+      stageTitle: "",
+      stageNature: "",
+      stageDescription: "",
+      domainTag: "",
+      modeTag: "",
+      durationTag: "",
+      competences: [],
+    });
   };
 
   const [niveauCompetence, setNiveauCompetence] = useState({});
@@ -191,6 +203,8 @@ const OffresRH = () => {
           visible={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
+          okText="Ajouter Offre"
+          cancelText="Annuler l'ajout de cette offre"
         >
           <div className="modal-content">
             <h3>Remplir les informations de l'offre</h3>

@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Select, Button, Row, Col } from "antd";
 import { FaRegUser } from "react-icons/fa";
 import CandidatsCard from "../../components/CandidatsCard/CandidatsCard";
-import ListeCandidatureCard from "../../components/ListeCandidatureCard/ListeCandidatureCard";
+import ListeCandidatureCard from "../../components/CandidatureCard/ListeCandidatureCard";
 import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks";
 import Navbar from "../../components/Navbar/Navbar";
-const { Option } = Select;
+import { BsSend } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
 
 const ListeCandidatures = () => {
+  const { Option } = Select;
   const candidatures = [
     { status: "en cours", nombreCandidats: 10 },
     { status: "entretien technique/RH programmé", nombreCandidats: 12 },
@@ -54,16 +56,6 @@ const ListeCandidatures = () => {
     },
   ];
 
-  const [selectedStatus, setSelectedStatus] = useState(null);
-
-  const handleCandidatsCardClick = (status) => {
-    setSelectedStatus(status);
-  };
-
-  const filteredCandidats = selectedStatus
-    ? candidats.filter((candidat) => candidat.statut === selectedStatus)
-    : candidats;
-
   return (
     <div className="offres-page">
       <Navbar links={RHNavbarLinks} />
@@ -75,21 +67,21 @@ const ListeCandidatures = () => {
             <CandidatsCard
               candidatureStatus={candidature.status}
               nombreCandidats={candidature.nombreCandidats}
-              onClick={() => handleCandidatsCardClick(candidature.status)}
             />
           </Col>
         ))}
       </Row>
-      {filteredCandidats.map((candidat) => (
+      {candidats.map((candidat) => (
         <ListeCandidatureCard
           key={candidat.id}
-          firstName={candidat.nom}
-          lastName={candidat.prenom}
-          CandidatureStatus={candidat.statut}
-          CandidatureDate={candidat.date}
+          Title={`${candidat.nom} ${candidat.prenom}`}
+          candidatureStatus={candidat.statut}
+          candidatureDate={candidat.date}
           showActions={true}
-          FirstButtonName={"programmer un entretien"}
-          SecondButtonName={"voir profil"}
+          firstButtonName="programmer un entretien"
+          secondButtonName="voir profil"
+          FirstIcon={BsSend}
+          SecondIcon={CgProfile}
         />
       ))}
     </div>

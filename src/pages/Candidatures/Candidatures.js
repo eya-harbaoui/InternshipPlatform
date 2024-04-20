@@ -5,6 +5,7 @@ import CandidatureCard from "../../components/CandidatureCard/CandidatureCard";
 import { CandidatureData } from "./CandidaturesData";
 import { MdOutlineWorkHistory } from "react-icons/md";
 import "./Candidatures.css";
+import "../../components/CandidatureCard/ListeCandidatureCard.css"
 import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks";
 
 const Candidatures = () => {
@@ -16,12 +17,14 @@ const Candidatures = () => {
       <MdOutlineWorkHistory className="candidature-icon" />
       <div className="candidature-cards">
         {CandidatureData.map((candidature, index) => (
+          <div className="candidature-card">
           <CandidatureCard
             key={index}
-            stageTitle={candidature.stageTitle}
+            Title={candidature.stageTitle}
             candidatureDate={candidature.candidatureDate}
             candidatureStatus={candidature.candidatureStatus}
           />
+          </div>
         ))}
       </div>
       

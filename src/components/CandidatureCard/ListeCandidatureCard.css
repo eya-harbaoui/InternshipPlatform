@@ -1,0 +1,62 @@
+.candidature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 800px;
+  background-color: #ffffffba;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.095);
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 50px;
+  text-align: left;
+}
+
+.candidature-card p {
+  margin-bottom: 20px;
+  color: #FF735C;
+  font-weight: bold;
+}
+
+.status_tag {
+  align-self: flex-end;
+  background: #e6e6e6;
+  border-radius: 2px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.title-and-tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.candidature-card .actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: auto;
+}
+
+.candidature-card .action {
+  background: #e6e6e6;
+  padding: 8px 12px;
+  border-radius: 2px;
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.candidature-card .action-icon {
+  margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+  .candidature-cards {
+    max-width: 100%;
+  }
+}
