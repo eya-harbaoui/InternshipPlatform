@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
-import { Form, Input, InputNumber, Popconfirm, Table, Typography, Button } from 'antd';
-
-const originData = [];
-for (let i = 0; i < 100; i++) {
-  originData.push({
-    key: i.toString(),
-    nom: `Edward ${i}`,
-    prénom: `John ${i}`,
-    email: `edward.john${i}@example.com`,
-  });
-}
+import { Form, Input, InputNumber, Popconfirm, Table, Typography, Button, Space, Modal } from 'antd';
+import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 const EditableCell = ({
   editing,
@@ -33,7 +24,7 @@ const EditableCell = ({
           rules={[
             {
               required: true,
-              message: `Please Input ${title}!`,
+              message: `SVP Ajoutez ${title}!`,
             },
           ]}
         >
@@ -48,8 +39,10 @@ const EditableCell = ({
 
 const Domstages = () => {
   const [form] = Form.useForm();
-  const [data, setData] = useState(originData);
+  const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const isEditing = (record) => record.key === editingKey;
 
   const edit = (record) => {
@@ -85,13 +78,39 @@ const Domstages = () => {
         setEditingKey('');
       }
     } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
+      console.log('Validation échouée:', errInfo);
     }
   };
 
   const handleDelete = (key) => {
     const newData = data.filter((item) => item.key !== key);
     setData(newData);
+  };
+
+  const handleAddDomain = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleModalOk = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        const newData = [...data];
+        newData.push({
+          key: newData.length.toString(),
+          nomdomaine: values.nomDomaine,
+          compétences: values.compétencesRequises,
+        });
+        setData(newData);
+        setIsModalVisible(false);
+      })
+      .catch((errorInfo) => {
+        console.log('Validation failed:', errorInfo);
+      });
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
   };
 
   const columns = [
@@ -131,7 +150,7 @@ const Domstages = () => {
             <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
               Modifier
             </Typography.Link>
-            <Popconfirm 
+            <Popconfirm
               title="Êtes-vous sûr de vouloir supprimer cet utilisateur?"
               onConfirm={() => handleDelete(record.key)}
             >
@@ -162,7 +181,14 @@ const Domstages = () => {
   return (
     <>
       <Typography.Title level={2} style={{ marginBottom: '20px' }}>Domaines et compétences</Typography.Title>
-      <Button type="primary" style={{ float: 'right', marginBottom: '20px' }}>Ajouter un domaine</Button>
+      <Button
+        type="primary"
+        style={{ float: 'right', marginBottom: '20px' }}
+        icon={<PlusOutlined />}
+        onClick={handleAddDomain}
+      >
+        Ajouter un domaine
+      </Button>
       <Form form={form} component={false}>
         <Table
           components={{
@@ -179,6 +205,29 @@ const Domstages = () => {
           }}
         />
       </Form>
+      <Modal
+        title="Ajouter un domaine"
+        visible={isModalVisible}
+        onOk={handleModalOk}
+        onCancel={handleModalCancel}
+      >
+        <Form form={form} layout="vertical">
+          <Form.Item
+            name="nomDomaine"
+            label="Nom du domaine"
+            rules={[{ required: true, message: 'SVP entrez le nom du domaine' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="compétencesRequises"
+            label="Compétences requises"
+            rules={[{ required: true, message: 'SVP entrez les compétences requises' }]}
+          >
+            <Input.TextArea />
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 };
