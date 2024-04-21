@@ -67,21 +67,110 @@
       "OfferStatus": "en cours de validation",
       "publicationDate": "2024-03-30",
       "offerLink": "offre-de-stage-8"
+    },
+    {
+      "id": "ca593287-af48-4d9e-abf4-fc77bd378cbd",
+      "stageTitle": "dddd",
+      "stageNature": "PFE",
+      "modeTag": "Hybride",
+      "domainTag": "Développement web",
+      "durationTag": "6 mois",
+      "stageDescription": "dddddddddddddddddddd",
+      "competences": {
+        "HTML": "Intermédiaire",
+        "CSS": "Intermédiaire",
+        "JavaScript": "Avancé"
+      },
+      "OfferStatus": "archivé",
+      "publicationDate": "",
+      "offerLink": "offre-de-stage-ca593287-af48-4d9e-abf4-fc77bd378cbd"
     }
   ],
   "user": [
+      {
+        "id": "1",
+        "firstName": "eya",
+        "lastName": "HARBAOUI",
+        "phoneNumber": "96386045",
+        "email": "eya.harbaoui@ensi-uma.tn",
+        "studyLevel": "Bachelor",
+        "establishment": "University of Example111111111",
+        "address": "Impasse Bahr omen Cité Ennkhilet",
+        "cv": "CVs/CV_Example.pdf",
+        "recommendationLetter": "llllllllllljsjjsjs",
+        "role": "student"
+      }
+  ],
+  "users_admin": [
     {
-      "id": "1",
-      "firstName": "eya",
-      "lastName": "HARBAOUI",
-      "phoneNumber": "96386045",
-      "email": "eya.harbaoui@ensi-uma.tn",
-      "studyLevel": "Bachelor",
-      "establishment": "University of Example111111111",
-      "address": "Impasse Bahr omen Cité Ennkhilet",
-      "cv": "CVs/CV_Example.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
-      "role": "student"
+      "key": "1",
+      "nom": "User 1",
+      "prenom": "Prenom 1",
+      "email": "user1@example.com",
+      "role": "Admin"
+    },
+    {
+      "key": "2",
+      "nom": "User 2",
+      "prenom": "Prenom 2",
+      "email": "user2@example.com",
+      "role": "Utilisateur"
+    },
+    {
+      "key": "3",
+      "nom": "User 3",
+      "prenom": "Prenom 3",
+      "email": "user3@example.com",
+      "role": "Admin"
+    },
+    {
+      "key": "4",
+      "nom": "User 4",
+      "prenom": "Prenom 4",
+      "email": "user4@example.com",
+      "role": "Utilisateur"
+    },
+    {
+      "key": "5",
+      "nom": "User 5",
+      "prenom": "Prenom 5",
+      "email": "user5@example.com",
+      "role": "Admin"
+    },
+    {
+      "key": "6",
+      "nom": "User 6",
+      "prenom": "Prenom 6",
+      "email": "user6@example.com",
+      "role": "Utilisateur"
+    },
+    {
+      "key": "7",
+      "nom": "User 7",
+      "prenom": "Prenom 7",
+      "email": "user7@example.com",
+      "role": "Admin"
+    },
+    {
+      "key": "8",
+      "nom": "User 8",
+      "prenom": "Prenom 8",
+      "email": "user8@example.com",
+      "role": "Utilisateur"
+    },
+    {
+      "key": "9",
+      "nom": "User 9",
+      "prenom": "Prenom 9",
+      "email": "user9@example.com",
+      "role": "Admin"
+    },
+    {
+      "key": "10",
+      "nom": "User 10",
+      "prenom": "Prenom 10",
+      "email": "user10@example.com",
+      "role": "Utilisateur"
     }
   ],
   "Student_Application": [
@@ -97,8 +186,9 @@
       "address": "456 Elm St",
       "cv": "CVs/CV_Alice_Smith.pdf",
       "recommendationLetter": "llllllllllljsjjsjs",
-      "candidatureStatus": "refusé",
-      "candidatureDate": "2024-04-15T09:21:17.052Z"
+      "candidatureStatus": "entretien technique programmé",
+      "candidatureDate": "2024-04-15T09:21:17.052Z",
+      "refuseReason": "Manque d'expérience professionnelle"
     },
     {
       "id": "2",
@@ -335,6 +425,28 @@
       "address": "",
       "link": "lll",
       "technicalValidatorId": null
+    },
+    {
+      "id": "",
+      "CandidatId": "",
+      "type": "RH",
+      "date": "2024-04-01T23:00:00.000Z",
+      "heure": "00:27",
+      "mode": "présentiel",
+      "address": "lac2",
+      "link": "",
+      "technicalValidatorId": null
+    },
+    {
+      "id": "",
+      "CandidatId": "",
+      "type": "technique",
+      "date": "2024-04-01T23:00:00.000Z",
+      "heure": "00:27",
+      "mode": "présentiel",
+      "address": "lac2",
+      "link": "",
+      "technicalValidatorId": "2"
     }
   ],
   "TechnicalValidators": [

@@ -16,7 +16,7 @@ function Topbar() {
             <form
                 className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 <div className="input-group">
-                    <input type="text" className="form-control bg-light border-0 small" placeholder="Search for..."
+                    <input type="text" className="form-control bg-light border-0 small" placeholder="chercher..."
                         aria-label="Search" aria-describedby="basic-addon2" />
                     <div className="input-group-append">
                         <button className="btn btn-primary" type="button">
@@ -41,7 +41,7 @@ function Topbar() {
                         <form className="form-inline mr-auto w-100 navbar-search">
                             <div className="input-group">
                                 <input type="text" className="form-control bg-light border-0 small"
-                                    placeholder="Search for..." aria-label="Search"
+                                    placeholder="chercher..." aria-label="Search"
                                     aria-describedby="basic-addon2" />
                                 <div className="input-group-append">
                                     <button className="btn btn-primary" type="button">
@@ -86,7 +86,7 @@ function Topbar() {
                             </div>
                             <div>
                                 <div className="small text-gray-500">19 Avril 2024</div>
-                                $290.29 has been deposited into your account!
+                                S
                             </div>
                         </a>
                         <a className="dropdown-item d-flex align-items-center" href="#">
@@ -97,10 +97,10 @@ function Topbar() {
                             </div>
                             <div>
                                 <div className="small text-gray-500">December 2, 2019</div>
-                                Spending Alert: We've noticed unusually high spending for your account.
+                                alerte.
                             </div>
                         </a>
-                        <a className="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                        <a className="dropdown-item text-center small text-gray-500" href="#">Afficher toutes les alertes</a>
                     </div>
                 </li>
 
@@ -125,9 +125,8 @@ function Topbar() {
                                 <div className="status-indicator bg-success"></div>
                             </div>
                             <div className="font-weight-bold">
-                                <div className="text-truncate">Hi there! I am wondering if you can help me with a
-                                    problem I've been having.</div>
-                                <div className="small text-gray-500">Emily Fowler · 58m</div>
+                                <div className="text-truncate">.</div>
+                                <div className="small text-gray-500"></div>
                             </div>
                         </a>
                         <a className="dropdown-item d-flex align-items-center" href="#">
@@ -137,8 +136,7 @@ function Topbar() {
                                 <div className="status-indicator"></div>
                             </div>
                             <div>
-                                <div className="text-truncate">I have the photos that you ordered last month, how
-                                    would you like them sent to you?</div>
+                                <div className="text-truncate"></div>
                                 <div className="small text-gray-500">Jae Chun · 1d</div>
                             </div>
                         </a>
@@ -149,8 +147,7 @@ function Topbar() {
                                 <div className="status-indicator bg-warning"></div>
                             </div>
                             <div>
-                                <div className="text-truncate">Last month's report looks great, I am very happy with
-                                    the progress so far, keep up the good work!</div>
+                                <div className="text-truncate"></div>
                                 <div className="small text-gray-500">Morgan Alvarez · 2d</div>
                             </div>
                         </a>
@@ -188,16 +185,16 @@ function Topbar() {
                         </a>
                         <a className="dropdown-item" href="#">
                             <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Settings
+                            Parametres
                         </a>
                         <a className="dropdown-item" href="#">
                             <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Activity Log
+                            Activités de connexion
                         </a>
                         <div className="dropdown-divider"></div>
                         <a className="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                             <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Logout
+                            se déconnecter
                         </a>
                     </div>
                 </li>

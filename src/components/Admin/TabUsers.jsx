@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
-import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
-const originData = [];
-for (let i = 0; i < 100; i++) {
-    originData.push({
-        key: i.toString(),
-        nom: `Edward ${i}`,
-        prénom: `John ${i}`,
-        email: `edward.john${i}@example.com`,
-      });
-}
+import React, { useState, useEffect } from "react";
+import {
+  Form,
+  Input,
+  InputNumber,
+  Popconfirm,
+  Table,
+  Typography,
+  Button,
+  Modal,
+} from "antd";
+import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import axios from "axios";
+
 const EditableCell = ({
   editing,
   dataIndex,
@@ -19,7 +22,7 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+  const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
   return (
     <td {...restProps}>
       {editing ? (
@@ -31,7 +34,7 @@ const EditableCell = ({
           rules={[
             {
               required: true,
-              message: `Please Input ${title}!`,
+              message: `Please enter ${title}!`,
             },
           ]}
         >
@@ -43,23 +46,42 @@ const EditableCell = ({
     </td>
   );
 };
-const TabUsers = () => {
+
+const TabUtilisateurs = () => {
   const [form] = Form.useForm();
-  const [data, setData] = useState(originData);
-  const [editingKey, setEditingKey] = useState('');
+  const [data, setData] = useState([]);
+  const [editingKey, setEditingKey] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/users_admin");
+      setData(response.data);
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
+  };
+
   const isEditing = (record) => record.key === editingKey;
+
   const edit = (record) => {
     form.setFieldsValue({
-      nom: '',
-      prénom: '',
-      email: '',
-      ...record,
+      nom: record.nom,
+      prenom: record.prenom,
+      email: record.email,
+      role: record.role,
     });
     setEditingKey(record.key);
   };
+
   const cancel = () => {
-    setEditingKey('');
+    setEditingKey("");
   };
+
   const save = async (key) => {
     try {
       const row = await form.validateFields();
@@ -71,110 +93,208 @@ const TabUsers = () => {
           ...item,
           ...row,
         });
+        await axios.put(`http://localhost:8000/users_admin/${key}`, row);
         setData(newData);
-        setEditingKey('');
+        setEditingKey("");
       } else {
         newData.push(row);
+        await axios.post("http://localhost:8000/users_admin", row);
         setData(newData);
-        setEditingKey('');
+        setEditingKey("");
       }
     } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
+      console.error("Validation failed:", errInfo);
     }
   };
 
-  const handleDelete = (key) => {
-    const newData = data.filter((item) => item.key !== key);
-    setData(newData);
+  const handleDelete = async (key) => {
+    try {
+      await axios.delete(`http://localhost:8000/users_admin/${key}`);
+      const newData = data.filter((item) => item.key !== key);
+      setData(newData);
+    } catch (error) {
+      console.error("Failed to delete:", error);
+    }
+  };
+
+  const handleAddUser = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleModalOk = async () => {
+    try {
+      const values = await form.validateFields();
+      await axios.post("http://localhost:8000/users_admin", values);
+      setIsModalVisible(false);
+      form.resetFields();
+      fetchData();
+    } catch (errorInfo) {
+      console.error("Validation failed:", errorInfo);
+    }
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+    form.resetFields();
   };
 
   const columns = [
     {
-      title: 'nom',
-      dataIndex: 'nom',
-      width: '25%',
+      title: "Nom",
+      dataIndex: "nom",
+      width: "15%",
       editable: true,
     },
     {
-      title: 'prénom',
-      dataIndex: 'prénom',
-      width: '15%',
+      title: "Prénom",
+      dataIndex: "prenom",
+      width: "15%",
       editable: true,
     },
     {
-      title: 'email',
-      dataIndex: 'email',
-      width: '40%',
+      title: "Email",
+      dataIndex: "email",
+      width: "20%",
       editable: true,
     },
     {
-      title: 'opération',
-      dataIndex: 'opération',
+      title: "Role",
+      dataIndex: "role",
+      width: "25%",
+      editable: true,
+    },
+    {
+      title: "Opération",
+      dataIndex: "operation",
+      width: "25%",
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
           <span>
-            <Typography.Link
-              onClick={() => save(record.key)}
-              style={{
-                marginRight: 8,
-              }}
-            >
+            <a onClick={() => save(record.key)} style={{ marginRight: 8 }}>
               Enregistrer
-            </Typography.Link>
-            <Popconfirm title="Vous voulez annuler?" onConfirm={cancel}>
+            </a>
+            <Popconfirm title="Voulez-vous annuler?" onConfirm={cancel}>
               <a>Annuler</a>
             </Popconfirm>
           </span>
         ) : (
-        <span>
-          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-            Modifier
-          </Typography.Link>
-          <Popconfirm 
-                  title="Êtes-vous sûr de vouloir supprimer cet utilisateur?"
-                  onConfirm={() => handleDelete(record.key)}
-                >
-                  <a style={{ marginLeft: 8, color: 'blue' }}>Supprimer</a>
-                </Popconfirm>
+          <span>
+            <a disabled={editingKey !== ""} onClick={() => edit(record)}>
+              Modifier
+            </a>
+            <Popconfirm
+              title="Voulez-vous supprimer cet utilisateur?"
+              onConfirm={() => handleDelete(record.key)}
+            >
+              <a style={{ marginLeft: 8, color: "blue" }}>Supprimer</a>
+            </Popconfirm>
           </span>
-          
         );
       },
     },
   ];
+
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
       return col;
     }
+
     return {
       ...col,
       onCell: (record) => ({
         record,
-        inputType: col.dataIndex === 'age' ? 'number' : 'text',
+        inputType: col.dataIndex === "age" ? "number" : "text",
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
       }),
     };
   });
+
   return (
-    <Form form={form} component={false}>
-      <Table
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        bordered
-        dataSource={data}
-        columns={mergedColumns}
-        rowClassName="editable-row"
-        pagination={{
-          onChange: cancel,
-        }}
-      />
-    </Form>
+    <>
+      <Typography.Title level={2} style={{ marginBottom: "20px" }}>
+        Utilisateurs
+      </Typography.Title>
+      <Button
+        type="primary"
+        style={{ float: "right", marginBottom: "20px" }}
+        icon={<PlusOutlined />}
+        onClick={handleAddUser}
+      >
+        Ajouter un utilisateur
+      </Button>
+      <Form form={form} component={false}>
+        <Table
+          components={{
+            body: {
+              cell: EditableCell,
+            },
+          }}
+          bordered
+          dataSource={data}
+          columns={mergedColumns}
+          rowClassName="editable-row"
+          pagination={{
+            onChange: cancel,
+          }}
+        />
+      </Form>
+      <Modal
+        title="Ajouter un utilisateur"
+        visible={isModalVisible}
+        onOk={handleModalOk}
+        onCancel={handleModalCancel}
+      >
+        <Form form={form} layout="vertical">
+          <Form.Item
+            name="nom"
+            label="Nom"
+            rules={[
+              {
+                required: true,
+                message: "SVP entrez le nom de l'utilisateur",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="prenom"
+            label="Prénom"
+            rules={[
+              {
+                required: true,
+                message: "SVP entrez le prénom de l'utilisateur",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[{ required: true, message: "SVP entrez l'email" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="role"
+            label="Role"
+            rules={[
+              {
+                required: true,
+                message: "SVP entrez le role de l'utilisateur",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Form>
+      </Modal>
+    </>
   );
 };
-export default TabUsers;
+
+export default TabUtilisateurs;
