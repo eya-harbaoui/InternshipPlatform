@@ -8,16 +8,9 @@ import {
   DatePicker,
   Input,
   Radio,
-  Popover,
 } from "antd";
 import { FaRegUser } from "react-icons/fa";
-import {
-  BsCalendar,
-  BsPersonCheck,
-  BsPersonDash,
-  BsEye,
-  BsFillExclamationTriangleFill,
-} from "react-icons/bs";
+import { BsCalendar, BsPersonCheck, BsPersonDash, BsEye } from "react-icons/bs";
 import CandidatsCard from "../../components/CandidatsCard/CandidatsCard";
 import ListeCandidatureCard from "../../components/CandidatureCard/ListeCandidatureCard";
 import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks";
@@ -50,7 +43,15 @@ const ListeCandidatures = () => {
   const [technicalValidators, setTechnicalValidators] = useState([]);
   const [selectedTechnicalValidator, setSelectedTechnicalValidator] =
     useState(null);
-  const [selectedCandidate, setSelectedCandidate] = useState(null); // New state for selected candidate
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
+
+  const refuseReasons = [
+    "Profil non conforme aux attentes",
+    "Manque d'expérience professionnelle",
+    "Autre opportunité professionnelle",
+    "Motivation insuffisante",
+    "Compétences techniques non adaptées",
+  ];
 
   const getStudentApplicationsForOffer = async () => {
     try {
@@ -88,7 +89,7 @@ const ListeCandidatures = () => {
   useEffect(() => {
     getStudentApplicationsForOffer();
     fetchTechnicalValidators();
-  }, []); // Use empty array as second argument to run effect only once
+  });
 
   const handleProgramInterview = (candidature) => {
     setSelectedCandidature(candidature);
@@ -138,6 +139,7 @@ const ListeCandidatures = () => {
 
   const acceptCandidate = (candidat) => {
     setSelectedCandidature(candidat);
+    console.log("selected candidat", candidat);
     setIsAcceptModalOpen(true);
   };
 
@@ -145,7 +147,10 @@ const ListeCandidatures = () => {
     try {
       await axios.put(
         `http://localhost:8000/Student_Application/${selectedCandidature.id}`,
-        { ...selectedCandidature, candidatureStatus: "accepté" }
+        {
+          ...selectedCandidature,
+          candidatureStatus: "accepté",
+        }
       );
       setIsAcceptModalOpen(false);
     } catch (error) {
@@ -166,7 +171,11 @@ const ListeCandidatures = () => {
     try {
       await axios.put(
         `http://localhost:8000/Student_Application/${selectedCandidature.id}`,
-        { ...selectedCandidature, candidatureStatus: "refusé" }
+        {
+          ...selectedCandidature,
+          candidatureStatus: "refusé",
+          refuseReason: refuseMessage,
+        }
       );
       setIsRefuseModalOpen(false);
     } catch (error) {
@@ -274,7 +283,7 @@ const ListeCandidatures = () => {
               <strong>Adresse: </strong> {selectedCandidate.address}
             </p>
             <p>
-              <strong>lettre de recommendation: </strong>{" "}
+              <strong>Lettre de recommandation: </strong>{" "}
               {selectedCandidate.recommendationLetter}
             </p>
           </div>
@@ -396,8 +405,20 @@ const ListeCandidatures = () => {
         okText="Refuser"
         cancelText="Annuler"
       >
+        <Select
+          placeholder="Motif de refus par défaut"
+          style={{ width: "100%" }}
+          onChange={(value) => setRefuseMessage(value)}
+        >
+          {refuseReasons.map((reason, index) => (
+            <Option key={index} value={reason}>
+              {reason}
+            </Option>
+          ))}
+        </Select>
         <Input
-          placeholder="Ajouter un motif de refus"
+          placeholder="Motif de refus personnalisé"
+          style={{ marginTop: "1rem" }}
           value={refuseMessage}
           onChange={(e) => setRefuseMessage(e.target.value)}
         />

@@ -86,7 +86,7 @@
   ],
   "Student_Application": [
     {
-      "id": "2",
+      "id": "1",
       "OfferId": 1,
       "firstName": "Alice",
       "lastName": "Smith",
@@ -101,72 +101,8 @@
       "candidatureDate": "2024-04-15T09:21:17.052Z"
     },
     {
-      "id": "3",
-      "OfferId": 1,
-      "firstName": "Emily",
-      "lastName": "Johnson",
-      "phoneNumber": "555123456",
-      "email": "emily.johnson@example.com",
-      "studyLevel": "PhD",
-      "establishment": "Example Institute",
-      "address": "789 Oak St",
-      "cv": "CVs/CV_Emily_Johnson.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
-      "candidatureStatus": "refusé",
-      "candidatureDate": "2024-04-16T14:37:05.189Z"
-    },
-    {
-      "id": "4",
-      "OfferId": 4,
-      "firstName": "Alice",
-      "lastName": "Johnson",
-      "phoneNumber": "555123456",
-      "email": "alice.johnson@example.com",
-      "studyLevel": "Bachelor",
-      "establishment": "Example College",
-      "address": "789 Oak St",
-      "cv": "CVs/CV_Alice_Johnson.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
-      "candidatureStatus": "refusé",
-      "candidatureDate": "2024-04-17T18:45:12.321Z"
-    },
-    {
-      "candidatureStatus": "refusé",
-      "id": "5"
-    },
-    {
-      "id": "6",
-      "OfferId": 6,
-      "firstName": "Emily",
-      "lastName": "Davis",
-      "phoneNumber": "555456789",
-      "email": "emily.davis@example.com",
-      "studyLevel": "PhD",
-      "establishment": "Example Institute",
-      "address": "555 Maple St",
-      "cv": "CVs/CV_Emily_Davis.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
-      "candidatureStatus": "entretien RH programmé",
-      "candidatureDate": "2024-04-19T15:30:24.555Z"
-    },
-    {
       "id": "2",
       "OfferId": 1,
-      "firstName": "Alice",
-      "lastName": "Smith",
-      "phoneNumber": "987654321",
-      "email": "alice.smith@example.com",
-      "studyLevel": "Bachelor",
-      "establishment": "Another University",
-      "address": "456 Elm St",
-      "cv": "CVs/CV_Alice_Smith.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
-      "candidatureStatus": "entretien RH programmé",
-      "candidatureDate": "2024-04-15T09:21:17.052Z"
-    },
-    {
-      "id": "3",
-      "OfferId": 1,
       "firstName": "Emily",
       "lastName": "Johnson",
       "phoneNumber": "555123456",
@@ -176,11 +112,11 @@
       "address": "789 Oak St",
       "cv": "CVs/CV_Emily_Johnson.pdf",
       "recommendationLetter": "llllllllllljsjjsjs",
-      "candidatureStatus": "entretien technique confirmé",
+      "candidatureStatus": "accepté",
       "candidatureDate": "2024-04-16T14:37:05.189Z"
     },
     {
-      "id": "4",
+      "id": "3",
       "OfferId": 2,
       "firstName": "Michael",
       "lastName": "Brown",
@@ -192,10 +128,11 @@
       "cv": "CVs/CV_Michael_Brown.pdf",
       "recommendationLetter": "llllllllllljsjjsjs",
       "candidatureStatus": "refusé",
-      "candidatureDate": "2024-04-18T10:12:03.415Z"
+      "candidatureDate": "2024-04-18T10:12:03.415Z",
+      "refuseReason": "Autre opportunité professionnelle"
     },
     {
-      "id": "5",
+      "id": "4",
       "OfferId": 2,
       "firstName": "Sarah",
       "lastName": "Davis",
@@ -206,11 +143,11 @@
       "address": "555 Maple St",
       "cv": "CVs/CV_Sarah_Davis.pdf",
       "recommendationLetter": "llllllllllljsjjsjs",
-      "candidatureStatus": "entretien RH confirmé",
+      "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-19T15:30:24.555Z"
     },
     {
-      "id": "6",
+      "id": "5",
       "OfferId": 2,
       "firstName": "Emma",
       "lastName": "Wilson",
@@ -221,11 +158,11 @@
       "address": "123 Main St",
       "cv": "CVs/CV_Emma_Wilson.pdf",
       "recommendationLetter": "llllllllllljsjjsjs",
-      "candidatureStatus": "entretien RH confirmé",
+      "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-17T18:45:12.321Z"
     },
     {
-      "id": "7",
+      "id": "6",
       "OfferId": 3,
       "firstName": "David",
       "lastName": "Martinez",
@@ -240,7 +177,7 @@
       "candidatureDate": "2024-04-20T12:30:45.789Z"
     },
     {
-      "id": "8",
+      "id": "7",
       "OfferId": 3,
       "firstName": "Sophia",
       "lastName": "Anderson",
@@ -255,7 +192,7 @@
       "candidatureDate": "2024-04-21T09:45:30.123Z"
     },
     {
-      "id": "9",
+      "id": "8",
       "OfferId": 3,
       "firstName": "Oliver",
       "lastName": "Garcia",
@@ -376,6 +313,28 @@
       "address": "lac3",
       "link": "",
       "technicalValidatorId": "3"
+    },
+    {
+      "id": "",
+      "CandidatId": "",
+      "type": "technique",
+      "date": "2024-04-02T23:00:00.000Z",
+      "heure": "16:30",
+      "mode": "présentiel",
+      "address": "lll",
+      "link": "",
+      "technicalValidatorId": "2"
+    },
+    {
+      "id": "",
+      "CandidatId": "",
+      "type": "RH",
+      "date": "2024-03-31T23:00:00.000Z",
+      "heure": "15:29",
+      "mode": "en ligne",
+      "address": "",
+      "link": "lll",
+      "technicalValidatorId": null
     }
   ],
   "TechnicalValidators": [
