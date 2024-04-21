@@ -11,23 +11,31 @@ import {
   Popover,
 } from "antd";
 import { FaRegUser } from "react-icons/fa";
+import {
+  BsCalendar,
+  BsPersonCheck,
+  BsPersonDash,
+  BsEye,
+  BsFillExclamationTriangleFill,
+} from "react-icons/bs";
 import CandidatsCard from "../../components/CandidatsCard/CandidatsCard";
 import ListeCandidatureCard from "../../components/CandidatureCard/ListeCandidatureCard";
 import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks";
 import Navbar from "../../components/Navbar/Navbar";
-import { BsSend } from "react-icons/bs";
-import { CgProfile } from "react-icons/cg";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { CandidaturesStatusList } from "../../components/CandidatureCard/statusUtils";
 
 const ListeCandidatures = () => {
   const { Option } = Select;
-  const [candidatures, setCandidatures] = useState([]);
+  const [candidatures, setCandidatures] = useState({});
   const [candidats, setCandidats] = useState([]);
   const [selectedCandidature, setSelectedCandidature] = useState(null);
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
+  const [isRefuseModalOpen, setIsRefuseModalOpen] = useState(false);
+  const [acceptMessage, setAcceptMessage] = useState("");
+  const [refuseMessage, setRefuseMessage] = useState("");
   const [interview, setInterview] = useState({
     id: "",
     CandidatId: "",
@@ -42,13 +50,19 @@ const ListeCandidatures = () => {
   const [technicalValidators, setTechnicalValidators] = useState([]);
   const [selectedTechnicalValidator, setSelectedTechnicalValidator] =
     useState(null);
+  const [selectedCandidate, setSelectedCandidate] = useState(null); // New state for selected candidate
 
   const getStudentApplicationsForOffer = async () => {
     try {
       const response = await axios.get(
         `http://localhost:8000/Student_Application?OfferId=${id}`
       );
+      const countByStatus = response.data.reduce((acc, curr) => {
+        acc[curr.candidatureStatus] = (acc[curr.candidatureStatus] || 0) + 1;
+        return acc;
+      }, {});
       setCandidats(response.data);
+      setCandidatures(countByStatus);
     } catch (error) {
       console.error(
         "Erreur lors de la récupération des candidatures étudiantes :",
@@ -74,7 +88,7 @@ const ListeCandidatures = () => {
   useEffect(() => {
     getStudentApplicationsForOffer();
     fetchTechnicalValidators();
-  }, []);
+  }, []); // Use empty array as second argument to run effect only once
 
   const handleProgramInterview = (candidature) => {
     setSelectedCandidature(candidature);
@@ -88,6 +102,26 @@ const ListeCandidatures = () => {
         technicalValidatorId: selectedTechnicalValidator,
       });
       console.log("Entretien programmé avec succès", response.data);
+
+      const newStatus =
+        interview.type === "RH"
+          ? "entretien RH programmé"
+          : "entretien technique programmé";
+      const updatedCandidature = {
+        ...selectedCandidature,
+        candidatureStatus: newStatus,
+      };
+
+      await axios.put(
+        `http://localhost:8000/Student_Application/${selectedCandidature.id}`,
+        updatedCandidature
+      );
+
+      const updatedCandidats = candidats.map((candidat) =>
+        candidat.id === selectedCandidature.id ? updatedCandidature : candidat
+      );
+
+      setCandidats(updatedCandidats);
       setIsModalOpen(false);
     } catch (error) {
       console.error("Erreur lors de la programmation de l'entretien", error);
@@ -101,6 +135,82 @@ const ListeCandidatures = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const acceptCandidate = (candidat) => {
+    setSelectedCandidature(candidat);
+    setIsAcceptModalOpen(true);
+  };
+
+  const handleAcceptModalOk = async () => {
+    try {
+      await axios.put(
+        `http://localhost:8000/Student_Application/${selectedCandidature.id}`,
+        { ...selectedCandidature, candidatureStatus: "accepté" }
+      );
+      setIsAcceptModalOpen(false);
+    } catch (error) {
+      console.error("Erreur lors de l'acceptation du candidat", error);
+    }
+  };
+
+  const handleAcceptModalCancel = () => {
+    setIsAcceptModalOpen(false);
+  };
+
+  const refuseCandidate = (candidat) => {
+    setSelectedCandidature(candidat);
+    setIsRefuseModalOpen(true);
+  };
+
+  const handleRefuseModalOk = async () => {
+    try {
+      await axios.put(
+        `http://localhost:8000/Student_Application/${selectedCandidature.id}`,
+        { ...selectedCandidature, candidatureStatus: "refusé" }
+      );
+      setIsRefuseModalOpen(false);
+    } catch (error) {
+      console.error("Erreur lors du refus du candidat", error);
+    }
+  };
+
+  const handleRefuseModalCancel = () => {
+    setIsRefuseModalOpen(false);
+  };
+
+  const viewProfile = (candidat) => {
+    setSelectedCandidate(candidat);
+  };
+
+  const actions = [
+    {
+      name: "programmer un entretien",
+      onClick: handleProgramInterview,
+      disabled: (candidat) =>
+        ["en cours", "entretien technique", "entretien RH programmé"].includes(
+          candidat.candidatureStatus
+        ),
+      Icon: BsCalendar,
+    },
+    {
+      name: "voir profil",
+      onClick: viewProfile,
+      disabled: () => false,
+      Icon: BsEye,
+    },
+    {
+      name: "accepter",
+      onClick: acceptCandidate,
+      disabled: () => false,
+      Icon: BsPersonCheck,
+    },
+    {
+      name: "refuser",
+      onClick: refuseCandidate,
+      disabled: () => false,
+      Icon: BsPersonDash,
+    },
+  ];
 
   return (
     <div className="offres-page">
@@ -120,26 +230,57 @@ const ListeCandidatures = () => {
           Title={`${candidat.firstName} ${candidat.lastName}`}
           candidatureStatus={candidat.candidatureStatus}
           candidatureDate={candidat.candidatureDate}
-          showActions={true}
-          firstButtonName="programmer un entretien"
-          secondButtonName="voir profil"
-          FirstIcon={BsSend}
-          SecondIcon={CgProfile}
-          firstButtonFunction={() => handleProgramInterview(candidat)}
-          isProgramInterviewDisabled={
-            [
-              "en cours",
-              "entretien technique",
-              "entretien RH programmé",
-            ].includes(candidat.candidatureStatus)
-              ? false
-              : true
-          }
-          statusRefusePopover={
-            candidat.candidatureStatus === "refusé" ? candidat.motifRefus : null
-          }
+          actions={actions.map((action) => ({
+            ...action,
+            onClick: () => action.onClick(candidat),
+            disabled: action.disabled(candidat),
+          }))}
+          description={candidat.description}
         />
       ))}
+      <Modal
+        title="Profil du candidat"
+        visible={selectedCandidate !== null}
+        onCancel={() => setSelectedCandidate(null)}
+        footer={[
+          <Button key="back" onClick={() => setSelectedCandidate(null)}>
+            Fermer
+          </Button>,
+        ]}
+      >
+        {selectedCandidate && (
+          <div>
+            <p>
+              <strong>Nom: </strong> {selectedCandidate.firstName}{" "}
+              {selectedCandidate.lastName}
+            </p>
+            <p>
+              <strong>Email: </strong> {selectedCandidate.email}
+            </p>
+            <p>
+              <strong>Téléphone: </strong> {selectedCandidate.phoneNumber}
+            </p>
+            <p>
+              <strong>Niveau: </strong> {selectedCandidate.studyLevel}
+            </p>
+            <p>
+              <strong>Etablissement: </strong>{" "}
+              {selectedCandidate.establishement}
+            </p>
+            <p>
+              <strong>CV: </strong> {selectedCandidate.cv}
+            </p>
+            <p>
+              <strong>Adresse: </strong> {selectedCandidate.address}
+            </p>
+            <p>
+              <strong>lettre de recommendation: </strong>{" "}
+              {selectedCandidate.recommendationLetter}
+            </p>
+          </div>
+        )}
+      </Modal>
+
       <Modal
         title="Programmer un entretien"
         visible={isModalOpen}
@@ -230,6 +371,36 @@ const ListeCandidatures = () => {
             </>
           )}
         </div>
+      </Modal>
+
+      <Modal
+        title="Accepter le candidat"
+        visible={isAcceptModalOpen}
+        onOk={handleAcceptModalOk}
+        onCancel={handleAcceptModalCancel}
+        okText="Accepter"
+        cancelText="Annuler"
+      >
+        <Input
+          placeholder="Ajouter un message personnalisé"
+          value={acceptMessage}
+          onChange={(e) => setAcceptMessage(e.target.value)}
+        />
+      </Modal>
+
+      <Modal
+        title="Refuser le candidat"
+        visible={isRefuseModalOpen}
+        onOk={handleRefuseModalOk}
+        onCancel={handleRefuseModalCancel}
+        okText="Refuser"
+        cancelText="Annuler"
+      >
+        <Input
+          placeholder="Ajouter un motif de refus"
+          value={refuseMessage}
+          onChange={(e) => setRefuseMessage(e.target.value)}
+        />
       </Modal>
     </div>
   );

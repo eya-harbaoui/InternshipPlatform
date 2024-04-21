@@ -1,41 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import CandidatureCard from "./CandidatureCard";
 import { Popover } from "antd";
 import "./ListeCandidatureCard.css";
+
 const ListeCandidatureCard = ({
   Title,
   candidatureStatus,
   candidatureDate,
-  firstButtonName,
-  secondButtonName,
-  FirstIcon: FirstIcon,
-  SecondIcon: SecondIcon,
-  firstButtonFunction,
-  isProgramInterviewDisabled,
-  
+  actions,
+  description,
 }) => {
-  
   return (
     <div className="candidature-card">
       <CandidatureCard
         Title={Title}
         candidatureDate={candidatureDate}
         candidatureStatus={candidatureStatus}
-      ></CandidatureCard>
+        description={description}
+      />
       <div className="actions">
-        <span
-          className="action"
-          onClick={firstButtonFunction}
-          disabled={isProgramInterviewDisabled}
-        >
-          {FirstIcon && <FirstIcon className="action-icon" />}
-          {firstButtonName}
-        </span>
-        <span className="action">
-          {SecondIcon && <SecondIcon className="action-icon" />}
-          {secondButtonName}
-        </span>
-        
+        {actions.map((action, index) => (
+          <span
+            key={index}
+            className="action"
+            onClick={action.onClick}
+            disabled={action.disabled}
+          >
+            {action.Icon && <action.Icon className="action-icon" />}
+            {action.name}
+          </span>
+        ))}
       </div>
     </div>
   );
