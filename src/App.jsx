@@ -4,6 +4,7 @@ import Signup from "./pages/Signup/signup";
 import Login from "./pages/Login/login";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
+import "./sb-admin-2.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import Offres from "./pages/Offres/Offres";
 import Postuler from "./pages/Postuler/Postuler";
@@ -12,6 +13,14 @@ import InternDetails from "./pages/InternDetails/InternDetails";
 import Acceuil from "./pages/Acceuil/Acceuil";
 import OffresRH from "./pages/OffresRH/OffresRH";
 import ListeCandidatures from "./pages/ListeCandidatures/ListeCandidatures";
+import Portal from "./components/Admin/Portal";
+import Dashboard from "./components/Admin/Dashboard";
+import Userlist from "./components/Admin/Userlist";
+import UserCreate from "./components/Admin/UserCreate";
+import UserView from "./components/Admin/UserView";
+import UserEdit from "./components/Admin/UserEdit";
+import TabUsers from "./components/Admin/TabUsers";
+import Domstages from "./components/Admin/DomaineStages";
 const App = () => {
   const isLoggedIn = window.localStorage.getItem("loggedIn");
   // Function to check if the user is logged in
@@ -39,6 +48,14 @@ const App = () => {
           <Route path="/UserDetails" element={<InternDetails />}></Route>
           <Route path="/RH_Offres" element={<OffresRH />}></Route>
           <Route path="/Liste_Candidatures" element={<ListeCandidatures/>}></Route>
+          <Route path='/portal' element={<Portal />}>
+          <Route path='dashboard' element={<Dashboard />} />
+          <Route path='user-list' element={<TabUsers />} />
+          <Route path='create-user' element={<UserCreate />} />
+          <Route path='user-view/:id' element={<UserView />} />
+          <Route path='user-edit/:id' element={<UserEdit />} />
+          <Route path='domainedestages' element={<Domstages />} />
+          </Route>
         </Routes>
       </div>
       <ToastContainer position="top-center"></ToastContainer>
