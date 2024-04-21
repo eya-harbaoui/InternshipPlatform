@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, InputNumber, Popconfirm, Table, Typography, Button, Space, Modal } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
+
 const EditableCell = ({
   editing,
   dataIndex,
@@ -47,9 +48,8 @@ const Domstages = () => {
 
   const edit = (record) => {
     form.setFieldsValue({
-      nom: '',
-      prénom: '',
-      email: '',
+      nomdomaine: '',
+      compétences: '',
       ...record,
     });
     setEditingKey(record.key);
@@ -151,7 +151,7 @@ const Domstages = () => {
               Modifier
             </Typography.Link>
             <Popconfirm
-              title="Êtes-vous sûr de vouloir supprimer cet utilisateur?"
+              title="Êtes-vous sûr de vouloir supprimer ce domaine?"
               onConfirm={() => handleDelete(record.key)}
             >
               <a style={{ marginLeft: 8, color: 'blue' }}>Supprimer</a>

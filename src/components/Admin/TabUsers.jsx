@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
-const originData = [];
-for (let i = 0; i < 100; i++) {
-    originData.push({
-        key: i.toString(),
-        nom: `Edward ${i}`,
-        prénom: `John ${i}`,
-        email: `edward.john${i}@example.com`,
-      });
-}
+import { Form, Input, InputNumber, Popconfirm, Table, Typography, Button, Space, Modal } from 'antd';
+import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+
+
 const EditableCell = ({
   editing,
   dataIndex,
@@ -31,7 +25,7 @@ const EditableCell = ({
           rules={[
             {
               required: true,
-              message: `Please Input ${title}!`,
+              message: `SVP Ajoutez ${title}!`,
             },
           ]}
         >
@@ -43,23 +37,30 @@ const EditableCell = ({
     </td>
   );
 };
-const TabUsers = () => {
+
+const TabUtilisateurs = () => {
   const [form] = Form.useForm();
-  const [data, setData] = useState(originData);
+  const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const isEditing = (record) => record.key === editingKey;
+
   const edit = (record) => {
     form.setFieldsValue({
       nom: '',
-      prénom: '',
-      email: '',
+      prenom: '',
+      Email: '',
+      Role: '',
       ...record,
     });
     setEditingKey(record.key);
   };
+
   const cancel = () => {
     setEditingKey('');
   };
+
   const save = async (key) => {
     try {
       const row = await form.validateFields();
@@ -79,7 +80,7 @@ const TabUsers = () => {
         setEditingKey('');
       }
     } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
+      console.log('Validation échouée:', errInfo);
     }
   };
 
@@ -88,28 +89,63 @@ const TabUsers = () => {
     setData(newData);
   };
 
+  const handleAddDomain = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleModalOk = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        const newData = [...data];
+        newData.push({
+          key: newData.length.toString(),
+          nom: values.nom,
+          prenom: values.prenom,
+          email: values.email,
+          role: values.role,
+        });
+        setData(newData);
+        setIsModalVisible(false);
+      })
+      .catch((errorInfo) => {
+        console.log('Validation failed:', errorInfo);
+      });
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+  };
+
   const columns = [
     {
-      title: 'nom',
+      title: 'Nom',
       dataIndex: 'nom',
-      width: '25%',
-      editable: true,
-    },
-    {
-      title: 'prénom',
-      dataIndex: 'prénom',
       width: '15%',
       editable: true,
     },
     {
-      title: 'email',
-      dataIndex: 'email',
-      width: '40%',
+      title: 'Prénom',
+      dataIndex: 'prenom',
+      width: '15%',
       editable: true,
     },
     {
+        title: 'Email',
+        dataIndex: 'email',
+        width: '20%',
+        editable: true,
+      },
+      {
+        title: 'Role',
+        dataIndex: 'role',
+        width: '25%',
+        editable: true,
+      },
+    {
       title: 'opération',
       dataIndex: 'opération',
+      width: '35%',
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
@@ -127,22 +163,22 @@ const TabUsers = () => {
             </Popconfirm>
           </span>
         ) : (
-        <span>
-          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-            Modifier
-          </Typography.Link>
-          <Popconfirm 
-                  title="Êtes-vous sûr de vouloir supprimer cet utilisateur?"
-                  onConfirm={() => handleDelete(record.key)}
-                >
-                  <a style={{ marginLeft: 8, color: 'blue' }}>Supprimer</a>
-                </Popconfirm>
+          <span>
+            <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+              Modifier
+            </Typography.Link>
+            <Popconfirm
+              title="Êtes-vous sûr de vouloir supprimer ce domaine?"
+              onConfirm={() => handleDelete(record.key)}
+            >
+              <a style={{ marginLeft: 8, color: 'blue' }}>Supprimer</a>
+            </Popconfirm>
           </span>
-          
         );
       },
     },
   ];
+
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
       return col;
@@ -158,23 +194,73 @@ const TabUsers = () => {
       }),
     };
   });
+
   return (
-    <Form form={form} component={false}>
-      <Table
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        bordered
-        dataSource={data}
-        columns={mergedColumns}
-        rowClassName="editable-row"
-        pagination={{
-          onChange: cancel,
-        }}
-      />
-    </Form>
+    <>
+      <Typography.Title level={2} style={{ marginBottom: '20px' }}> Utilisateurs</Typography.Title>
+      <Button
+        type="primary"
+        style={{ float: 'right', marginBottom: '20px' }}
+        icon={<PlusOutlined />}
+        onClick={handleAddDomain}
+      >
+        Ajouter un utilisateur
+      </Button>
+      <Form form={form} component={false}>
+        <Table
+          components={{
+            body: {
+              cell: EditableCell,
+            },
+          }}
+          bordered
+          dataSource={data}
+          columns={mergedColumns}
+          rowClassName="editable-row"
+          pagination={{
+            onChange: cancel,
+          }}
+        />
+      </Form>
+      <Modal
+        title="Ajouter un utilisateur"
+        visible={isModalVisible}
+        onOk={handleModalOk}
+        onCancel={handleModalCancel}
+      >
+        <Form form={form} layout="vertical">
+          <Form.Item
+            name="Nom"
+            label="nom"
+            rules={[{ required: true, message: 'SVP entrez le nom de l'/'utilisateur' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="Prénom"
+            label="prenom"
+            rules={[{ required: true, message: 'SVP entrez le prénom de l'/'utilisateur' }]}
+          >
+            <Input />
+            </Form.Item>
+            <Form.Item
+            name="Email"
+            label="email"
+            rules={[{ required: true, message: 'SVP entrez l'/'email' }]}
+          >
+            <Input />
+            </Form.Item>
+          <Form.Item
+            name="Role"
+            label="role"
+            rules={[{ required: true, message: 'SVP entrez le role de l'/'utilisateur' }]}
+          >
+            <Input.TextArea />
+          </Form.Item>
+        </Form>
+      </Modal>
+    </>
   );
 };
-export default TabUsers;
+
+export default TabUtilisateurs;
