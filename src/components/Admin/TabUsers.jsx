@@ -8,9 +8,12 @@ import {
   Typography,
   Button,
   Modal,
+  Select,
 } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
+
+const { Option } = Select;
 
 const EditableCell = ({
   editing,
@@ -38,7 +41,17 @@ const EditableCell = ({
             },
           ]}
         >
-          {inputNode}
+          {dataIndex === "role" ? (
+            <Select>
+              <Option value="admin">Admin</Option>
+              <Option value="RH">RH</Option>
+              <Option value="validateur technique">Validateur Technique</Option>
+              <Option value="etudiant">Étudiant</Option>
+              <Option value="manager">Manager</Option>
+            </Select>
+          ) : (
+            inputNode
+          )}
         </Form.Item>
       ) : (
         children
@@ -66,7 +79,7 @@ const TabUtilisateurs = () => {
     }
   };
 
-  const isEditing = (record) => record.key === editingKey;
+  const isEditing = (record) => record.id === editingKey;
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -75,7 +88,7 @@ const TabUtilisateurs = () => {
       email: record.email,
       role: record.role,
     });
-    setEditingKey(record.key);
+    setEditingKey(record.id);
   };
 
   const cancel = () => {
@@ -86,7 +99,7 @@ const TabUtilisateurs = () => {
     try {
       const row = await form.validateFields();
       const newData = [...data];
-      const index = newData.findIndex((item) => key === item.key);
+      const index = newData.findIndex((item) => key === item.id);
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, {
@@ -110,7 +123,7 @@ const TabUtilisateurs = () => {
   const handleDelete = async (key) => {
     try {
       await axios.delete(`http://localhost:8000/users_admin/${key}`);
-      const newData = data.filter((item) => item.key !== key);
+      const newData = data.filter((item) => item.id !== key);
       setData(newData);
     } catch (error) {
       console.error("Failed to delete:", error);
@@ -119,6 +132,7 @@ const TabUtilisateurs = () => {
 
   const handleAddUser = () => {
     setIsModalVisible(true);
+    form.resetFields(); // Reset form fields when opening modal
   };
 
   const handleModalOk = async () => {
@@ -171,7 +185,7 @@ const TabUtilisateurs = () => {
         const editable = isEditing(record);
         return editable ? (
           <span>
-            <a onClick={() => save(record.key)} style={{ marginRight: 8 }}>
+            <a onClick={() => save(record.id)} style={{ marginRight: 8 }}>
               Enregistrer
             </a>
             <Popconfirm title="Voulez-vous annuler?" onConfirm={cancel}>
@@ -185,7 +199,7 @@ const TabUtilisateurs = () => {
             </a>
             <Popconfirm
               title="Voulez-vous supprimer cet utilisateur?"
-              onConfirm={() => handleDelete(record.key)}
+              onConfirm={() => handleDelete(record.id)}
             >
               <a style={{ marginLeft: 8, color: "blue" }}>Supprimer</a>
             </Popconfirm>
@@ -219,7 +233,7 @@ const TabUtilisateurs = () => {
       </Typography.Title>
       <Button
         type="primary"
-        style={{ float: "right", marginBottom: "20px" }}
+        style={{ float: "right", marginBottom: "20px" ,backgroundColor:"#ff735c"}}
         icon={<PlusOutlined />}
         onClick={handleAddUser}
       >
@@ -289,7 +303,13 @@ const TabUtilisateurs = () => {
               },
             ]}
           >
-            <Input />
+            <Select>
+              <Option value="admin">Admin</Option>
+              <Option value="RH">RH</Option>
+              <Option value="validateur technique">Validateur Technique</Option>
+              <Option value="etudiant">Étudiant</Option>
+              <Option value="manager">Manager</Option>
+            </Select>
           </Form.Item>
         </Form>
       </Modal>

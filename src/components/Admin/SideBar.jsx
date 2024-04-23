@@ -12,7 +12,7 @@ library.add(faUserShield);
 
 function Sidebar() {
     return (
-        <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul className="navbar-nav-1  sidebar sidebar-dark accordion" id="accordionSidebar">
 
             {/* <!-- Sidebar - Brand --> */}
             <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">

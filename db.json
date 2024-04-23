@@ -30,7 +30,7 @@
         "communication": "Intermédiaire",
         "analytics": "Débutant"
       },
-      "OfferStatus": "en cours de validation",
+      "OfferStatus": "publié",
       "publicationDate": "2024-04-12",
       "offerLink": "offre-de-stage-2"
     },
@@ -87,86 +87,72 @@
     }
   ],
   "user": [
-      {
-        "id": "1",
-        "firstName": "eya",
-        "lastName": "HARBAOUI",
-        "phoneNumber": "96386045",
-        "email": "eya.harbaoui@ensi-uma.tn",
-        "studyLevel": "Bachelor",
-        "establishment": "University of Example111111111",
-        "address": "Impasse Bahr omen Cité Ennkhilet",
-        "cv": "CVs/CV_Example.pdf",
-        "recommendationLetter": "llllllllllljsjjsjs",
-        "role": "student"
-      }
+    {
+      "id": "1",
+      "firstName": "eya",
+      "lastName": "HARBAOUI",
+      "phoneNumber": "96386045",
+      "email": "eya.harbaoui@ensi-uma.tn",
+      "studyLevel": "Bachelor",
+      "establishment": "University of Example111111111",
+      "address": "Impasse Bahr omen Cité Ennkhilet",
+      "cv": "CVs/CV_Example.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "role": "student"
+    }
   ],
   "users_admin": [
     {
-      "key": "1",
-      "nom": "User 1",
-      "prenom": "Prenom 1",
-      "email": "user1@example.com",
-      "role": "Admin"
-    },
-    {
-      "key": "2",
-      "nom": "User 2",
-      "prenom": "Prenom 2",
-      "email": "user2@example.com",
-      "role": "Utilisateur"
-    },
-    {
-      "key": "3",
       "nom": "User 3",
       "prenom": "Prenom 3",
       "email": "user3@example.com",
-      "role": "Admin"
+      "role": "Admin",
+      "id": "3"
     },
     {
-      "key": "4",
+      "id": "4",
       "nom": "User 4",
       "prenom": "Prenom 4",
       "email": "user4@example.com",
       "role": "Utilisateur"
     },
     {
-      "key": "5",
+      "id": "5",
       "nom": "User 5",
       "prenom": "Prenom 5",
       "email": "user5@example.com",
       "role": "Admin"
     },
     {
-      "key": "6",
+      "id": "6",
       "nom": "User 6",
       "prenom": "Prenom 6",
       "email": "user6@example.com",
       "role": "Utilisateur"
     },
     {
-      "key": "7",
+      "id": "7",
       "nom": "User 7",
       "prenom": "Prenom 7",
       "email": "user7@example.com",
       "role": "Admin"
     },
     {
-      "key": "8",
+      "id": "8",
       "nom": "User 8",
       "prenom": "Prenom 8",
       "email": "user8@example.com",
       "role": "Utilisateur"
     },
     {
-      "key": "9",
+      "id": "9",
       "nom": "User 9",
       "prenom": "Prenom 9",
       "email": "user9@example.com",
       "role": "Admin"
     },
     {
-      "key": "10",
+      "id": "10",
       "nom": "User 10",
       "prenom": "Prenom 10",
       "email": "user10@example.com",
@@ -295,6 +281,36 @@
       "recommendationLetter": "llllllllllljsjjsjs",
       "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-22T15:20:10.456Z"
+    },
+    {
+      "id": "1",
+      "OfferId": "2",
+      "firstName": "eya",
+      "lastName": "HARBAOUI",
+      "phoneNumber": "96386045",
+      "email": "eya.harbaoui@ensi-uma.tn",
+      "studyLevel": "Bachelor",
+      "establishment": "University of Example111111111",
+      "address": "Impasse Bahr omen Cité Ennkhilet",
+      "cv": "CVs/CV_Example.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "en cours",
+      "candidatureDate": "2024-04-23T13:49:31.735Z"
+    },
+    {
+      "id": "1",
+      "OfferId": "2",
+      "firstName": "eya",
+      "lastName": "HARBAOUI",
+      "phoneNumber": "96386044",
+      "email": "eya.harbaoui@ensi-uma.tn",
+      "studyLevel": "Bachelor",
+      "establishment": "University of Example111111111",
+      "address": "Impasse Bahr omen Cité Ennkhilet",
+      "cv": "CVs/CV_Example.pdf",
+      "recommendationLetter": "llllllllllljsjjsjs",
+      "candidatureStatus": "en cours",
+      "candidatureDate": "2024-04-23T13:49:44.589Z"
     }
   ],
   "Interviews": [
@@ -480,16 +496,7 @@
   ],
   "Domaines": [
     {
-      "domainName": "Développement web",
-      "competences": [
-        "HTML",
-        "CSS",
-        "JavaScript"
-      ],
-      "id": "dbbb"
-    },
-    {
-      "domainName": "Data Science",
+      "domainName": "Dév",
       "competences": [
         "Python",
         "Machine Learning",
@@ -534,13 +541,13 @@
       "id": "d11a"
     },
     {
-      "domainName": "Développement logiciel",
+      "domainName": "Développement Web",
       "competences": [
-        "Java",
-        "C++",
-        "Version Control (Git)"
+        "HTML",
+        "CSS",
+        "JS"
       ],
-      "id": "df53"
+      "id": "87a7"
     }
   ]
 }

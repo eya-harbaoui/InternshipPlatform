@@ -6,20 +6,20 @@ import {
 } from 'chart.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
-//import "./sb-admin-2.min.css";
+import "./sb-admin-2.min.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title);
 
 function Dashboard() {
     return (
         <>
-            <div className="d-sm-flex align-items-center justify-content-between mb-4">
+            {/*<div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
                 <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                     <FontAwesomeIcon icon={faDownload} style={{ marginRight: "0.25rem", color: "white" }} />
                     Generer un rapport
                 </a>
-            </div>
+    </div>*/}
             <div className="row">
                 <Card title="Stage publié /mois" value="7" color="primary" />
                 <Card title="Stage publié /An" value="30" color="success" />
