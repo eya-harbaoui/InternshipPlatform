@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Select,
-  Button,
-  Row,
-  Col,
-  Modal,
-  DatePicker,
-  Input,
-  Radio,
-} from "antd";
+import { Select, Row, Col, Modal, DatePicker, Input, Radio } from "antd";
 import { FaRegUser } from "react-icons/fa";
 import { BsCalendar, BsPersonCheck, BsPersonDash, BsEye } from "react-icons/bs";
 import CandidatsCard from "../../components/CandidatsCard/CandidatsCard";
@@ -26,12 +17,15 @@ const ListeCandidatures = () => {
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [isCandidatureFileModalOpen, setIsCandidatureFileModalOpen] =
+    useState(false);
   const [isRefuseModalOpen, setIsRefuseModalOpen] = useState(false);
   const [acceptMessage, setAcceptMessage] = useState("");
   const [refuseMessage, setRefuseMessage] = useState("");
   const [interview, setInterview] = useState({
     id: "",
-    CandidatId: "",
+    CandidatureId: "",
     type: "",
     date: null,
     heure: null,
@@ -52,17 +46,58 @@ const ListeCandidatures = () => {
     "Motivation insuffisante",
     "Compétences techniques non adaptées",
   ];
-
   const getStudentApplicationsForOffer = async () => {
     try {
       const response = await axios.get(
         `http://localhost:8000/Student_Application?OfferId=${id}`
       );
-      const countByStatus = response.data.reduce((acc, curr) => {
+
+      console.log("Réponse des candidatures:", response.data);
+
+      // Récupérer les données des étudiants associées à chaque candidature
+      const candidatsWithInfo = await Promise.all(
+        response.data.map(async (candidature) => {
+          // Récupérer les informations de l'étudiant pour cette candidature
+          const studentResponse = await axios.get(
+            `http://localhost:8000/Students/${candidature.studentId}`
+          );
+          console.log("Réponse de l'étudiant:", studentResponse.data);
+
+          // Pour la récupération de l'entretien
+          const interviewResponse = await axios.get(
+            `http://localhost:8000/Interviews?CandidatureId=${candidature.id}`
+          );
+          console.log("Réponse de l'entretien:", interviewResponse.data);
+
+          // Pour la récupération de l'offre
+          const offerResponse = await axios.get(
+            `http://localhost:8000/offers?id=${id}`
+          );
+
+          console.log("Réponse de l'offre:", offerResponse.data);
+
+          // Fusionner les données de le l'entretien avec la candidature
+          return {
+            ...candidature,
+            ...studentResponse.data,
+            ...interviewResponse.data[0],
+            ...offerResponse.data[0],
+          };
+        })
+      );
+
+      console.log("Candidats avec informations:", candidatsWithInfo);
+
+      // Calculer le nombre de candidatures par statut
+      const countByStatus = candidatsWithInfo.reduce((acc, curr) => {
         acc[curr.candidatureStatus] = (acc[curr.candidatureStatus] || 0) + 1;
         return acc;
       }, {});
-      setCandidats(response.data);
+
+      console.log("Nombre de candidatures par statut:", countByStatus);
+
+      // Mettre à jour l'état des candidatures et des étudiants
+      setCandidats(candidatsWithInfo);
       setCandidatures(countByStatus);
     } catch (error) {
       console.error(
@@ -89,10 +124,11 @@ const ListeCandidatures = () => {
   useEffect(() => {
     getStudentApplicationsForOffer();
     fetchTechnicalValidators();
-  });
+  }, [id]);
 
   const handleProgramInterview = (candidature) => {
     setSelectedCandidature(candidature);
+    setInterview({ ...interview, CandidatureId: candidature.id });
     showModal();
   };
 
@@ -139,7 +175,6 @@ const ListeCandidatures = () => {
 
   const acceptCandidate = (candidat) => {
     setSelectedCandidature(candidat);
-    console.log("selected candidat", candidat);
     setIsAcceptModalOpen(true);
   };
 
@@ -189,6 +224,18 @@ const ListeCandidatures = () => {
 
   const viewProfile = (candidat) => {
     setSelectedCandidate(candidat);
+    setIsProfileModalOpen(true);
+  };
+
+  const viewProfileCancel = () => {
+    setIsProfileModalOpen(false);
+  };
+  const viewCandidatureFile = (candidat) => {
+    setSelectedCandidate(candidat);
+    setIsCandidatureFileModalOpen(true);
+  };
+  const viewCandidatureFileCancel = () => {
+    setIsCandidatureFileModalOpen(false);
   };
 
   const actions = [
@@ -202,11 +249,12 @@ const ListeCandidatures = () => {
       Icon: BsCalendar,
     },
     {
-      name: "voir profil",
-      onClick: viewProfile,
-      disabled: () => false,
-      Icon: BsEye,
+      name: "Fiche candidature",
+      onClick: viewCandidatureFile,
+      disabled: (candidat) => ["en cours"].includes(candidat.candidatureStatus),
+      Icon: FaRegUser,
     },
+
     {
       name: "accepter",
       onClick: acceptCandidate,
@@ -244,20 +292,19 @@ const ListeCandidatures = () => {
             onClick: () => action.onClick(candidat),
             disabled: action.disabled(candidat),
           }))}
-          description={candidat.description}
+          statusRefusePopover={candidat.refuseReason}
+          onClickTitle={() => {
+            viewProfile(candidat);
+          }}
         />
       ))}
-      <Modal
-        title="Profil du candidat"
-        visible={selectedCandidate !== null}
-        onCancel={() => setSelectedCandidate(null)}
-        footer={[
-          <Button key="back" onClick={() => setSelectedCandidate(null)}>
-            Fermer
-          </Button>,
-        ]}
-      >
-        {selectedCandidate && (
+      {isProfileModalOpen && (
+        <Modal
+          title="Profil du candidat"
+          visible={isProfileModalOpen}
+          onOk={viewProfileCancel}
+          onCancel={viewProfileCancel}
+        >
           <div>
             <p>
               <strong>Nom: </strong> {selectedCandidate.firstName}{" "}
@@ -273,8 +320,7 @@ const ListeCandidatures = () => {
               <strong>Niveau: </strong> {selectedCandidate.studyLevel}
             </p>
             <p>
-              <strong>Etablissement: </strong>{" "}
-              {selectedCandidate.establishement}
+              <strong>Etablissement: </strong> {selectedCandidate.establishment}
             </p>
             <p>
               <strong>CV: </strong> {selectedCandidate.cv}
@@ -287,142 +333,185 @@ const ListeCandidatures = () => {
               {selectedCandidate.recommendationLetter}
             </p>
           </div>
-        )}
-      </Modal>
+        </Modal>
+      )}
 
-      <Modal
-        title="Programmer un entretien"
-        visible={isModalOpen}
-        onOk={sendInterview}
-        onCancel={handleCancel}
-        okText="Envoyer un email au candidat"
-        cancelText="Annuler l'envoie"
-      >
-        <div className="modal-content">
-          <h3>Type d'entretien</h3>
-          <Select
-            placeholder="Sélectionnez le type d'entretien"
-            style={{ width: "100%" }}
-            onChange={(value) => setInterview({ ...interview, type: value })}
-            value={interview.type}
-          >
-            <Option value="RH">Entretien RH</Option>
-            <Option value="technique">Entretien technique</Option>
-          </Select>
-
-          <h3>Date de l'entretien</h3>
-          <DatePicker
-            onChange={(date) => setInterview({ ...interview, date })}
-            value={interview.date}
-          />
-
-          <h3>Heure de l'entretien</h3>
-          <Input
-            type="time"
-            onChange={(e) =>
-              setInterview({ ...interview, heure: e.target.value })
-            }
-            value={interview.heure}
-          />
-
-          <h3>Mode de l'entretien</h3>
-          <Radio.Group
-            onChange={(e) =>
-              setInterview({ ...interview, mode: e.target.value })
-            }
-            value={interview.mode}
-          >
-            <Radio value="en ligne">En ligne</Radio>
-            <Radio value="présentiel">Présentiel</Radio>
-          </Radio.Group>
-
-          {interview.mode === "présentiel" && (
-            <>
-              <h3>Adresse de l'entretien</h3>
-              <Input
-                placeholder="Adresse de l'entretien"
-                onChange={(e) =>
-                  setInterview({ ...interview, address: e.target.value })
-                }
-                value={interview.address}
-              />
-            </>
-          )}
-
-          {interview.mode === "en ligne" && (
-            <>
-              <h3>Lien de l'entretien</h3>
-              <Input
-                placeholder="Lien de l'entretien en ligne"
-                onChange={(e) =>
-                  setInterview({ ...interview, link: e.target.value })
-                }
-                value={interview.link}
-              />
-            </>
-          )}
-
-          {interview.type === "technique" && (
-            <>
-              <h3>Validateur technique</h3>
-              <Select
-                placeholder="Sélectionnez un validateur technique"
-                style={{ width: "100%" }}
-                onChange={(value) => setSelectedTechnicalValidator(value)}
-                value={selectedTechnicalValidator}
-              >
-                {technicalValidators.map((validator) => (
-                  <Option key={validator.id} value={validator.id}>
-                    {`${validator.firstName} ${validator.lastName}`}
-                  </Option>
-                ))}
-              </Select>
-            </>
-          )}
-        </div>
-      </Modal>
-
-      <Modal
-        title="Accepter le candidat"
-        visible={isAcceptModalOpen}
-        onOk={handleAcceptModalOk}
-        onCancel={handleAcceptModalCancel}
-        okText="Accepter"
-        cancelText="Annuler"
-      >
-        <Input
-          placeholder="Ajouter un message personnalisé"
-          value={acceptMessage}
-          onChange={(e) => setAcceptMessage(e.target.value)}
-        />
-      </Modal>
-
-      <Modal
-        title="Refuser le candidat"
-        visible={isRefuseModalOpen}
-        onOk={handleRefuseModalOk}
-        onCancel={handleRefuseModalCancel}
-        okText="Refuser"
-        cancelText="Annuler"
-      >
-        <Select
-          placeholder="Motif de refus par défaut"
-          style={{ width: "100%" }}
-          onChange={(value) => setRefuseMessage(value)}
+      {isModalOpen && (
+        <Modal
+          title="Programmer un entretien"
+          visible={isModalOpen}
+          onOk={sendInterview}
+          onCancel={handleCancel}
+          okText="Envoyer un email au candidat"
+          cancelText="Annuler l'envoie"
         >
-          {refuseReasons.map((reason, index) => (
-            <Option key={index} value={reason}>
-              {reason}
-            </Option>
-          ))}
-        </Select>
-        <Input
-          placeholder="Motif de refus personnalisé"
-          style={{ marginTop: "1rem" }}
-          value={refuseMessage}
-          onChange={(e) => setRefuseMessage(e.target.value)}
-        />
-      </Modal>
+          <div className="modal-content">
+            <h3>Type d'entretien</h3>
+            <Select
+              placeholder="Sélectionnez le type d'entretien"
+              style={{ width: "100%" }}
+              onChange={(value) => setInterview({ ...interview, type: value })}
+              value={interview.type}
+            >
+              <Option value="RH">Entretien RH</Option>
+              <Option value="technique">Entretien technique</Option>
+            </Select>
+
+            <h3>Date de l'entretien</h3>
+            <DatePicker
+              onChange={(date) => setInterview({ ...interview, date })}
+              value={interview.date}
+            />
+
+            <h3>Heure de l'entretien</h3>
+            <Input
+              type="time"
+              onChange={(e) =>
+                setInterview({ ...interview, heure: e.target.value })
+              }
+              value={interview.heure}
+            />
+
+            <h3>Mode de l'entretien</h3>
+            <Radio.Group
+              onChange={(e) =>
+                setInterview({ ...interview, mode: e.target.value })
+              }
+              value={interview.mode}
+            >
+              <Radio value="en ligne">En ligne</Radio>
+              <Radio value="présentiel">Présentiel</Radio>
+            </Radio.Group>
+
+            {interview.mode === "présentiel" && (
+              <>
+                <h3>Adresse de l'entretien</h3>
+                <Input
+                  placeholder="Adresse de l'entretien"
+                  onChange={(e) =>
+                    setInterview({ ...interview, address: e.target.value })
+                  }
+                  value={interview.address}
+                />
+              </>
+            )}
+
+            {interview.mode === "en ligne" && (
+              <>
+                <h3>Lien de l'entretien</h3>
+                <Input
+                  placeholder="Lien de l'entretien en ligne"
+                  onChange={(e) =>
+                    setInterview({ ...interview, link: e.target.value })
+                  }
+                  value={interview.link}
+                />
+              </>
+            )}
+
+            {interview.type === "technique" && (
+              <>
+                <h3>Validateur technique</h3>
+                <Select
+                  placeholder="Sélectionnez un validateur technique"
+                  style={{ width: "100%" }}
+                  onChange={(value) => setSelectedTechnicalValidator(value)}
+                  value={selectedTechnicalValidator}
+                >
+                  {technicalValidators.map((validator) => (
+                    <Option key={validator.id} value={validator.id}>
+                      {`${validator.firstName} ${validator.lastName}`}
+                    </Option>
+                  ))}
+                </Select>
+              </>
+            )}
+          </div>
+        </Modal>
+      )}
+
+      {isAcceptModalOpen && (
+        <Modal
+          title="Accepter le candidat"
+          visible={isAcceptModalOpen}
+          onOk={handleAcceptModalOk}
+          onCancel={handleAcceptModalCancel}
+          okText="Accepter"
+          cancelText="Annuler"
+        >
+          <Input
+            placeholder="Ajouter un message personnalisé"
+            value={acceptMessage}
+            onChange={(e) => setAcceptMessage(e.target.value)}
+          />
+        </Modal>
+      )}
+
+      {isRefuseModalOpen && (
+        <Modal
+          title="Refuser le candidat"
+          visible={isRefuseModalOpen}
+          onOk={handleRefuseModalOk}
+          onCancel={handleRefuseModalCancel}
+          okText="Refuser"
+          cancelText="Annuler"
+        >
+          <Select
+            placeholder="Motif de refus par défaut"
+            style={{ width: "100%" }}
+            onChange={(value) => setRefuseMessage(value)}
+          >
+            {refuseReasons.map((reason, index) => (
+              <Option key={index} value={reason}>
+                {reason}
+              </Option>
+            ))}
+          </Select>
+          <Input
+            placeholder="Motif de refus personnalisé"
+            style={{ marginTop: "1rem" }}
+            value={refuseMessage}
+            onChange={(e) => setRefuseMessage(e.target.value)}
+          />
+        </Modal>
+      )}
+
+      {isCandidatureFileModalOpen && (
+        <Modal
+          title="Fiche Candidature"
+          visible={isCandidatureFileModalOpen}
+          onOk={viewCandidatureFile}
+          onCancel={viewCandidatureFileCancel}
+        >
+          <div>
+            <p>
+              <strong>Nom de stage: </strong> {selectedCandidate.stageTitle}{" "}
+            </p>
+            <p>
+              <strong>Nom de stagiaire: </strong> {selectedCandidate.firstName}{" "}
+              {selectedCandidate.lastName}
+            </p>
+            <p>
+              <strong>Type de l'entretien: </strong> {selectedCandidate.type}{" "}
+            </p>
+            <p>
+              <strong>Date et heure de l'entretien: </strong>{" "}
+              {selectedCandidate.date} {selectedCandidate.heure}
+            </p>
+            <p>
+              <strong>Mode de l'entretien: </strong> {selectedCandidate.mode}{" "}
+            </p>
+            <h3>Compétences demandées :</h3>
+            {Object.entries(selectedCandidate.competences).map(
+              ([competence, niveau]) => (
+                <p key={competence}>
+                  {competence}: {niveau}
+                </p>
+              )
+            )}
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };

@@ -1,36 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input, Popconfirm, Table, Typography, Button, Modal, Tag } from 'antd';
-import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import axios from 'axios';
-import { Flex } from 'antd';
+import React, { useState, useEffect } from "react";
+import {
+  Form,
+  Input,
+  InputNumber,
+  Popconfirm,
+  Table,
+  Typography,
+  Button,
+  Modal,
+  Select,
+  Tag,
+} from "antd";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  PlusOutlined,
+  CheckOutlined,
+  CloseOutlined,
+} from "@ant-design/icons";
+import axios from "axios";
 
-const tagInputStyle = {
-  width: 100,
-  height: 22,
-  marginInlineEnd: 8,
-  verticalAlign: 'top',
+const { Option } = Select;
+
+const EditableCell = ({
+  editing,
+  dataIndex,
+  title,
+  inputType,
+  record,
+  index,
+  children,
+  ...restProps
+}) => {
+  const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
+  return (
+    <td {...restProps}>
+      {editing ? (
+        <Form.Item
+          name={dataIndex}
+          style={{
+            margin: 0,
+          }}
+          rules={[
+            {
+              required: true,
+              message: `Please enter ${title}!`,
+            },
+          ]}
+        >
+          {inputNode}
+        </Form.Item>
+      ) : (
+        children
+      )}
+    </td>
+  );
 };
 
 const Domstages = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
-  const [editingKey, setEditingKey] = useState('');
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [inputVisible, setInputVisible] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-  const [editingCompetences, setEditingCompetences] = useState({});
+  const [editingKey, setEditingKey] = useState("");
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [addingCompetences, setAddingCompetences] = useState([]);
+  const [editRecord, setEditRecord] = useState(null);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/Domaines');
+      const response = await axios.get("http://localhost:8000/Domaines");
       setData(response.data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -39,300 +84,206 @@ const Domstages = () => {
   const edit = (record) => {
     form.setFieldsValue({
       domainName: record.domainName,
-      competences: record.competences.map((comp) => comp),
     });
     setEditingKey(record.id);
-    setEditingCompetences({ ...editingCompetences, [record.id]: record.competences });
+    setEditRecord(record);
   };
 
   const cancel = () => {
-    setEditingKey('');
-    setEditingCompetences({});
+    setEditingKey("");
     form.resetFields();
+    setEditRecord(null);
   };
 
-  const save = async (key) => {
+  const save = async (record) => {
     try {
-      const row = await form.validateFields();
-      const newData = [...data];
-      const index = newData.findIndex((item) => key === item.id);
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, {
-          ...item,
-          ...row,
-          competences: editingCompetences[key] || [],
-        });
-        await axios.put(`http://localhost:8000/Domaines/${key}`, {
-          domainName: row.domainName,
-          competences: newData[index].competences,
-        });
-        setData(newData);
-        setEditingKey('');
-        setEditingCompetences({});
-      } else {
-        newData.push(row);
-        setData(newData);
-        setEditingKey('');
-        setEditingCompetences({});
-      }
-    } catch (errInfo) {
-      console.log('Validation failed:', errInfo);
+      const updatedData = await form.validateFields([
+        "domainName",
+      ]); // Validation des champs du formulaire
+      const newData = data.map((item) => {
+        if (item.id === record.id) {
+          return { ...item, ...updatedData };
+        }
+        return item;
+      });
+      await axios.put(`http://localhost:8000/Domaines/${record.id}`, {
+        ...record,
+        ...updatedData,
+      }); // Appel réseau pour mettre à jour les données sur le serveur
+      setData(newData); // Mise à jour de l'état local avec les nouvelles données
+      setEditingKey(""); // Réinitialisation de l'état d'édition
+      setEditRecord(null);
+    } catch (errorInfo) {
+      console.error("Validation failed:", errorInfo); // Gestion des erreurs de validation
+      // Afficher un message d'erreur à l'utilisateur ou effectuer d'autres actions appropriées
     }
   };
 
+
+  const handleEditModalOk = async () => {
+    if (!editRecord) return;
+    try {
+      const updatedData = await form.validateFields();
+      await axios.put(`http://localhost:8000/Domaines/${editRecord.id}`, {
+        ...editRecord, // Envoyer toutes les données du record existant
+        ...updatedData, // Mise à jour des données modifiées
+      });
+      fetchData();
+      setIsEditModalVisible(false);
+      form.resetFields();
+      setAddingCompetences([]);
+    } catch (errorInfo) {
+      console.log("Validation failed:", errorInfo);
+    }
+  };
   const handleDelete = async (key) => {
     try {
       await axios.delete(`http://localhost:8000/Domaines/${key}`);
       const newData = data.filter((item) => item.id !== key);
       setData(newData);
     } catch (error) {
-      console.error('Error deleting domain:', error);
+      console.error("Error deleting domain:", error);
     }
   };
 
   const handleAddDomain = () => {
-    setIsModalVisible(true);
+    setIsAddModalVisible(true);
+    form.resetFields(); // Réinitialiser les champs du formulaire lors de l'ouverture de la modalité
   };
 
-  const handleModalOk = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        axios.post('http://localhost:8000/Domaines', {
-          domainName: values.domainName,
-          competences: addingCompetences,
-        });
-        fetchData();
-        setIsModalVisible(false);
-        form.resetFields();
-      })
-      .catch((errorInfo) => {
-        console.log('Validation failed:', errorInfo);
+  const handleAddModalOk = async () => {
+    try {
+      const values = await form.validateFields();
+      await axios.post("http://localhost:8000/Domaines", {
+        domainName: values.domainName,
+        competences: addingCompetences,
       });
+      fetchData();
+      setIsAddModalVisible(false);
+      form.resetFields();
+      setAddingCompetences([]);
+    } catch (errorInfo) {
+      console.log("Validation failed:", errorInfo);
+    }
   };
 
-  const handleModalCancel = () => {
-    setIsModalVisible(false);
+  const handleAddModalCancel = () => {
+    setIsAddModalVisible(false);
     form.resetFields();
+    setAddingCompetences([]);
   };
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+  const handleEditCompetences = (record) => {
+    setEditRecord(record);
+    setIsEditModalVisible(true);
+    setAddingCompetences(record.competences);
+    form.setFieldsValue({
+      domainName: record.domainName,
+    });
   };
 
-  const handleInputConfirm = () => {
-    if (inputValue && !addingCompetences.includes(inputValue)) {
-      setAddingCompetences([...addingCompetences, inputValue]);
-      setInputVisible(false);
-      setInputValue('');
-    }
+
+  const handleEditModalCancel = () => {
+    setIsEditModalVisible(false);
+    form.resetFields();
+    setAddingCompetences([]);
   };
 
-  const handleRemoveCompetence = (record, compToRemove) => {
-    const newData = [...data];
-    const index = newData.findIndex((item) => record.id === item.id);
-    if (index > -1) {
-      const item = newData[index];
-      const updatedCompetences = item.competences.filter((comp) => comp !== compToRemove);
-      newData.splice(index, 1, {
-        ...item,
-        competences: updatedCompetences,
-      });
-      setData(newData);
-      setEditingCompetences({ ...editingCompetences, [record.id]: updatedCompetences });
-    }
+  const handleAddingCompetenceChange = (value) => {
+    setAddingCompetences(value);
   };
 
-  const handleEditCompetence = (record, index, newComp) => {
-    const newData = [...data];
-    const dataIndex = newData.findIndex((item) => record.id === item.id);
-    if (dataIndex > -1) {
-      const item = newData[dataIndex];
-      const updatedCompetences = [...item.competences];
-      updatedCompetences[index] = newComp;
-      newData[dataIndex] = {
-        ...item,
-        competences: updatedCompetences,
-      };
-      setData(newData);
-      setEditingCompetences({ ...editingCompetences, [record.id]: updatedCompetences });
-    }
-  };
-
-  const handleAddCompetence = () => {
-    if (inputValue && !addingCompetences.includes(inputValue)) {
-      setAddingCompetences([...addingCompetences, inputValue]);
-      setInputValue('');
-    }
-  };
-
-  const handleEditDomainName = (record, newName) => {
-    const newData = [...data];
-    const index = newData.findIndex((item) => record.id === item.id);
-    if (index > -1) {
-      newData[index].domainName = newName;
-      setData(newData);
-    }
-  };
-
-  const EditableCell = ({
-    editing,
-    dataIndex,
-    title,
-    inputType,
-    record,
-    index,
-    children,
-    ...restProps
-  }) => {
-    const inputNode = inputType === 'tags' ? <Input mode="tags" /> : <Input />;
-    return (
-      <td {...restProps}>
-        {editing ? (
-          <Form.Item
-            name={dataIndex}
-            style={{
-              margin: 0,
-            }}
-            rules={[
-              {
-                required: true,
-                message: `SVP Ajoutez ${title}!`,
-              },
-            ]}
-          >
-            {inputNode}
-          </Form.Item>
-        ) : (
-          children
-        )}
-      </td>
-    );
-  };
-
-  const mergedColumns = [
+  const columns = [
     {
-      title: 'Nom du domaine',
-      dataIndex: 'domainName',
-      width: '25%',
+      title: "Nom du domaine",
+      dataIndex: "domainName",
+      width: "15%",
       editable: true,
-      render: (text, record) => {
-        return isEditing(record) ? (
-          <Form.Item
-            name="domainName"
-            style={{ margin: 0 }}
-            rules={[{ required: true, message: 'Veuillez entrer le nom du domaine!' }]}
-          >
-            <Input value={text} onChange={(e) => handleEditDomainName(record, e.target.value)} />
-          </Form.Item>
-        ) : (
-          text
-        );
-      },
     },
     {
-      title: 'Compétences requises',
-      dataIndex: 'competences',
-      width: '40%',
-      editable: true,
-      render: (competences, record) => (
+      title: "Compétences Requises",
+      dataIndex: "competences",
+      width: "15%",
+      render: (competences) => (
         <>
-          {isEditing(record) ? (
-            <Flex gap="4px 0" wrap="wrap">
-              {editingCompetences[record.id].map((comp, index) => (
-                <Tag
-                  key={index}
-                  closable
-                  onClose={() => handleRemoveCompetence(record, comp)}
-                  onClick={() => {
-                    const newComp = prompt("Modifier la compétence", comp);
-                    if (newComp !== null) {
-                      handleEditCompetence(record, index, newComp);
-                    }
-                  }}
-                >
-                  {comp}
-                </Tag>
-              ))}
-              {inputVisible && (
-                <Input
-                  style={tagInputStyle}
-                  value={inputValue}
-                  onChange={handleInputChange}
-                  onPressEnter={handleInputConfirm}
-                />
-              )}
-              {!inputVisible && (
-                <Tag
-                  style={tagInputStyle}
-                  onClick={() => setInputVisible(true)}
-                  icon={<PlusOutlined />}
-                >
-                  Compétence
-                </Tag>
-              )}
-            </Flex>
-          ) : (
-            <>
-              {competences && competences.length > 0 ? (
-                competences.map((comp, index) => <Tag key={index}>{comp}</Tag>)
-              ) : (
-                <span>Aucune compétence requise</span>
-              )}
-            </>
-          )}
+          {competences &&
+            competences.map((competence) => (
+              <Tag key={competence}>{competence}</Tag>
+            ))}
         </>
       ),
     },
     {
-      title: 'Opération',
-      dataIndex: 'operation',
+      title: "Opération",
+      dataIndex: "operation",
+      width: "25%",
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
           <span>
-            <Typography.Link
-              onClick={() => save(record.id)}
-              style={{
-                marginRight: 8,
-              }}
-            >
+            <a onClick={() => save(record)} style={{ marginRight: 8 }}>
               Enregistrer
-            </Typography.Link>
-            <Popconfirm title="Vous voulez annuler?" onConfirm={cancel}>
+            </a>
+            <Popconfirm title="Voulez-vous annuler?" onConfirm={cancel}>
               <a>Annuler</a>
             </Popconfirm>
           </span>
         ) : (
           <span>
-            <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+            <a disabled={editingKey !== ""} onClick={() => edit(record)}>
               Modifier
-            </Typography.Link>
+            </a>
             <Popconfirm
-              title="Êtes-vous sûr de vouloir supprimer ce domaine?"
+              title="Voulez-vous supprimer cet utilisateur?"
               onConfirm={() => handleDelete(record.id)}
             >
-              <a style={{ marginLeft: 8, color: 'blue' }}>Supprimer</a>
+              <a style={{ marginLeft: 8, color: "blue" }}>Supprimer</a>
             </Popconfirm>
+            <a
+              onClick={() => handleEditCompetences(record)}
+              style={{ marginLeft: 8 }}
+            >
+              Modifier Compétences
+            </a>
           </span>
         );
       },
     },
   ];
 
+  const mergedColumns = columns.map((col) => {
+    if (!col.editable) {
+      return col;
+    }
+
+    return {
+      ...col,
+      onCell: (record) => ({
+        record,
+        inputType: col.dataIndex === "age" ? "number" : "text",
+        dataIndex: col.dataIndex,
+        title: col.title,
+        editing: isEditing(record),
+      }),
+    };
+  });
+
   return (
     <>
-      <Typography.Title level={2} style={{ marginBottom: '20px' }}>
-        Domaines et compétences
+      <Typography.Title level={2} style={{ marginBottom: "20px" }}>
+        Domaines et Compétences
       </Typography.Title>
       <Button
         type="primary"
-        style={{ float: 'right', marginBottom: '20px', backgroundColor: "#ff735c" }}
+        style={{
+          float: "right",
+          marginBottom: "20px",
+          backgroundColor: "#ff735c",
+        }}
         icon={<PlusOutlined />}
         onClick={handleAddDomain}
       >
-        Ajouter un domaine
+        Ajouter un Domaine
       </Button>
       <Form form={form} component={false}>
         <Table
@@ -342,10 +293,7 @@ const Domstages = () => {
             },
           }}
           bordered
-          dataSource={data.map((item, index) => ({
-            ...item,
-            key: item.id ?? index.toString(),
-          }))}
+          dataSource={data}
           columns={mergedColumns}
           rowClassName="editable-row"
           pagination={{
@@ -355,52 +303,72 @@ const Domstages = () => {
       </Form>
       <Modal
         title="Ajouter un domaine"
-        visible={isModalVisible}
-        onOk={handleModalOk}
-        onCancel={handleModalCancel}
+        visible={isAddModalVisible}
+        onOk={handleAddModalOk}
+        onCancel={handleAddModalCancel}
       >
         <Form form={form} layout="vertical">
           <Form.Item
             name="domainName"
             label="Nom du domaine"
-            rules={[{ required: true, message: 'SVP entrez le nom du domaine' }]}
+            rules={[
+              {
+                required: true,
+                message: "SVP entrez le nom du domaine",
+              },
+            ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="competences"
-            label="Compétences requises"
-            rules={[{ required: true, message: 'SVP entrez les compétences requises' }]}
+            label="Compétences Requises"
+            rules={[
+              {
+                required: true,
+                message: "SVP entrez les compétences requises pour ce domaine",
+              },
+            ]}
           >
-            <Flex gap="4px 0" wrap="wrap">
-              {addingCompetences.map((comp) => (
-                <Tag key={comp} closable onClose={() => setAddingCompetences(addingCompetences.filter(c => c !== comp))}>
-                  {comp}
-                </Tag>
-              ))}
-              {inputVisible && (
-                <Input
-                  style={tagInputStyle}
-                  value={inputValue}
-                  onChange={handleInputChange}
-                  onPressEnter={handleInputConfirm}
-                />
-              )}
-              {!inputVisible && (
-                <Tag
-                  style={tagInputStyle}
-                  onClick={() => setInputVisible(true)}
-                  icon={<PlusOutlined />}
-                >
-                  Compétence
-                </Tag>
-              )}
-            </Flex>
+            <Select
+              mode="tags"
+              style={{ width: "100%" }}
+              placeholder="Ajouter compétences"
+              onChange={handleAddingCompetenceChange}
+              value={addingCompetences}
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
+      <Modal
+        title="Modifier les compétences"
+        visible={isEditModalVisible}
+        onOk={handleEditModalOk}
+        onCancel={handleEditModalCancel}
+      >
+        <Form form={form} layout="vertical">
+          <Form.Item
+            name="competences"
+            label="Compétences Requises"
+            initialValue={editRecord ? editRecord.competences : []}
+            rules={[
+              {
+                required: true,
+                message: "SVP entrez les compétences requises pour ce domaine",
+              },
+            ]}
+          >
+            <Select
+              mode="tags"
+              style={{ width: "100%" }}
+              placeholder="Modifier compétences"
+              onChange={handleAddingCompetenceChange}
+              value={addingCompetences}
+            />
           </Form.Item>
         </Form>
       </Modal>
     </>
   );
 };
-
 export default Domstages;

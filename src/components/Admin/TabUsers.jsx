@@ -68,7 +68,7 @@ const TabUtilisateurs = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   const fetchData = async () => {
     try {

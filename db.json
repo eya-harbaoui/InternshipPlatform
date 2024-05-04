@@ -47,7 +47,7 @@
         "iOS": "Débutant",
         "React Native": "Débutant"
       },
-      "OfferStatus": "archivé",
+      "OfferStatus": "publié",
       "publicationDate": "2024-04-01",
       "offerLink": "offre-de-stage-4"
     },
@@ -69,7 +69,7 @@
       "offerLink": "offre-de-stage-8"
     },
     {
-      "id": "ca593287-af48-4d9e-abf4-fc77bd378cbd",
+      "id": "9",
       "stageTitle": "dddd",
       "stageNature": "PFE",
       "modeTag": "Hybride",
@@ -81,24 +81,105 @@
         "CSS": "Intermédiaire",
         "JavaScript": "Avancé"
       },
-      "OfferStatus": "archivé",
-      "publicationDate": "",
-      "offerLink": "offre-de-stage-ca593287-af48-4d9e-abf4-fc77bd378cbd"
+      "OfferStatus": "publié",
+      "publicationDate": "2024-03-31",
+      "offerLink": "offre-de-stage-9"
+    },
+    {
+      "id": "10",
+      "stageTitle": "dddd",
+      "stageNature": "PFE",
+      "modeTag": "Hybride",
+      "domainTag": "Développement web",
+      "durationTag": "6 mois",
+      "stageDescription": "dddddddddddddddddddd",
+      "competences": {
+        "HTML": "Intermédiaire",
+        "CSS": "Intermédiaire",
+        "JavaScript": "Avancé"
+      },
+      "OfferStatus": "en cours de validation",
+      "publicationDate": "2024-02-20",
+      "offerLink": "offre-de-stage-10"
+    },
+    {
+      "id": "11",
+      "stageTitle": "dddd",
+      "stageNature": "PFE",
+      "modeTag": "Hybride",
+      "domainTag": "Développement web",
+      "durationTag": "6 mois",
+      "stageDescription": "dddddddddddddddddddd",
+      "competences": {
+        "HTML": "Intermédiaire",
+        "CSS": "Intermédiaire",
+        "JavaScript": "Avancé"
+      },
+      "OfferStatus": "publié",
+      "publicationDate": "2024-02-20",
+      "offerLink": "offre-de-stage-11"
     }
   ],
-  "user": [
+  "Students": [
     {
       "id": "1",
       "firstName": "eya",
       "lastName": "HARBAOUI",
-      "phoneNumber": "96386045",
       "email": "eya.harbaoui@ensi-uma.tn",
+      "password": " azertyu123@",
+      "phoneNumber": "96386045",
       "studyLevel": "Bachelor",
-      "establishment": "University of Example111111111",
+      "establishment": "ecole nationale des sciences de l'info ENSI",
       "address": "Impasse Bahr omen Cité Ennkhilet",
-      "cv": "CVs/CV_Example.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
-      "role": "student"
+      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]"
+    },
+    {
+      "id": "2",
+      "firstName": "Ahmed",
+      "lastName": "Ben Salah",
+      "email": "ahmed.bensalah@example.com",
+      "password": "P@ssw0rd!",
+      "phoneNumber": "98765432",
+      "studyLevel": "Master",
+      "establishment": "University of Tunis El Manar",
+      "address": "Avenue de la République, Tunis",
+      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]"
+    },
+    {
+      "id": "3",
+      "firstName": "Lina",
+      "lastName": "Zouari",
+      "email": "lina.zouari@example.com",
+      "password": "Qwerty123!",
+      "phoneNumber": "74125896",
+      "studyLevel": "PhD",
+      "establishment": "National School of Engineers of Sfax",
+      "address": "Route de Soukra, Sfax",
+      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]"
+    },
+    {
+      "id": "4",
+      "firstName": "Fatima",
+      "lastName": "Cherif",
+      "email": "fatima.cherif@example.com",
+      "password": "Fatima123!",
+      "phoneNumber": "555123456",
+      "studyLevel": "Bachelor",
+      "establishment": "Institut Supérieur des Etudes Technologiques de Sousse",
+      "address": "Rue Ibn Khaldoun, Sousse",
+      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]"
+    },
+    {
+      "id": "5",
+      "firstName": "Karim",
+      "lastName": "Maaloul",
+      "email": "karim.maaloul@example.com",
+      "password": "Karim123!",
+      "phoneNumber": "777654321",
+      "studyLevel": "Master",
+      "establishment": "Higher Institute of Management of Tunis",
+      "address": "Avenue de la Liberté, Tunis",
+      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]"
     }
   ],
   "users_admin": [
@@ -106,7 +187,7 @@
       "nom": "User 3",
       "prenom": "Prenom 3",
       "email": "user3@example.com",
-      "role": "Admin",
+      "role": "RH",
       "id": "3"
     },
     {
@@ -152,179 +233,166 @@
       "role": "Admin"
     },
     {
-      "id": "10",
       "nom": "User 10",
       "prenom": "Prenom 10",
       "email": "user10@example.com",
-      "role": "Utilisateur"
+      "role": "validateur technique",
+      "id": "10"
     }
   ],
   "Student_Application": [
     {
       "id": "1",
-      "OfferId": 1,
-      "firstName": "Alice",
-      "lastName": "Smith",
-      "phoneNumber": "987654321",
-      "email": "alice.smith@example.com",
-      "studyLevel": "Bachelor",
-      "establishment": "Another University",
-      "address": "456 Elm St",
-      "cv": "CVs/CV_Alice_Smith.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
-      "candidatureStatus": "entretien technique programmé",
+      "studentId": "1",
+      "OfferId": "1",
+      "candidatureStatus": "entretien RH programmé",
       "candidatureDate": "2024-04-15T09:21:17.052Z",
-      "refuseReason": "Manque d'expérience professionnelle"
+      "refuseReason": "Manque d'expérience professionnelle",
+      "firstName": "eya",
+      "lastName": "HARBAOUI",
+      "email": "eya.harbaoui@ensi-uma.tn",
+      "password": " azertyu123@",
+      "phoneNumber": "96386045",
+      "studyLevel": "Bachelor",
+      "establishment": "ecole nationale des sciences de l'info ENSI",
+      "address": "",
+      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]",
+      "CandidatureId": "1",
+      "date": "",
+      "mode": "",
+      "link": "",
+      "stageTitle": "Stage en développement web",
+      "stageNature": "PFA",
+      "modeTag": "Hybride",
+      "domainTag": "Développement web",
+      "durationTag": "4 mois",
+      "stageDescription": "Vous êtes passionné(e) par le développement web et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en développement web. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en programmation. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
+      "competences": {
+        "html": "Intermédiaire",
+        "css": "Avancé",
+        "javascript": "Débutant"
+      },
+      "OfferStatus": "en cours de validation",
+      "publicationDate": "2024-04-05",
+      "offerLink": "offre-de-stage-1"
     },
     {
       "id": "2",
-      "OfferId": 1,
-      "firstName": "Emily",
-      "lastName": "Johnson",
-      "phoneNumber": "555123456",
-      "email": "emily.johnson@example.com",
-      "studyLevel": "PhD",
-      "establishment": "Example Institute",
-      "address": "789 Oak St",
-      "cv": "CVs/CV_Emily_Johnson.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
+      "studentId": "1",
+      "OfferId": "2",
       "candidatureStatus": "accepté",
-      "candidatureDate": "2024-04-16T14:37:05.189Z"
+      "candidatureDate": "2024-04-16T14:37:05.189Z",
+      "refuseReason": ""
     },
     {
       "id": "3",
-      "OfferId": 2,
-      "firstName": "Michael",
-      "lastName": "Brown",
-      "phoneNumber": "555987654",
-      "email": "michael.brown@example.com",
-      "studyLevel": "Master",
-      "establishment": "University of Example222222222",
-      "address": "321 Pine St",
-      "cv": "CVs/CV_Michael_Brown.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
-      "candidatureStatus": "refusé",
-      "candidatureDate": "2024-04-18T10:12:03.415Z",
-      "refuseReason": "Autre opportunité professionnelle"
+      "studentId": "3",
+      "OfferId": "4",
+      "candidatureStatus": "entretien technique programmé",
+      "candidatureDate": "2024-04-20T12:30:45.789Z",
+      "refuseReason": ""
     },
     {
       "id": "4",
-      "OfferId": 2,
-      "firstName": "Sarah",
-      "lastName": "Davis",
-      "phoneNumber": "555456789",
-      "email": "sarah.davis@example.com",
-      "studyLevel": "PhD",
-      "establishment": "Example College",
-      "address": "555 Maple St",
-      "cv": "CVs/CV_Sarah_Davis.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
+      "studentId": "2",
+      "OfferId": "2",
       "candidatureStatus": "refusé",
-      "candidatureDate": "2024-04-19T15:30:24.555Z"
+      "candidatureDate": "2024-04-19T15:30:24.555Z",
+      "refuseReason": "Profil Non conforme aux attentes"
     },
     {
       "id": "5",
-      "OfferId": 2,
-      "firstName": "Emma",
-      "lastName": "Wilson",
-      "phoneNumber": "555123456",
-      "email": "emma.wilson@example.com",
-      "studyLevel": "Bachelor",
-      "establishment": "Example University",
-      "address": "123 Main St",
-      "cv": "CVs/CV_Emma_Wilson.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
+      "studentId": "2",
+      "OfferId": "3",
       "candidatureStatus": "refusé",
-      "candidatureDate": "2024-04-17T18:45:12.321Z"
+      "candidatureDate": "2024-04-17T18:45:12.321Z",
+      "refuseReason": "Motivation insuffisante"
     },
     {
       "id": "6",
-      "OfferId": 3,
-      "firstName": "David",
-      "lastName": "Martinez",
-      "phoneNumber": "555987654",
-      "email": "david.martinez@example.com",
-      "studyLevel": "Master",
-      "establishment": "University of Example333333333",
-      "address": "789 Oak St",
-      "cv": "CVs/CV_David_Martinez.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
+      "studentId": "3",
+      "OfferId": "4",
       "candidatureStatus": "en cours",
-      "candidatureDate": "2024-04-20T12:30:45.789Z"
+      "candidatureDate": "2024-04-20T12:30:45.789Z",
+      "refuseReason": ""
     },
     {
       "id": "7",
-      "OfferId": 3,
-      "firstName": "Sophia",
-      "lastName": "Anderson",
-      "phoneNumber": "555654321",
-      "email": "sophia.anderson@example.com",
-      "studyLevel": "PhD",
-      "establishment": "Another University",
-      "address": "456 Elm St",
-      "cv": "CVs/CV_Sophia_Anderson.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
+      "studentId": "3",
+      "OfferId": "4",
       "candidatureStatus": "accepté",
-      "candidatureDate": "2024-04-21T09:45:30.123Z"
+      "candidatureDate": "2024-04-21T09:45:30.123Z",
+      "refuseReason": ""
     },
     {
       "id": "8",
-      "OfferId": 3,
-      "firstName": "Oliver",
-      "lastName": "Garcia",
-      "phoneNumber": "555456789",
-      "email": "oliver.garcia@example.com",
-      "studyLevel": "Bachelor",
-      "establishment": "Example College",
-      "address": "555 Maple St",
-      "cv": "CVs/CV_Oliver_Garcia.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
+      "studentId": "4",
+      "OfferId": "4",
       "candidatureStatus": "refusé",
-      "candidatureDate": "2024-04-22T15:20:10.456Z"
+      "candidatureDate": "2024-04-22T15:20:10.456Z",
+      "refuseReason": ""
     },
     {
-      "id": "1",
-      "OfferId": "2",
-      "firstName": "eya",
-      "lastName": "HARBAOUI",
-      "phoneNumber": "96386045",
-      "email": "eya.harbaoui@ensi-uma.tn",
-      "studyLevel": "Bachelor",
-      "establishment": "University of Example111111111",
-      "address": "Impasse Bahr omen Cité Ennkhilet",
-      "cv": "CVs/CV_Example.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
+      "id": "9",
+      "studentId": "5",
+      "OfferId": "4",
       "candidatureStatus": "en cours",
-      "candidatureDate": "2024-04-23T13:49:31.735Z"
+      "candidatureDate": "2024-04-23T13:49:31.735Z",
+      "refuseReason": ""
     },
     {
-      "id": "1",
-      "OfferId": "2",
-      "firstName": "eya",
-      "lastName": "HARBAOUI",
-      "phoneNumber": "96386044",
-      "email": "eya.harbaoui@ensi-uma.tn",
-      "studyLevel": "Bachelor",
-      "establishment": "University of Example111111111",
-      "address": "Impasse Bahr omen Cité Ennkhilet",
-      "cv": "CVs/CV_Example.pdf",
-      "recommendationLetter": "llllllllllljsjjsjs",
+      "id": "10",
+      "studentId": "5",
+      "OfferId": "4",
       "candidatureStatus": "en cours",
-      "candidatureDate": "2024-04-23T13:49:44.589Z"
+      "candidatureDate": "2024-04-23T13:49:44.589Z",
+      "refuseReason": ""
+    },
+    {
+      "id": "11",
+      "studentId": "4",
+      "OfferId": "4",
+      "candidatureStatus": "en cours",
+      "candidatureDate": "2024-04-23T19:55:35.408Z",
+      "refuseReason": ""
+    },
+    {
+      "id": "12",
+      "studentId": "4",
+      "OfferId": "1",
+      "candidatureStatus": "en cours",
+      "candidatureDate": "2024-04-23T19:56:29.268Z",
+      "refuseReason": ""
+    },
+    {
+      "id": "13",
+      "studentId": "2",
+      "OfferId": "3",
+      "candidatureStatus": "en cours",
+      "candidatureDate": "2024-04-23T20:49:51.437Z",
+      "refuseReason": ""
+    },
+    {
+      "id": "14",
+      "studentId": "2",
+      "OfferId": "5",
+      "candidatureStatus": "en cours",
+      "candidatureDate": "2024-04-26T18:55:26.995Z",
+      "refuseReason": ""
     }
   ],
   "Interviews": [
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "1",
+      "CandidatureId": "1",
       "date": "",
       "mode": "",
       "address": "",
       "link": ""
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "2",
+      "CandidatureId": "2",
       "type": "RH",
       "date": "2024-04-03T23:00:00.000Z",
       "heure": "04:17",
@@ -333,8 +401,8 @@
       "link": "https://meet.google.com/zbi-yinv-sjo"
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "3",
+      "CandidatureId": "3",
       "type": "technique",
       "date": "2024-05-01T23:00:00.000Z",
       "heure": "15:00",
@@ -344,8 +412,8 @@
       "technicalValidatorId": "2"
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "4",
+      "CandidatureId": "4",
       "type": "RH",
       "date": "2024-04-04T23:00:00.000Z",
       "heure": "01:02",
@@ -355,8 +423,8 @@
       "technicalValidatorId": null
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "5",
+      "CandidatureId": "5",
       "type": "technique",
       "date": "2024-04-04T23:00:00.000Z",
       "heure": "01:02",
@@ -366,8 +434,8 @@
       "technicalValidatorId": "3"
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "6",
+      "CandidatureId": "6",
       "type": "technique",
       "date": "2024-04-01T23:00:00.000Z",
       "heure": "01:07",
@@ -377,8 +445,8 @@
       "technicalValidatorId": "3"
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "7",
+      "CandidatureId": "7",
       "type": "RH",
       "date": "2024-03-31T23:00:00.000Z",
       "heure": "05:18",
@@ -388,8 +456,8 @@
       "technicalValidatorId": null
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "8",
+      "CandidatureId": "8",
       "type": "technique",
       "date": "2024-03-31T23:00:00.000Z",
       "heure": "07:33",
@@ -399,8 +467,8 @@
       "technicalValidatorId": "3"
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "9",
+      "CandidatureId": "9",
       "type": "RH",
       "date": "2024-03-31T23:00:00.000Z",
       "heure": "07:33",
@@ -410,8 +478,8 @@
       "technicalValidatorId": "3"
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "10",
+      "CandidatureId": "10",
       "type": "technique",
       "date": "2024-04-02T23:00:00.000Z",
       "heure": "07:57",
@@ -421,8 +489,8 @@
       "technicalValidatorId": "3"
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "11",
+      "CandidatureId": "11",
       "type": "technique",
       "date": "2024-04-02T23:00:00.000Z",
       "heure": "16:30",
@@ -432,8 +500,8 @@
       "technicalValidatorId": "2"
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "12",
+      "CandidatureId": "12",
       "type": "RH",
       "date": "2024-03-31T23:00:00.000Z",
       "heure": "15:29",
@@ -443,8 +511,8 @@
       "technicalValidatorId": null
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "13",
+      "CandidatureId": "13",
       "type": "RH",
       "date": "2024-04-01T23:00:00.000Z",
       "heure": "00:27",
@@ -454,8 +522,8 @@
       "technicalValidatorId": null
     },
     {
-      "id": "",
-      "CandidatId": "",
+      "id": "14",
+      "CandidatureId": "14",
       "type": "technique",
       "date": "2024-04-01T23:00:00.000Z",
       "heure": "00:27",
@@ -463,6 +531,17 @@
       "address": "lac2",
       "link": "",
       "technicalValidatorId": "2"
+    },
+    {
+      "id": "",
+      "CandidatureId": "1",
+      "type": "RH",
+      "date": "2024-04-24T23:00:00.000Z",
+      "heure": "15:00",
+      "mode": "en ligne",
+      "address": "",
+      "link": "lien 1",
+      "technicalValidatorId": null
     }
   ],
   "TechnicalValidators": [
@@ -496,7 +575,7 @@
   ],
   "Domaines": [
     {
-      "domainName": "Dév",
+      "domainName": "Data Science",
       "competences": [
         "Python",
         "Machine Learning",
@@ -548,6 +627,23 @@
         "JS"
       ],
       "id": "87a7"
+    },
+    {
+      "domainName": "intelligence artificielle",
+      "id": "6da5",
+      "competences": [
+        "ML",
+        "DL"
+      ]
+    },
+    {
+      "domainName": "devops",
+      "id": "de3b",
+      "competences": [
+        "git ",
+        "docker",
+        "linux"
+      ]
     }
   ]
 }

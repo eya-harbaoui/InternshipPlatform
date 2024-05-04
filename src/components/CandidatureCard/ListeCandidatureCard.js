@@ -8,7 +8,8 @@ const ListeCandidatureCard = ({
   candidatureStatus,
   candidatureDate,
   actions,
-  description,
+  statusRefusePopover,
+  onClickTitle
 }) => {
   return (
     <div className="candidature-card">
@@ -16,7 +17,8 @@ const ListeCandidatureCard = ({
         Title={Title}
         candidatureDate={candidatureDate}
         candidatureStatus={candidatureStatus}
-        description={description}
+        statusRefusePopover={statusRefusePopover}
+        onClickTitle={onClickTitle}
       />
       <div className="actions">
         {actions.map((action, index) => (

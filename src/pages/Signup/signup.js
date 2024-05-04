@@ -1,83 +1,72 @@
-import { Link } from "react-router-dom";
-import "./signup.css";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PasswordInput from "../../components/Input/PasswordInput";
+import "./signup.css";
 
 const Signup = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [numTel, setNumTel] = useState("");
+  const navigate = useNavigate();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    passwordRetyped: "",
+    phoneNumber: "",
+  });
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
-  };
-
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
-  };
-
-  const handleNumTelChange = (e) => {
-    setNumTel(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password || !firstName || !lastName || !numTel) {
-      toast.error("All fields must be filled out!");
-    } else if (password.length < 6) {
-      toast.warning("Short Password");
-    } else if (
-      password.search(/\d/) === -1 ||
-      password.search(/[a-zA-Z]/) === -1 ||
-      password.search(/[!@#$%^&*()_+.,;:]/) === -1
-    ) {
-      toast.warning(
-        "Your password must contain alphanumeric characters and symbols!"
-      );
-    } else {
-      axios
-        .post(
-          "http://localhost:5000/register",
-          {
-            firstName,
-            lastName,
-            email,
-            numTel,
-            password,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
-          }
-        )
-        .then((response) => {
-          if (response.data.error) {
-            toast.error(response.data.error);
-          } else {
-            toast.success("Registration successful!");
-            window.location = "/login";
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      passwordRetyped,
+      phoneNumber,
+    } = formData;
+
+    if (password !== passwordRetyped) {
+      toast.error("Les mots de passe ne correspondent pas");
+      return;
     }
+
+    if (!password || !password.trim()) {
+      toast.error("Veuillez entrer un mot de passe");
+      return;
+    }
+
+    axios
+      .post("http://localhost:8000/user", {
+        firstName,
+        lastName,
+        email,
+        password,
+        phoneNumber,
+      })
+      .then((response) => {
+        if (response.data.error) {
+          toast.error(response.data.error);
+        } else {
+          toast.success("Inscription réussie !");
+          navigate("/login"); // Redirection vers la page de connexion
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -87,50 +76,68 @@ const Signup = () => {
         <div className="left-signup">
           <img className="img-signup" src="./images/SignUp.jpg" alt="signup" />
         </div>
-        <div className="right-signup">
+        <form className="right-signup" onSubmit={handleSubmit}>
           <input
-            className="input-signup-right "
+            className="input-signup-right"
             type="text"
-            value={lastName}
-            onChange={handleLastNameChange}
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
             placeholder="Nom"
           />
           <input
-            className="input-signup-right "
+            className="input-signup-right"
             type="text"
-            value={firstName}
-            onChange={handleFirstNameChange}
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
             placeholder="Prénom"
           />
           <input
-            className="input-signup-right "
+            className="input-signup-right"
             type="text"
-            value={numTel}
-            onChange={handleNumTelChange}
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleChange}
             placeholder="Numéro de téléphone"
           />
           <input
-            className="input-signup-right "
+            className="input-signup-right"
             type="email"
-            value={email}
-            onChange={handleEmailChange}
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             placeholder="Adresse e-mail"
           />
           <PasswordInput
+            name="password"
             placeholder="Mot de passe"
-            onChange={handlePasswordChange}
+            value={formData.password}
+            onChange={(value) =>
+              setFormData((prevFormData) => ({
+                ...prevFormData,
+                password: value,
+              }))
+            }
           />
           <PasswordInput
+            name="passwordRetyped"
             placeholder="Re-tapez Mot de passe"
-            onChange={handlePasswordChange}
+            value={formData.passwordRetyped}
+            onChange={(value) =>
+              setFormData((prevFormData) => ({
+                ...prevFormData,
+                passwordRetyped: value,
+              }))
+            }
           />
-          <button type="submit" className="btn-signup" onClick={handleSubmit}>
+          <button className="btn-signup" onClick={handleSubmit}>
             S'inscrire
           </button>
           <p className="text-signup">
             Vous avez déjà un compte ? <Link to="/login">Connectez-vous</Link>
           </p>
-        </div>
+        </form>
       </div>
     </div>
   );

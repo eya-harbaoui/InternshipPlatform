@@ -8,6 +8,7 @@ const CandidatureCard = ({
   candidatureDate,
   candidatureStatus,
   statusRefusePopover,
+  onClickTitle,
 }) => {
   const { tagColor, tagText } = getStatusTag(candidatureStatus);
 
@@ -30,11 +31,11 @@ const CandidatureCard = ({
   return (
     <>
       <div className="title-and-tag">
-        <h3>{Title}</h3>
+        <h3 onClick={onClickTitle}>{Title}</h3>
         {candidatureStatus === "refusé" && (
           <Popover
             content={popoverContent}
-            title="Cliquer pour voir le Motif du refus"
+            title="Motif du refus"
           >
             <Tag color={tagColor} className="status_tag" onClick={showModal}>
               {tagText}

@@ -5,9 +5,4 @@ export const RHNavbarLinks = [
     url: "/RH_details",
     cName: "nav-links",
   },
-  {
-    title: "Liste des candidatures",
-    url: "/Liste_candidatures",
-    cName: "nav-links",
-  },
 ];

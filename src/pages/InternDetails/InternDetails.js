@@ -25,7 +25,7 @@ const InternDetails = () => {
 
   const fetchProfileInfo = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/user");
+      const response = await axios.get("http://localhost:8000/Students");
       if (response.data) {
         console.log("responseeee", response.data);
         setFormData(response.data[0]);
@@ -67,7 +67,10 @@ const InternDetails = () => {
   const handleSave = async () => {
     try {
       console.log(formData, "formData puuuuut");
-      await axios.put(`http://localhost:8000/user/${formData.id}`, formData);
+      await axios.put(
+        `http://localhost:8000/Students/${formData.id}`,
+        formData
+      );
       setEditing(false);
     } catch (error) {
       console.error(

@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  FaRegLightbulb,
-  FaRegCalendarAlt,
-  FaTrash,
-  FaUpload,
-} from "react-icons/fa";
+import { FaRegLightbulb, FaRegCalendarAlt } from "react-icons/fa";
 import { GrDocumentUser } from "react-icons/gr";
 import { FiHome } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -13,9 +8,11 @@ import { NavbarLinks } from "../../components/Navbar/NavbarLinks";
 import "./Postuler.css";
 import StudentForm from "../../components/StudentForm/StudentForm";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const Postuler = () => {
+  const isSignedIn = localStorage.getItem("isSignedIn");
   const location = useLocation();
   const jobDetails = location.state ? location.state.jobDetails : null;
   const [showForm, setShowForm] = useState(false);
@@ -36,7 +33,7 @@ const Postuler = () => {
 
   const fetchProfileInfo = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/user");
+      const response = await axios.get("http://localhost:8000/Students");
       if (response.data) {
         console.log("responseeee", response.data);
         setFormData(response.data[0]);
@@ -77,7 +74,16 @@ const Postuler = () => {
   };
 
   const handlePostulerForm = () => {
-    setShowForm(true);
+    // Vérifier la variable dans le local storage
+    console.log(isSignedIn, "isSignedIn");
+    if (isSignedIn === "false") {
+      console.log(isSignedIn, "isSignedIn after if");
+      // Vérifier si la variable est nulle ou non définie
+      // Naviguer vers la page d'inscription si la variable est absente ou fausse
+      navigate("/signup");
+    } else {
+      setShowForm(true);
+    }
   };
 
   const handleEdit = () => {

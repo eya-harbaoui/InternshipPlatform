@@ -21,7 +21,7 @@ const Offres = () => {
     modeTag,
     durationTag,
     competences,
-    publicationDate,
+    publicationDate
   ) => {
     navigate(`/Offres/${id}`, {
       state: {
@@ -62,7 +62,10 @@ const Offres = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/offers");
+      const response = await axios.get("http://localhost:8000/offers", {
+      params: {
+        OfferStatus: "publié" // Spécifiez le statut de l'offre à filtrer ici
+      }});
       const sortedData = response.data.sort((a, b) => {
         return new Date(b.publicationDate) - new Date(a.publicationDate);
       });
@@ -74,20 +77,20 @@ const Offres = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
-
-  const filteredStageData = data.filter((stage) => {
-    return (
-      stage.stageTitle
-        .toLowerCase()
-        .includes(filter.searchTerm.toLowerCase()) &&
-      (filter.domain === "" || stage.domainTag === filter.domain) &&
-      (filter.duration === "" || stage.durationTag === filter.duration) &&
-      (filter.mode === "" || stage.modeTag === filter.mode) &&
-      (filter.nature === "" || stage.stageNature === filter.nature)
-    );
   });
 
+  const filteredStageData = data
+    .filter((stage) => {
+      return (
+        stage.stageTitle
+          .toLowerCase()
+          .includes(filter.searchTerm.toLowerCase()) &&
+        (filter.domain === "" || stage.domainTag === filter.domain) &&
+        (filter.duration === "" || stage.durationTag === filter.duration) &&
+        (filter.mode === "" || stage.modeTag === filter.mode) &&
+        (filter.nature === "" || stage.stageNature === filter.nature)
+      );
+    });
   return (
     <div className="offres-page">
       <Navbar links={NavbarLinks} />
