@@ -45,8 +45,8 @@
         "iOS": "Débutant",
         "React Native": "Débutant"
       },
-      "OfferStatus": "en cours de validation",
-      "publicationDate": "2024-05-05T09:35:24.781Z"
+      "OfferStatus": "publié",
+      "publicationDate": "2024-05-05T12:10:57.501Z"
     },
     {
       "id": "8",
@@ -77,8 +77,8 @@
         "docker": "Débutant",
         "linux": "Avancé"
       },
-      "OfferStatus": "en cours de validation",
-      "publicationDate": "2024-05-05T00:29:14.105Z"
+      "OfferStatus": "publié",
+      "publicationDate": "2024-05-05T12:10:58.141Z"
     },
     {
       "id": "3d2c1607-cefd-4aa1-8db1-a46f565c7750",
@@ -95,6 +95,22 @@
       },
       "OfferStatus": "publié",
       "publicationDate": "2024-05-05T09:35:26.014Z"
+    },
+    {
+      "id": "ae3e5449-6171-429e-9975-3323cfea8985",
+      "stageTitle": "kkkkkjjj",
+      "stageNature": "PFE",
+      "modeTag": "Remote",
+      "domainTag": "Design graphique",
+      "durationTag": "4 mois",
+      "stageDescription": "kkkkkjjj",
+      "competences": {
+        "Adobe Photoshop": "connaissance pratique",
+        "Adobe Illustrator": "maîtrise",
+        "UI/UX Design": "intermédiaire"
+      },
+      "OfferStatus": "publié",
+      "publicationDate": "2024-05-05T12:10:59.366Z"
     }
   ],
   "Students": [
@@ -108,7 +124,8 @@
       "studyLevel": "Bachelor",
       "establishment": "ecole nationale des sciences de l'info ENSI",
       "address": "Impasse Bahr omen Cité Ennkhilet",
-      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]"
+      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]",
+      "CV": "CVeyaHarbaoui.pdf"
     },
     {
       "id": "2",
@@ -120,7 +137,8 @@
       "studyLevel": "Master",
       "establishment": "University of Tunis El Manar",
       "address": "Avenue de la République, Tunis",
-      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]"
+      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]",
+      "CV": "CVahmedBenSalah.pdf"
     },
     {
       "id": "3",
@@ -132,7 +150,8 @@
       "studyLevel": "PhD",
       "establishment": "National School of Engineers of Sfax",
       "address": "Route de Soukra, Sfax",
-      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]"
+      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]",
+      "CV": "CVLinaZouari.pdf"
     },
     {
       "id": "4",
@@ -144,7 +163,8 @@
       "studyLevel": "Bachelor",
       "establishment": "Institut Supérieur des Etudes Technologiques de Sousse",
       "address": "Rue Ibn Khaldoun, Sousse",
-      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]"
+      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]",
+      "CV": "CVFatimaCherif.pdf"
     },
     {
       "id": "5",
@@ -156,7 +176,8 @@
       "studyLevel": "Master",
       "establishment": "Higher Institute of Management of Tunis",
       "address": "Avenue de la Liberté, Tunis",
-      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]"
+      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]",
+      "CV": "CVKarimMaaloul.pdf"
     }
   ],
   "users_admin": [
@@ -225,36 +246,7 @@
       "candidatureStatus": "accepté",
       "candidatureDate": "2024-04-23T19:56:29.268Z",
       "refuseReason": "",
-      "firstName": "Fatima",
-      "lastName": "Cherif",
-      "email": "fatima.cherif@example.com",
-      "password": "Fatima123!",
-      "phoneNumber": "555123456",
-      "studyLevel": "Bachelor",
-      "establishment": "Institut Supérieur des Etudes Technologiques de Sousse",
-      "address": "",
-      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]",
-      "CandidatureId": "12",
-      "type": "RH",
-      "date": "2024-03-31T23:00:00.000Z",
-      "heure": "15:29",
-      "mode": "en ligne",
-      "link": "lll",
-      "technicalValidatorId": null,
-      "stageTitle": "Stage en développement web",
-      "stageNature": "PFA",
-      "modeTag": "Hybride",
-      "domainTag": "Développement web",
-      "durationTag": "4 mois",
-      "stageDescription": "Vous êtes passionné(e) par le développement web et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en développement web. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en programmation. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
-      "competences": {
-        "html": "Intermédiaire",
-        "css": "Avancé",
-        "javascript": "Débutant"
-      },
-      "OfferStatus": "publié",
-      "publicationDate": "2024-05-04T11:23:58.973Z",
-      "offerLink": "offre-de-stage-1"
+      "acceptMessage": "Votre profil et votre motivation convient à ce stage ,Bienvenue Chez notre entreprise"
     },
     {
       "id": "2",
@@ -262,49 +254,19 @@
       "OfferId": "2",
       "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-19T15:30:24.555Z",
-      "refuseReason": "Motivation insuffisante",
-      "firstName": "Ahmed",
-      "lastName": "Ben Salah",
-      "email": "ahmed.bensalah@example.com",
-      "password": "P@ssw0rd!",
-      "phoneNumber": "98765432",
-      "studyLevel": "Master",
-      "establishment": "University of Tunis El Manar",
-      "address": "",
-      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]",
-      "CandidatureId": "2",
-      "type": "RH",
-      "date": "2024-04-03T23:00:00.000Z",
-      "heure": "04:17",
-      "mode": "en ligne",
-      "link": "https://meet.google.com/zbi-yinv-sjo",
-      "technicalValidatorId": null,
-      "stageTitle": "Stage en marketing digital",
-      "stageNature": "PFA",
-      "modeTag": "Hybride",
-      "domainTag": "Marketing digital",
-      "durationTag": "4 mois",
-      "stageDescription": "Vous êtes passionné(e) par le marketing digital et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en marketing digital. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en marketing. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.111111",
-      "competences": {
-        "marketing": "Avancé",
-        "communication": "Intermédiaire",
-        "analytics": "Débutant"
-      },
-      "OfferStatus": "en cours de validation",
-      "publicationDate": "2024-05-04T11:24:08.757Z",
-      "offerLink": "offre-de-stage-2"
+      "refuseReason": "Motivation insuffisante"
     },
     {
       "id": "3",
       "studentId": "3",
-      "OfferId": "4",
+      "OfferId": "2",
       "candidatureStatus": "entretien technique programmé",
       "candidatureDate": "2024-04-20T12:30:45.789Z",
       "refuseReason": ""
     },
     {
       "id": "4",
-      "studentId": "2",
+      "studentId": "3",
       "OfferId": "2",
       "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-19T15:30:24.555Z",
@@ -312,7 +274,7 @@
     },
     {
       "id": "5",
-      "studentId": "2",
+      "studentId": "4",
       "OfferId": "3",
       "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-17T18:45:12.321Z",
@@ -320,41 +282,42 @@
     },
     {
       "id": "6",
-      "studentId": "3",
+      "studentId": "2",
       "OfferId": "4",
-      "candidatureStatus": "en cours",
+      "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-20T12:30:45.789Z",
-      "refuseReason": ""
+      "refuseReason": "Motivation insuffisante"
     },
     {
       "id": "7",
-      "studentId": "3",
+      "studentId": "5",
       "OfferId": "4",
       "candidatureStatus": "accepté",
       "candidatureDate": "2024-04-21T09:45:30.123Z",
-      "refuseReason": ""
+      "refuseReason": "",
+      "acceptMessage": "Vos compétences technique et soft skills sont convenable à ce stage,Bienvenue"
     },
     {
       "id": "8",
-      "studentId": "4",
+      "studentId": "1",
       "OfferId": "4",
       "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-22T15:20:10.456Z",
-      "refuseReason": ""
+      "refuseReason": "Motivation insuffisante"
     },
     {
       "id": "9",
-      "studentId": "5",
-      "OfferId": "4",
+      "studentId": "2",
+      "OfferId": "8",
       "candidatureStatus": "en cours",
       "candidatureDate": "2024-04-23T13:49:31.735Z",
-      "refuseReason": ""
+      "refuseReason": "Motivation insuffisante"
     },
     {
       "id": "10",
       "studentId": "5",
-      "OfferId": "4",
-      "candidatureStatus": "en cours",
+      "OfferId": "8",
+      "candidatureStatus": "entretien technique programmé",
       "candidatureDate": "2024-04-23T13:49:44.589Z",
       "refuseReason": ""
     },
@@ -368,7 +331,7 @@
     },
     {
       "id": "12",
-      "studentId": "4",
+      "studentId": "2",
       "OfferId": "1",
       "candidatureStatus": "en cours",
       "candidatureDate": "2024-04-23T19:56:29.268Z",
@@ -450,7 +413,6 @@
       "date": "2024-04-01T23:00:00.000Z",
       "heure": "01:07",
       "mode": "en ligne",
-      "address": "",
       "link": "lien1",
       "technicalValidatorId": "3"
     },
@@ -461,7 +423,6 @@
       "date": "2024-03-31T23:00:00.000Z",
       "heure": "05:18",
       "mode": "présentiel",
-      "address": "kkk",
       "link": "",
       "technicalValidatorId": null
     },
@@ -552,6 +513,47 @@
       "address": "",
       "link": "lien 1",
       "technicalValidatorId": null
+    },
+    {
+      "id": "",
+      "CandidatureId": "1",
+      "type": "RH",
+      "date": "2024-04-30T23:00:00.000Z",
+      "heure": "17:19",
+      "mode": "présentiel",
+      "address": "lac3",
+      "link": "",
+      "technicalValidatorId": null
+    },
+    {
+      "id": "",
+      "type": "technique",
+      "date": "2024-05-07T23:00:00.000Z",
+      "heure": "20:02",
+      "mode": "en ligne",
+      "address": "",
+      "link": "kkk",
+      "technicalValidatorId": "1"
+    },
+    {
+      "id": "",
+      "type": "technique",
+      "date": "2024-05-07T23:00:00.000Z",
+      "heure": "20:02",
+      "mode": "en ligne",
+      "address": "",
+      "link": "kkk",
+      "technicalValidatorId": "1"
+    },
+    {
+      "id": "",
+      "type": "technique",
+      "date": "2024-05-28T23:00:00.000Z",
+      "heure": "19:07",
+      "mode": "présentiel",
+      "address": "lac1",
+      "link": "",
+      "technicalValidatorId": "2"
     }
   ],
   "TechnicalValidators": [
@@ -586,84 +588,47 @@
   "Domaines": [
     {
       "domainName": "Data Science",
-      "competences": [
-        "Python",
-        "Machine Learning",
-        "data"
-      ],
+      "competences": ["Python", "Machine Learning", "data"],
       "id": "0154"
     },
     {
       "domainName": "Design graphique",
-      "competences": [
-        "Adobe Photoshop",
-        "Adobe Illustrator",
-        "UI/UX Design"
-      ],
+      "competences": ["Adobe Photoshop", "Adobe Illustrator", "UI/UX Design"],
       "id": "3175"
     },
     {
       "domainName": "Développement mobile",
-      "competences": [
-        "Android",
-        "iOS",
-        "React Native"
-      ],
+      "competences": ["Android", "iOS", "React Native"],
       "id": "8bd9"
     },
     {
       "domainName": "Administration système",
-      "competences": [
-        "Linux",
-        "Windows Server",
-        "Virtualisation"
-      ],
+      "competences": ["Linux", "Windows Server", "Virtualisation"],
       "id": "5fb7"
     },
     {
       "domainName": "Marketing digital",
-      "competences": [
-        "SEO",
-        "SEM",
-        "Social Media Marketing"
-      ],
+      "competences": ["SEO", "SEM", "Social Media Marketing"],
       "id": "d11a"
     },
     {
       "domainName": "Développement Web",
-      "competences": [
-        "HTML",
-        "CSS",
-        "JS"
-      ],
+      "competences": ["HTML", "CSS", "JS"],
       "id": "87a7"
     },
     {
       "domainName": "intelligence artificielle",
       "id": "6da5",
-      "competences": [
-        "ML",
-        "DL"
-      ]
+      "competences": ["ML", "DL"]
     },
     {
       "domainName": "devops",
       "id": "de3b",
-      "competences": [
-        "git ",
-        "docker",
-        "linux"
-      ]
+      "competences": ["git ", "docker", "linux"]
     },
     {
       "domainName": "MLOPS",
-      "competences": [
-        "ML",
-        "Docker",
-        "Linux",
-        "Git",
-        "DL"
-      ],
+      "competences": ["ML", "Docker", "Linux", "Git", "DL"],
       "id": "0e03"
     }
   ]

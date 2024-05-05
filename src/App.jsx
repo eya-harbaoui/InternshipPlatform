@@ -11,7 +11,7 @@ import Candidatures from "./pages/Candidatures/Candidatures";
 import InternDetails from "./pages/InternDetails/InternDetails";
 import Acceuil from "./pages/Acceuil/Acceuil";
 import OffresRH from "./pages/OffresRH/OffresRH";
-import ListeCandidatures from "./pages/ListeCandidatures/ListeCandidatures";
+import ListeCandidaturesRH from "./pages/ListeCandidaturesRH/ListeCandidaturesRH";
 import Portal from "./components/Admin/Portal";
 import Dashboard from "./components/Admin/Dashboard";
 import TabUtilisateurs from "./components/Admin/TabUsers";
@@ -33,7 +33,7 @@ const App = () => {
           <Route path="/RH_Offres" element={<OffresRH />}></Route>
           <Route
             path="/liste_candidatures/:id"
-            element={<ListeCandidatures />}
+            element={<ListeCandidaturesRH />}
           />
           <Route
             path="manager_validation"

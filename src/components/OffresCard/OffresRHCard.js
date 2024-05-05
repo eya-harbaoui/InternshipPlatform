@@ -19,7 +19,6 @@ const { Option } = Select;
 
 const OffresRHCard = ({
   id,
-  offerLink,
   stageTitle,
   stageNature,
   stageDescription,
@@ -51,53 +50,53 @@ const OffresRHCard = ({
     navigate(`/liste_candidatures/${selectedOffer.id}`);
   };
 
-   useEffect(() => {
-     fetchDomains();
-   }, []);
+  useEffect(() => {
+    fetchDomains();
+  });
 
-   useEffect(() => {
-     // New useEffect for fetching selected offer details
-     if (id) {
-       fetchOfferDetails(id);
-     }
-   }, [id]);
+  useEffect(() => {
+    // New useEffect for fetching selected offer details
+    if (id) {
+      fetchOfferDetails(id);
+    }
+  }, [id]);
 
-   const fetchDomains = async () => {
-     try {
-       const response = await axios.get("http://localhost:8000/Domaines");
-       if (response.data) {
-         setDomains(response.data);
-         const domains = response.data.map((domain) => ({
-           value: domain.domainName,
-           label: domain.domainName,
-         }));
-         setDomainOptions([
-           { value: "", label: "Tous les domaines" },
-           ...domains,
-         ]);
-       }
-     } catch (error) {
-       console.error("Erreur lors de la récupération des domaines :", error);
-     }
-   };
+  const fetchDomains = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/Domaines");
+      if (response.data) {
+        setDomains(response.data);
+        const domains = response.data.map((domain) => ({
+          value: domain.domainName,
+          label: domain.domainName,
+        }));
+        setDomainOptions([
+          { value: "", label: "Tous les domaines" },
+          ...domains,
+        ]);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la récupération des domaines :", error);
+    }
+  };
 
-   const fetchOfferDetails = async (id) => {
-     // New function to fetch offer details
-     try {
-       const response = await axios.get(`http://localhost:8000/offers/${id}`);
-       if (response.data) {
-         setSelectedOffer(response.data);
-         setDomaineSelectionne(response.data.domainTag);
-         setCompetencesDomaine(response.data.competences || {});
-         console.log("***selected offer****", selectedOffer);
-       }
-     } catch (error) {
-       console.error(
-         "Erreur lors de la récupération des détails de l'offre :",
-         error
-       );
-     }
-   };
+  const fetchOfferDetails = async (id) => {
+    // New function to fetch offer details
+    try {
+      const response = await axios.get(`http://localhost:8000/offers/${id}`);
+      if (response.data) {
+        setSelectedOffer(response.data);
+        setDomaineSelectionne(response.data.domainTag);
+        setCompetencesDomaine(response.data.competences || {});
+        console.log("***selected offer****", selectedOffer);
+      }
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération des détails de l'offre :",
+        error
+      );
+    }
+  };
 
   const handleCancel = () => {
     setSelectedOffer({
@@ -111,7 +110,6 @@ const OffresRHCard = ({
       competences: competences,
       OfferStatus: OfferStatus,
       publicationDate: publicationDate,
-      offerLink: offerLink,
     });
     setIsModalOpen(false);
     setChangeCompetences(false);
@@ -193,7 +191,7 @@ const OffresRHCard = ({
 
   useEffect(() => {
     fetchDomains();
-  }, []);
+  });
   return (
     <>
       <div className="stage-card">

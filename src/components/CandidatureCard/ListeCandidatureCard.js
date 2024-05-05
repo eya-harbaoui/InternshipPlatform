@@ -24,7 +24,7 @@ const ListeCandidatureCard = ({
         {actions.map((action, index) => (
           <span
             key={index}
-            className="action"
+            className={`action ${action.disabled ? "disabled" : ""}`}
             onClick={action.onClick}
             disabled={action.disabled}
           >

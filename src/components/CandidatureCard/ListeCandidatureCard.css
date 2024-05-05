@@ -51,9 +51,15 @@
   align-items: center;
 }
 
+.candidature-card .action.disabled {
+  pointer-events: none;
+  opacity: 0.5; /* Nouveau style pour les actions désactivées */
+}
+
 .candidature-card .action-icon {
   margin-right: 5px;
 }
+
 
 @media (max-width: 768px) {
   .candidature-cards {

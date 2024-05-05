@@ -99,7 +99,7 @@ const OffresRH = () => {
     }
   };
 
-  // Fonction pour envoyer une offre à l'API
+  // Fonction ajouter une offre 
   const sendOffer = async () => {
     try {
       const id = uuidv4(); // Générer un ID unique
@@ -115,7 +115,7 @@ const OffresRH = () => {
       console.log("Offre ajoutée avec succès:", response.data);
       toast.success("Offre ajoutée avec succès !");
       setIsModalOpen(false);
-      setOffer(...offer, {
+      setOffer({
         stageTitle: "",
         stageNature: "",
         stageDescription: "",
@@ -129,7 +129,6 @@ const OffresRH = () => {
     }
   };
 
-  // Effet pour charger les données initiales et les domaines une seule fois au chargement de la page
   useEffect(() => {
     fetchData();
     fetchDomains();
@@ -147,7 +146,7 @@ const OffresRH = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
-    setOffer(...offer, {
+    setOffer({
       stageTitle: "",
       stageNature: "",
       stageDescription: "",
@@ -159,7 +158,6 @@ const OffresRH = () => {
   };
 
   // États pour la sélection de domaine, niveau de compétence et compétences pour chaque domaine
-  const [niveauCompetence, setNiveauCompetence] = useState({});
   const [domaineSelectionne, setDomaineSelectionne] = useState("");
   const [competencesDomaine, setCompetencesDomaine] = useState({});
 
