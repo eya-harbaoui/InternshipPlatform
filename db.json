@@ -585,11 +585,10 @@
   ],
   "Domaines": [
     {
-      "domainName": "Data Science",
+      "domainName": "Data Sc",
       "competences": [
         "Python",
-        "Machine Learning",
-        "Data Visualization"
+        "Machine Learning"
       ],
       "id": "0154"
     },

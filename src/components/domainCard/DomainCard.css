@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1000px;
+  max-width: 100%;
   background-color: #ffffffba;
   border-radius: 4px;
   box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.095);
@@ -31,23 +31,47 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .domain-card .competence-tag {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f2f2f2;
-  padding: 5px 10px;
-  border-radius: 20px;
   margin: 5px;
-  font-size: 14px;
-  text-transform: uppercase;
-  color: #333;
 }
 
-.domain-card .edit-icon,
-.domain-card .delete-icon {
-  margin-left: 5px;
+.domain-card .edit-delete-icons {
+  display: flex;
+  align-items: center;
+}
+
+
+
+.domain-card .edit-icon {
+  font-size: 24px;
+  margin-left: 10px;
+  color: #1976d2; /* bleu */
   cursor: pointer;
+}
+
+.domain-card .delete-icon {
+  font-size: 24px;
+  margin-left: 10px;
+  color: #d32f2f; /* rouge */
+  cursor: pointer;
+}
+
+
+@media screen and (min-width: 768px) {
+  .domain-card {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .domain-card .domain-info {
+    margin-bottom: 0;
+  }
+
+  .domain-card .competences {
+    margin-bottom: 0;
+  }
 }
