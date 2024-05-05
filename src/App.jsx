@@ -17,6 +17,7 @@ import Dashboard from "./components/Admin/Dashboard";
 import TabUtilisateurs from "./components/Admin/TabUsers";
 import Domstages from "./components/Admin/DomaineStages";
 import ManagerValidation from "./pages/ManagerValidation/ManagerValidation";
+import ManagerDomains from "./pages/ManagerDomains/ManagerDomains";
 const App = () => {
   return (
     <BrowserRouter>
@@ -38,6 +39,7 @@ const App = () => {
             path="manager_validation"
             element={<ManagerValidation />}
           ></Route>
+          <Route path="/Domaines_et_Compétences" element={<ManagerDomains/>}></Route>
           <Route path="/portal" element={<Portal />}>
             <Route path="domainedestages" element={<Domstages />} />
             <Route path="dashboard" element={<Dashboard />} />

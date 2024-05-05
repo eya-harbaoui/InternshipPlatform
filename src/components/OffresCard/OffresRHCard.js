@@ -11,8 +11,10 @@ import {
   modeOptions,
   natureOptions,
 } from "../../components/Filter/FilterOptions.js";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getStatusTag } from "./OffersStatus.js";
+import { SkillsLevel } from "../../components/OffresCard/SkillsLevel.js"; //liste des compétences recquises
 const { Option } = Select;
 
 const OffresRHCard = ({
@@ -32,47 +34,11 @@ const OffresRHCard = ({
   const [domainOptions, setDomainOptions] = useState([]);
   const [domains, setDomains] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedOffer, setSelectedOffer] = useState({
-    id: id,
-    stageTitle: stageTitle,
-    stageNature: stageNature,
-    modeTag: modeTag,
-    domainTag: domainTag,
-    durationTag: durationTag,
-    stageDescription: stageDescription,
-    competences: competences,
-    OfferStatus: OfferStatus,
-    publicationDate: publicationDate,
-    offerLink: offerLink,
-  });
-  const [domaineSelectionne, setDomaineSelectionne] = useState(
-    selectedOffer.domainTag
-  );
-  const [competencesDomaine, setCompetencesDomaine] = useState(
-    selectedOffer.competences
-  );
+  const [selectedOffer, setSelectedOffer] = useState({});
+  const [domaineSelectionne, setDomaineSelectionne] = useState();
+  const [competencesDomaine, setCompetencesDomaine] = useState();
   const [changeCompetences, setChangeCompetences] = useState(false);
-  const fetchDomains = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/Domaines");
-      if (response.data) {
-        setDomains(response.data);
-        const domains = response.data.map((domain) => ({
-          value: domain.domainName,
-          label: domain.domainName,
-        }));
-        setDomainOptions([
-          { value: "", label: "Tous les domaines" },
-          ...domains,
-        ]);
-      }
-    } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des informations de profil :",
-        error
-      );
-    }
-  };
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -81,11 +47,57 @@ const OffresRHCard = ({
     setIsModalOpen(false);
   };
 
-
   const handleCandidatures = () => {
     navigate(`/liste_candidatures/${selectedOffer.id}`);
   };
 
+   useEffect(() => {
+     fetchDomains();
+   }, []);
+
+   useEffect(() => {
+     // New useEffect for fetching selected offer details
+     if (id) {
+       fetchOfferDetails(id);
+     }
+   }, [id]);
+
+   const fetchDomains = async () => {
+     try {
+       const response = await axios.get("http://localhost:8000/Domaines");
+       if (response.data) {
+         setDomains(response.data);
+         const domains = response.data.map((domain) => ({
+           value: domain.domainName,
+           label: domain.domainName,
+         }));
+         setDomainOptions([
+           { value: "", label: "Tous les domaines" },
+           ...domains,
+         ]);
+       }
+     } catch (error) {
+       console.error("Erreur lors de la récupération des domaines :", error);
+     }
+   };
+
+   const fetchOfferDetails = async (id) => {
+     // New function to fetch offer details
+     try {
+       const response = await axios.get(`http://localhost:8000/offers/${id}`);
+       if (response.data) {
+         setSelectedOffer(response.data);
+         setDomaineSelectionne(response.data.domainTag);
+         setCompetencesDomaine(response.data.competences || {});
+         console.log("***selected offer****", selectedOffer);
+       }
+     } catch (error) {
+       console.error(
+         "Erreur lors de la récupération des détails de l'offre :",
+         error
+       );
+     }
+   };
 
   const handleCancel = () => {
     setSelectedOffer({
@@ -105,29 +117,7 @@ const OffresRHCard = ({
     setChangeCompetences(false);
   };
   const navigate = useNavigate();
-  let tagColor = "";
-  let tagText = "";
-  switch (OfferStatus) {
-    case "en cours de validation":
-      tagColor = "blue";
-      tagText = "en cours de validation";
-      break;
-    case "publié":
-      tagColor = "green";
-      tagText = "publié";
-      break;
-    case "brouillon":
-      tagColor = "red";
-      tagText = "brouillon";
-      break;
-    case "archivé":
-      tagColor = "purple";
-      tagText = "Archivé";
-      break;
-    default:
-      tagColor = "default";
-      tagText = "Statut inconnu";
-  }
+  let { tagColor, tagText } = getStatusTag(OfferStatus);
 
   const handlePublishClick = async () => {
     try {
@@ -372,9 +362,11 @@ const OffresRHCard = ({
                           handleCompetenceChange(competence, value)
                         }
                       >
-                        <Option value="Débutant">Débutant</Option>
-                        <Option value="Intermédiaire">Intermédiaire</Option>
-                        <Option value="Avancé">Avancé</Option>
+                        {SkillsLevel.map((level, index) => (
+                          <option key={index} value={level}>
+                            {level}
+                          </option>
+                        ))}
                       </Select>
                     </div>
                   ))}

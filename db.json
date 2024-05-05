@@ -2,20 +2,19 @@
   "offers": [
     {
       "id": "1",
-      "stageTitle": "Stage en développement web",
-      "stageNature": "PFA",
-      "modeTag": "Hybride",
-      "domainTag": "Développement web",
-      "durationTag": "4 mois",
-      "stageDescription": "Vous êtes passionné(e) par le développement web et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en développement web. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en programmation. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
+      "stageTitle": "Stage en développement web***",
+      "stageNature": "PFE",
+      "modeTag": "Remote",
+      "domainTag": "Développement Web",
+      "durationTag": "6 mois",
+      "stageDescription": "Vous êtes passionné(e) par le développement web et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en développement web. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en programmation. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.***",
       "competences": {
-        "html": "Intermédiaire",
-        "css": "Avancé",
-        "javascript": "Débutant"
+        "HTML": 5,
+        "CSS": 4,
+        "JS": 2
       },
-      "OfferStatus": "en cours de validation",
-      "publicationDate": "2024-04-05",
-      "offerLink": "offre-de-stage-1"
+      "OfferStatus": "archivé",
+      "publicationDate": "2024-05-05T09:35:24.182Z"
     },
     {
       "id": "2",
@@ -31,8 +30,7 @@
         "analytics": "Débutant"
       },
       "OfferStatus": "publié",
-      "publicationDate": "2024-04-12",
-      "offerLink": "offre-de-stage-2"
+      "publicationDate": "2024-05-05T09:35:47.451Z"
     },
     {
       "id": "4",
@@ -48,8 +46,7 @@
         "React Native": "Débutant"
       },
       "OfferStatus": "publié",
-      "publicationDate": "2024-04-01",
-      "offerLink": "offre-de-stage-4"
+      "publicationDate": "2024-05-05T09:35:24.781Z"
     },
     {
       "id": "8",
@@ -64,60 +61,40 @@
         "cyberSecurity": "Intermédiaire",
         "penetrationTesting": "Débutant"
       },
-      "OfferStatus": "en cours de validation",
-      "publicationDate": "2024-03-30",
-      "offerLink": "offre-de-stage-8"
-    },
-    {
-      "id": "9",
-      "stageTitle": "dddd",
-      "stageNature": "PFE",
-      "modeTag": "Hybride",
-      "domainTag": "Développement web",
-      "durationTag": "6 mois",
-      "stageDescription": "dddddddddddddddddddd",
-      "competences": {
-        "HTML": "Intermédiaire",
-        "CSS": "Intermédiaire",
-        "JavaScript": "Avancé"
-      },
       "OfferStatus": "publié",
-      "publicationDate": "2024-03-31",
-      "offerLink": "offre-de-stage-9"
+      "publicationDate": "2024-05-05T09:35:44.815Z"
     },
     {
-      "id": "10",
-      "stageTitle": "dddd",
-      "stageNature": "PFE",
+      "id": "5b52c452-0e88-4eeb-8dfd-d63fa20d9261",
+      "stageTitle": "stage en Devops",
+      "stageNature": "PFA",
       "modeTag": "Hybride",
-      "domainTag": "Développement web",
+      "domainTag": "devops",
       "durationTag": "6 mois",
-      "stageDescription": "dddddddddddddddddddd",
+      "stageDescription": "lkkkksssssssssssssssssssssssssssss",
       "competences": {
-        "HTML": "Intermédiaire",
-        "CSS": "Intermédiaire",
-        "JavaScript": "Avancé"
+        "git ": "Débutant",
+        "docker": "Débutant",
+        "linux": "Avancé"
       },
       "OfferStatus": "en cours de validation",
-      "publicationDate": "2024-02-20",
-      "offerLink": "offre-de-stage-10"
+      "publicationDate": "2024-05-05T00:29:14.105Z"
     },
     {
-      "id": "11",
-      "stageTitle": "dddd",
+      "id": "3d2c1607-cefd-4aa1-8db1-a46f565c7750",
+      "stageTitle": "stage sys admin",
       "stageNature": "PFE",
       "modeTag": "Hybride",
-      "domainTag": "Développement web",
-      "durationTag": "6 mois",
-      "stageDescription": "dddddddddddddddddddd",
+      "domainTag": "Administration système",
+      "durationTag": "4 mois",
+      "stageDescription": "llllloppppppppppppppppp",
       "competences": {
-        "HTML": "Intermédiaire",
-        "CSS": "Intermédiaire",
-        "JavaScript": "Avancé"
+        "Linux": "Intermédiaire",
+        "Windows Server": "Intermédiaire",
+        "Virtualisation": "Avancé"
       },
       "OfferStatus": "publié",
-      "publicationDate": "2024-02-20",
-      "offerLink": "offre-de-stage-11"
+      "publicationDate": "2024-05-05T09:35:26.014Z"
     }
   ],
   "Students": [
@@ -243,24 +220,27 @@
   "Student_Application": [
     {
       "id": "1",
-      "studentId": "1",
+      "studentId": "4",
       "OfferId": "1",
-      "candidatureStatus": "entretien RH programmé",
-      "candidatureDate": "2024-04-15T09:21:17.052Z",
-      "refuseReason": "Manque d'expérience professionnelle",
-      "firstName": "eya",
-      "lastName": "HARBAOUI",
-      "email": "eya.harbaoui@ensi-uma.tn",
-      "password": " azertyu123@",
-      "phoneNumber": "96386045",
+      "candidatureStatus": "accepté",
+      "candidatureDate": "2024-04-23T19:56:29.268Z",
+      "refuseReason": "",
+      "firstName": "Fatima",
+      "lastName": "Cherif",
+      "email": "fatima.cherif@example.com",
+      "password": "Fatima123!",
+      "phoneNumber": "555123456",
       "studyLevel": "Bachelor",
-      "establishment": "ecole nationale des sciences de l'info ENSI",
+      "establishment": "Institut Supérieur des Etudes Technologiques de Sousse",
       "address": "",
       "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]",
-      "CandidatureId": "1",
-      "date": "",
-      "mode": "",
-      "link": "",
+      "CandidatureId": "12",
+      "type": "RH",
+      "date": "2024-03-31T23:00:00.000Z",
+      "heure": "15:29",
+      "mode": "en ligne",
+      "link": "lll",
+      "technicalValidatorId": null,
       "stageTitle": "Stage en développement web",
       "stageNature": "PFA",
       "modeTag": "Hybride",
@@ -272,17 +252,47 @@
         "css": "Avancé",
         "javascript": "Débutant"
       },
-      "OfferStatus": "en cours de validation",
-      "publicationDate": "2024-04-05",
+      "OfferStatus": "publié",
+      "publicationDate": "2024-05-04T11:23:58.973Z",
       "offerLink": "offre-de-stage-1"
     },
     {
       "id": "2",
-      "studentId": "1",
+      "studentId": "2",
       "OfferId": "2",
-      "candidatureStatus": "accepté",
-      "candidatureDate": "2024-04-16T14:37:05.189Z",
-      "refuseReason": ""
+      "candidatureStatus": "refusé",
+      "candidatureDate": "2024-04-19T15:30:24.555Z",
+      "refuseReason": "Motivation insuffisante",
+      "firstName": "Ahmed",
+      "lastName": "Ben Salah",
+      "email": "ahmed.bensalah@example.com",
+      "password": "P@ssw0rd!",
+      "phoneNumber": "98765432",
+      "studyLevel": "Master",
+      "establishment": "University of Tunis El Manar",
+      "address": "",
+      "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]",
+      "CandidatureId": "2",
+      "type": "RH",
+      "date": "2024-04-03T23:00:00.000Z",
+      "heure": "04:17",
+      "mode": "en ligne",
+      "link": "https://meet.google.com/zbi-yinv-sjo",
+      "technicalValidatorId": null,
+      "stageTitle": "Stage en marketing digital",
+      "stageNature": "PFA",
+      "modeTag": "Hybride",
+      "domainTag": "Marketing digital",
+      "durationTag": "4 mois",
+      "stageDescription": "Vous êtes passionné(e) par le marketing digital et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en marketing digital. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en marketing. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.111111",
+      "competences": {
+        "marketing": "Avancé",
+        "communication": "Intermédiaire",
+        "analytics": "Débutant"
+      },
+      "OfferStatus": "en cours de validation",
+      "publicationDate": "2024-05-04T11:24:08.757Z",
+      "offerLink": "offre-de-stage-2"
     },
     {
       "id": "3",

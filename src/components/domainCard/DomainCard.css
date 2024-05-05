@@ -1,0 +1,53 @@
+.domain-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1000px;
+  background-color: #ffffffba;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.095);
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.domain-card .domain-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.domain-card .domain-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.domain-card .domain-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.domain-card .competences {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.domain-card .competence-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2f2f2;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin: 5px;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #333;
+}
+
+.domain-card .edit-icon,
+.domain-card .delete-icon {
+  margin-left: 5px;
+  cursor: pointer;
+}

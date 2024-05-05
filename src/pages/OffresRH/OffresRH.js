@@ -1,46 +1,39 @@
-//import
+// Import des bibliothèques et composants nécessaires depuis React et d'autres fichiers
 import React, { useState, useEffect } from "react";
-import OffresRHCard from "../../components/OffresCard/OffresRHCard.js";
-import "./OffresRH.css";
-import Navbar from "../../components/Navbar/Navbar";
-import axios from "axios";
-import { Select, Modal } from "antd";
+import OffresRHCard from "../../components/OffresCard/OffresRHCard.js"; // Composant de carte pour les offres RH
+import "./OffresRH.css"; // Styles spécifiques pour cette page
+import Navbar from "../../components/Navbar/Navbar"; // Barre de navigation
+import axios from "axios"; // Pour les requêtes HTTP
+import { Select, Modal } from "antd"; // Composants d'interface utilisateur Ant Design
 import {
   durationOptions,
   modeOptions,
   natureOptions,
-} from "../../components/Filter/FilterOptions.js";
-import Filter from "../../components/Filter/Filter";
-import { MdOutlineContentPasteSearch } from "react-icons/md";
-import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks";
-import { v4 as uuidv4 } from "uuid";
-import { toast } from "react-toastify";
-const { Option } = Select;
+} from "../../components/Filter/FilterOptions.js"; // Options pour les filtres
+import Filter from "../../components/Filter/Filter"; // Composant pour filtrer les offres
+import { MdOutlineContentPasteSearch } from "react-icons/md"; // Icône de recherche
+import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks"; // Liens spécifiques à la barre de navigation RH
+import { v4 as uuidv4 } from "uuid"; // Pour générer des identifiants uniques
+import { toast } from "react-toastify"; // Bibliothèque pour les notifications
+import { SkillsLevel } from "../../components/OffresCard/SkillsLevel.js"; //liste des compétences recquises
+const { Option } = Select; // Option de sélection pour Ant Design
 
+// Composant principal OffresRH
 const OffresRH = () => {
-  //Define the states and functions
+  // Définition des états et fonctions
   const [filter, setFilter] = useState({
     searchTerm: "",
     domain: "",
     duration: "",
     mode: "",
     nature: "",
-  });
-  const [data, setData] = useState([]);
-  const [domainOptions, setDomainOptions] = useState([]);
-  const [domains, setDomains] = useState([]);
-  const [offer, setOffer] = useState({
-    stageTitle: "",
-    stageNature: "",
-    stageDescription: "",
-    domainTag: "",
-    modeTag: "",
-    durationTag: "",
-    publicationDate: "",
-    OfferStatus: "brouillon",
-    competences: [],
-  });
+  }); // État pour les filtres
+  const [data, setData] = useState([]); // État pour stocker les données des offres
+  const [domainOptions, setDomainOptions] = useState([]); // Options de domaine pour les filtres
+  const [domains, setDomains] = useState([]); // État pour stocker les domaines
+  const [offer, setOffer] = useState({});
 
+  // Fonction pour effacer les filtres
   const handleClearFilter = () => {
     setFilter({
       searchTerm: "",
@@ -51,6 +44,7 @@ const OffresRH = () => {
     });
   };
 
+  // Fonction pour récupérer les domaines depuis l'API
   const fetchDomains = async () => {
     try {
       const response = await axios.get("http://localhost:8000/Domaines");
@@ -74,10 +68,12 @@ const OffresRH = () => {
     }
   };
 
+  // Fonction pour gérer les changements de filtre
   const handleFilterChange = (key, value) => {
     setFilter({ ...filter, [key]: value });
   };
 
+  // Fonction pour filtrer les données des offres en fonction des filtres sélectionnés
   const filteredStageData = data.filter((stage) => {
     return (
       stage.stageTitle
@@ -90,6 +86,7 @@ const OffresRH = () => {
     );
   });
 
+  // Fonction pour récupérer les données des offres depuis l'API
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8000/offers");
@@ -102,22 +99,23 @@ const OffresRH = () => {
     }
   };
 
+  // Fonction pour envoyer une offre à l'API
   const sendOffer = async () => {
     try {
-      const id = uuidv4(); // Generate unique ID
-      const offerWithIdAndLink = {
-        ...offer,
+      const id = uuidv4(); // Générer un ID unique
+      const offerWithId = {
         id: id,
-        offerLink: `offre-de-stage-${id}`,
+        ...offer,
+        OfferStatus: "brouillon",
       };
       const response = await axios.post(
         "http://localhost:8000/offers",
-        offerWithIdAndLink
+        offerWithId
       );
       console.log("Offre ajoutée avec succès:", response.data);
       toast.success("Offre ajoutée avec succès !");
       setIsModalOpen(false);
-      setOffer({
+      setOffer(...offer, {
         stageTitle: "",
         stageNature: "",
         stageDescription: "",
@@ -131,11 +129,13 @@ const OffresRH = () => {
     }
   };
 
+  // Effet pour charger les données initiales et les domaines une seule fois au chargement de la page
   useEffect(() => {
     fetchData();
     fetchDomains();
   });
 
+  // États pour la gestion de la fenêtre modale d'ajout d'offre
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -147,7 +147,7 @@ const OffresRH = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
-    setOffer({
+    setOffer(...offer, {
       stageTitle: "",
       stageNature: "",
       stageDescription: "",
@@ -158,10 +158,12 @@ const OffresRH = () => {
     });
   };
 
+  // États pour la sélection de domaine, niveau de compétence et compétences pour chaque domaine
   const [niveauCompetence, setNiveauCompetence] = useState({});
   const [domaineSelectionne, setDomaineSelectionne] = useState("");
   const [competencesDomaine, setCompetencesDomaine] = useState({});
 
+  // Fonction pour gérer le changement de domaine
   const handleDomaineChange = (domaine) => {
     setDomaineSelectionne(domaine);
     setOffer({ ...offer, domainTag: domaine });
@@ -170,6 +172,7 @@ const OffresRH = () => {
     setCompetencesDomaine({ ...competencesDomaine, [domaine]: competences });
   };
 
+  // Fonction pour gérer le changement de compétence et son niveau
   const handleCompetenceChange = (competence, niveau) => {
     const updatedCompetences = {
       ...offer.competences,
@@ -177,6 +180,8 @@ const OffresRH = () => {
     };
     setOffer({ ...offer, competences: updatedCompetences });
   };
+
+  // Rendu du composant OffresRH
   return (
     <div className="offres-RH-page">
       <Navbar links={RHNavbarLinks} />
@@ -194,7 +199,7 @@ const OffresRH = () => {
       />
       <div className="stage-cards-RH">
         {filteredStageData.map((stage, index) => (
-          <OffresRHCard key={index} {...stage} />
+          <OffresRHCard key={index} {...stage} id={stage.id} />
         ))}
       </div>
       {isModalOpen && (
@@ -289,9 +294,11 @@ const OffresRH = () => {
                       handleCompetenceChange(competence, value)
                     }
                   >
-                    <Option value="Débutant">Débutant</Option>
-                    <Option value="Intermédiaire">Intermédiaire</Option>
-                    <Option value="Avancé">Avancé</Option>
+                    {SkillsLevel.map((level, index) => (
+                      <option key={index} value={level}>
+                        {level}
+                      </option>
+                    ))}
                   </Select>
                 </div>
               ))}

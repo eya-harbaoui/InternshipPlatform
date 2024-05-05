@@ -4,13 +4,9 @@ import ManagerOfferCard from "../../components/ManagerOfferCard/ManagerOfferCard
 import "./ManagerValidation.css";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
-import { Select, Modal } from "antd"
 import Filter from "../../components/Filter/Filter";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
 import { ManagerNavbarLinks } from "../../components/Navbar/ManagerNavbarLinks";
-import { v4 as uuidv4 } from "uuid";
-import { toast } from "react-toastify";
-const { Option } = Select;
 
 const ManagerValidation = () => {
   //Define the states and functions
@@ -22,19 +18,6 @@ const ManagerValidation = () => {
     nature: "",
   });
   const [data, setData] = useState([]);
-  const [domainOptions, setDomainOptions] = useState([]);
-  const [domains, setDomains] = useState([]);
-  const [offer, setOffer] = useState({
-    stageTitle: "",
-    stageNature: "",
-    stageDescription: "",
-    domainTag: "",
-    modeTag: "",
-    durationTag: "",
-    publicationDate: "",
-    OfferStatus: "brouillon",
-    competences: [],
-  });
 
   const handleClearFilter = () => {
     setFilter({
@@ -44,29 +27,6 @@ const ManagerValidation = () => {
       mode: "",
       nature: "",
     });
-  };
-
-  const fetchDomains = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/Domaines");
-      if (response.data) {
-        console.log("responseeee", response.data);
-        setDomains(response.data);
-        const domains = response.data.map((domain) => ({
-          value: domain.domainName,
-          label: domain.domainName,
-        }));
-        setDomainOptions([
-          { value: "", label: "Tous les domaines" },
-          ...domains,
-        ]);
-      }
-    } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des informations de profil :",
-        error
-      );
-    }
   };
 
   const handleFilterChange = (key, value) => {
@@ -87,11 +47,12 @@ const ManagerValidation = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/offers");
-      const filteredData = response.data.filter(
-        (offer) => offer.offerStatus === "en cours de validation"
-      );
-      const sortedData = filteredData.sort((a, b) => {
+      const response = await axios.get("http://localhost:8000/offers", {
+        params: {
+          OfferStatus: "en cours de validation", // Spécifiez le statut de l'offre à filtrer ici
+        },
+      });
+      const sortedData = response.data.sort((a, b) => {
         return new Date(b.publicationDate) - new Date(a.publicationDate);
       });
       setData(sortedData);
@@ -100,55 +61,9 @@ const ManagerValidation = () => {
     }
   };
 
-
-  const sendOffer = async () => {
-    try {
-      const id = uuidv4(); // Generate unique ID
-      const offerWithIdAndLink = {
-        ...offer,
-        id: id,
-      };
-      const response = await axios.post(
-        "http://localhost:8000/offers",
-        offerWithIdAndLink
-      );
-      console.log("Offre ajoutée avec succès:", response.data);
-      toast.success("Offre ajoutée avec succès !");
-      setIsModalOpen(false);
-      setOffer({
-        stageTitle: "",
-        stageNature: "",
-        stageDescription: "",
-        domainTag: "",
-        modeTag: "",
-        durationTag: "",
-        competences: [],
-      });
-    } catch (error) {
-      console.error("Erreur lors de l'ajout de l'offre:", error);
-    }
-  };
-
   useEffect(() => {
     fetchData();
-    fetchDomains();
   });
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    setOffer({
-      stageTitle: "",
-      stageNature: "",
-      stageDescription: "",
-      domainTag: "",
-      modeTag: "",
-      durationTag: "",
-      competences: [],
-    });
-  };
 
   return (
     <div className="offres-RH-page">

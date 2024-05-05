@@ -124,7 +124,7 @@ const ListeCandidatures = () => {
   useEffect(() => {
     getStudentApplicationsForOffer();
     fetchTechnicalValidators();
-  }, [id]);
+  });
 
   const handleProgramInterview = (candidature) => {
     setSelectedCandidature(candidature);
@@ -180,13 +180,21 @@ const ListeCandidatures = () => {
 
   const handleAcceptModalOk = async () => {
     try {
+      const updatedCandidature = {
+        ...selectedCandidature,
+        candidatureStatus: "accepté",
+      };
+
       await axios.put(
         `http://localhost:8000/Student_Application/${selectedCandidature.id}`,
-        {
-          ...selectedCandidature,
-          candidatureStatus: "accepté",
-        }
+        updatedCandidature
       );
+
+      const updatedCandidats = candidats.map((candidat) =>
+        candidat.id === selectedCandidature.id ? updatedCandidature : candidat
+      );
+
+      setCandidats(updatedCandidats);
       setIsAcceptModalOpen(false);
     } catch (error) {
       console.error("Erreur lors de l'acceptation du candidat", error);

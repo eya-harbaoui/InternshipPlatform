@@ -5,6 +5,7 @@ import "./OffresCard.css";
 import { MdUpdate } from "react-icons/md";
 
 const StageCard = ({
+  id,
   stageTitle,
   stageNature,
   stageDescription,

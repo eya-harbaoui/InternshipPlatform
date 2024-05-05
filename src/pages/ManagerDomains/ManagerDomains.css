@@ -1,0 +1,97 @@
+.domaines-Manager-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.title-Manager-page {
+  margin-top: 50px;
+  margin-bottom: 10px;
+  color: #ff735c;
+}
+.icon-Manager-page {
+  font-size: 40px; /* Taille de l'icône */
+  color: #ff735c; /* Couleur de l'icône */
+  margin-bottom: 30px;
+}
+
+
+
+@media (max-width: 768px) {
+  
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.add-offer-button {
+  background-color: #ff735c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.modal-content {
+  padding: 20px;
+}
+
+.modal-input {
+  width: 90% !important;
+  margin-bottom: 10px;
+}
+
+.competences-container {
+  margin-top: 20px;
+}
+
+.competence-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.competence-input span {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+.input-text-design {
+  width: 90%;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.input-text-design:focus {
+  border-color: #ff735c;
+}
+
+.textarea-design {
+  width: 90%;
+  height: 150px; /* Hauteur du textarea */
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.textarea-design:focus {
+  border-color: #ff735c;
+}
