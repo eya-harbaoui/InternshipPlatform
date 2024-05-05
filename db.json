@@ -45,7 +45,7 @@
         "iOS": "Débutant",
         "React Native": "Débutant"
       },
-      "OfferStatus": "publié",
+      "OfferStatus": "en cours de validation",
       "publicationDate": "2024-05-05T09:35:24.781Z"
     },
     {
@@ -585,10 +585,11 @@
   ],
   "Domaines": [
     {
-      "domainName": "Data Sc",
+      "domainName": "Data Science",
       "competences": [
         "Python",
-        "Machine Learning"
+        "Machine Learning",
+        "data"
       ],
       "id": "0154"
     },
@@ -653,6 +654,17 @@
         "docker",
         "linux"
       ]
+    },
+    {
+      "domainName": "MLOPS",
+      "competences": [
+        "ML",
+        "Docker",
+        "Linux",
+        "Git",
+        "DL"
+      ],
+      "id": "0e03"
     }
   ]
 }

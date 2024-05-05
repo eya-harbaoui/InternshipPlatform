@@ -18,7 +18,14 @@
 }
 
 
-
+.add-domain-button {
+  background-color: #ff735c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
 @media (max-width: 768px) {
   
 }
