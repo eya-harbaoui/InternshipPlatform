@@ -13,7 +13,7 @@
         "CSS": 4,
         "JS": 2
       },
-      "OfferStatus": "archivé",
+      "OfferStatus": "en cours de validation",
       "publicationDate": "2024-05-05T09:35:24.182Z"
     },
     {
@@ -46,7 +46,7 @@
         "React Native": "Débutant"
       },
       "OfferStatus": "publié",
-      "publicationDate": "2024-05-05T12:10:57.501Z"
+      "publicationDate": "2024-05-11T00:57:47.193Z"
     },
     {
       "id": "8",
@@ -65,22 +65,6 @@
       "publicationDate": "2024-05-05T09:35:44.815Z"
     },
     {
-      "id": "5b52c452-0e88-4eeb-8dfd-d63fa20d9261",
-      "stageTitle": "stage en Devops",
-      "stageNature": "PFA",
-      "modeTag": "Hybride",
-      "domainTag": "devops",
-      "durationTag": "6 mois",
-      "stageDescription": "lkkkksssssssssssssssssssssssssssss",
-      "competences": {
-        "git ": "Débutant",
-        "docker": "Débutant",
-        "linux": "Avancé"
-      },
-      "OfferStatus": "publié",
-      "publicationDate": "2024-05-05T12:10:58.141Z"
-    },
-    {
       "id": "3d2c1607-cefd-4aa1-8db1-a46f565c7750",
       "stageTitle": "stage sys admin",
       "stageNature": "PFE",
@@ -93,24 +77,8 @@
         "Windows Server": "Intermédiaire",
         "Virtualisation": "Avancé"
       },
-      "OfferStatus": "publié",
+      "OfferStatus": "en cours de validation",
       "publicationDate": "2024-05-05T09:35:26.014Z"
-    },
-    {
-      "id": "ae3e5449-6171-429e-9975-3323cfea8985",
-      "stageTitle": "kkkkkjjj",
-      "stageNature": "PFE",
-      "modeTag": "Remote",
-      "domainTag": "Design graphique",
-      "durationTag": "4 mois",
-      "stageDescription": "kkkkkjjj",
-      "competences": {
-        "Adobe Photoshop": "connaissance pratique",
-        "Adobe Illustrator": "maîtrise",
-        "UI/UX Design": "intermédiaire"
-      },
-      "OfferStatus": "publié",
-      "publicationDate": "2024-05-05T12:10:59.366Z"
     }
   ],
   "Students": [
@@ -260,9 +228,10 @@
       "id": "3",
       "studentId": "3",
       "OfferId": "2",
-      "candidatureStatus": "entretien technique programmé",
+      "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-20T12:30:45.789Z",
-      "refuseReason": ""
+      "refuseReason": "Autre opportunité professionnelle",
+      "technicalValidatorId": "2"
     },
     {
       "id": "4",
@@ -275,10 +244,11 @@
     {
       "id": "5",
       "studentId": "4",
-      "OfferId": "3",
+      "OfferId": "",
       "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-17T18:45:12.321Z",
-      "refuseReason": "Motivation insuffisante"
+      "refuseReason": "Compétences techniques non adaptées",
+      "technicalValidatorId": "3"
     },
     {
       "id": "6",
@@ -286,7 +256,8 @@
       "OfferId": "4",
       "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-20T12:30:45.789Z",
-      "refuseReason": "Motivation insuffisante"
+      "refuseReason": "Motivation insuffisante",
+      "technicalValidatorId": "3"
     },
     {
       "id": "7",
@@ -301,33 +272,29 @@
       "id": "8",
       "studentId": "1",
       "OfferId": "4",
-      "candidatureStatus": "refusé",
-      "candidatureDate": "2024-04-22T15:20:10.456Z",
-      "refuseReason": "Motivation insuffisante"
+      "candidatureStatus": "en cours",
+      "candidatureDate": "2024-04-22T15:20:10.456Z"
     },
     {
       "id": "9",
       "studentId": "2",
       "OfferId": "8",
       "candidatureStatus": "en cours",
-      "candidatureDate": "2024-04-23T13:49:31.735Z",
-      "refuseReason": "Motivation insuffisante"
+      "candidatureDate": "2024-04-23T13:49:31.735Z"
     },
     {
       "id": "10",
       "studentId": "5",
       "OfferId": "8",
-      "candidatureStatus": "entretien technique programmé",
-      "candidatureDate": "2024-04-23T13:49:44.589Z",
-      "refuseReason": ""
+      "candidatureStatus": "en cours",
+      "candidatureDate": "2024-04-23T13:49:44.589Z"
     },
     {
       "id": "11",
       "studentId": "4",
       "OfferId": "4",
       "candidatureStatus": "en cours",
-      "candidatureDate": "2024-04-23T19:55:35.408Z",
-      "refuseReason": ""
+      "candidatureDate": "2024-04-23T19:55:35.408Z"
     },
     {
       "id": "12",
@@ -355,14 +322,6 @@
     }
   ],
   "Interviews": [
-    {
-      "id": "1",
-      "CandidatureId": "1",
-      "date": "",
-      "mode": "",
-      "address": "",
-      "link": ""
-    },
     {
       "id": "2",
       "CandidatureId": "2",
@@ -502,58 +461,6 @@
       "address": "lac2",
       "link": "",
       "technicalValidatorId": "2"
-    },
-    {
-      "id": "",
-      "CandidatureId": "1",
-      "type": "RH",
-      "date": "2024-04-24T23:00:00.000Z",
-      "heure": "15:00",
-      "mode": "en ligne",
-      "address": "",
-      "link": "lien 1",
-      "technicalValidatorId": null
-    },
-    {
-      "id": "",
-      "CandidatureId": "1",
-      "type": "RH",
-      "date": "2024-04-30T23:00:00.000Z",
-      "heure": "17:19",
-      "mode": "présentiel",
-      "address": "lac3",
-      "link": "",
-      "technicalValidatorId": null
-    },
-    {
-      "id": "",
-      "type": "technique",
-      "date": "2024-05-07T23:00:00.000Z",
-      "heure": "20:02",
-      "mode": "en ligne",
-      "address": "",
-      "link": "kkk",
-      "technicalValidatorId": "1"
-    },
-    {
-      "id": "",
-      "type": "technique",
-      "date": "2024-05-07T23:00:00.000Z",
-      "heure": "20:02",
-      "mode": "en ligne",
-      "address": "",
-      "link": "kkk",
-      "technicalValidatorId": "1"
-    },
-    {
-      "id": "",
-      "type": "technique",
-      "date": "2024-05-28T23:00:00.000Z",
-      "heure": "19:07",
-      "mode": "présentiel",
-      "address": "lac1",
-      "link": "",
-      "technicalValidatorId": "2"
     }
   ],
   "TechnicalValidators": [
@@ -588,47 +495,84 @@
   "Domaines": [
     {
       "domainName": "Data Science",
-      "competences": ["Python", "Machine Learning", "data"],
+      "competences": [
+        "Python",
+        "Machine Learning",
+        "data"
+      ],
       "id": "0154"
     },
     {
       "domainName": "Design graphique",
-      "competences": ["Adobe Photoshop", "Adobe Illustrator", "UI/UX Design"],
+      "competences": [
+        "Adobe Photoshop",
+        "Adobe Illustrator",
+        "UI/UX Design"
+      ],
       "id": "3175"
     },
     {
       "domainName": "Développement mobile",
-      "competences": ["Android", "iOS", "React Native"],
+      "competences": [
+        "Android",
+        "iOS",
+        "React Native"
+      ],
       "id": "8bd9"
     },
     {
       "domainName": "Administration système",
-      "competences": ["Linux", "Windows Server", "Virtualisation"],
+      "competences": [
+        "Linux",
+        "Windows Server",
+        "Virtualisation"
+      ],
       "id": "5fb7"
     },
     {
       "domainName": "Marketing digital",
-      "competences": ["SEO", "SEM", "Social Media Marketing"],
+      "competences": [
+        "SEO",
+        "SEM",
+        "Social Media Marketing"
+      ],
       "id": "d11a"
     },
     {
       "domainName": "Développement Web",
-      "competences": ["HTML", "CSS", "JS"],
+      "competences": [
+        "HTML",
+        "CSS",
+        "JS"
+      ],
       "id": "87a7"
     },
     {
       "domainName": "intelligence artificielle",
       "id": "6da5",
-      "competences": ["ML", "DL"]
+      "competences": [
+        "ML",
+        "DL"
+      ]
     },
     {
       "domainName": "devops",
       "id": "de3b",
-      "competences": ["git ", "docker", "linux"]
+      "competences": [
+        "git ",
+        "docker",
+        "linux"
+      ]
     },
     {
       "domainName": "MLOPS",
-      "competences": ["ML", "Docker", "Linux", "Git", "DL"],
+      "competences": [
+        "ML",
+        "Docker",
+        "Linux",
+        "Git",
+        "DL"
+      ],
       "id": "0e03"
     }
   ]

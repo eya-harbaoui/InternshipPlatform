@@ -144,6 +144,7 @@ const ListeCandidaturesRH = () => {
       const updatedCandidature = {
         ...selectedCandidature["CandidatureInfos"],
         candidatureStatus: newStatus,
+        technicalValidatorId : selectedTechnicalValidator
       };
 
       // Mise à jour de la candidature sur le serveur

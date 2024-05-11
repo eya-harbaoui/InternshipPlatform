@@ -18,6 +18,7 @@ import TabUtilisateurs from "./components/Admin/TabUsers";
 import Domstages from "./components/Admin/DomaineStages";
 import ManagerValidation from "./pages/ManagerValidation/ManagerValidation";
 import ManagerDomains from "./pages/ManagerDomains/ManagerDomains";
+import ListeCandidaturesVT from "./pages/ListeCandidatureVT/ListeCandidauteVT";
 const App = () => {
   return (
     <BrowserRouter>
@@ -40,6 +41,7 @@ const App = () => {
             element={<ManagerValidation />}
           ></Route>
           <Route path="/Domaines_et_Compétences" element={<ManagerDomains/>}></Route>
+          <Route path="Candidatures_Assignées/:id" element={<ListeCandidaturesVT/>}></Route>
           <Route path="/portal" element={<Portal />}>
             <Route path="domainedestages" element={<Domstages />} />
             <Route path="dashboard" element={<Dashboard />} />
