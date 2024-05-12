@@ -9,9 +9,9 @@
       "durationTag": "6 mois",
       "stageDescription": "Vous êtes passionné(e) par le développement web et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en développement web. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en programmation. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.***",
       "competences": {
-        "HTML": 5,
-        "CSS": 4,
-        "JS": 2
+        "HTML": "maîtrise",
+        "CSS": "intermédiaire",
+        "JS": "connaissance pratique"
       },
       "OfferStatus": "en cours de validation",
       "publicationDate": "2024-05-05T09:35:24.182Z"
@@ -25,9 +25,9 @@
       "durationTag": "4 mois",
       "stageDescription": "Vous êtes passionné(e) par le marketing digital et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en marketing digital. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en marketing. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.111111",
       "competences": {
-        "marketing": "Avancé",
-        "communication": "Intermédiaire",
-        "analytics": "Débutant"
+        "marketing": "connaissance pratique",
+        "communication": "débutant",
+        "analytics": "intermédiaire"
       },
       "OfferStatus": "publié",
       "publicationDate": "2024-05-05T09:35:47.451Z"
@@ -41,9 +41,9 @@
       "durationTag": "6 mois",
       "stageDescription": "Vous êtes passionné(e) par le développement mobile et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en développement mobile. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en programmation mobile. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
       "competences": {
-        "Android": "Débutant",
-        "iOS": "Débutant",
-        "React Native": "Débutant"
+        "Android": "débutant",
+        "iOS": "débutant",
+        "React Native": "débutant"
       },
       "OfferStatus": "publié",
       "publicationDate": "2024-05-11T00:57:47.193Z"
@@ -57,9 +57,9 @@
       "durationTag": "6 mois",
       "stageDescription": "Vous êtes passionné(e) par la sécurité informatique et vous souhaitez acquérir une expérience professionnelle dans ce domaine ? Rejoignez notre équipe pour un stage de 6 mois en sécurité informatique. Vous travaillerez sur des projets concrets et aurez l'opportunité de mettre en pratique vos compétences en sécurité. Vous serez encadré(e) par des professionnels expérimentés et aurez l'occasion de participer à des formations et des ateliers.",
       "competences": {
-        "networkSecurity": "Avancé",
-        "cyberSecurity": "Intermédiaire",
-        "penetrationTesting": "Débutant"
+        "networkSecurity": "avancé",
+        "cyberSecurity": "intermédiaire",
+        "penetrationTesting": "débutant"
       },
       "OfferStatus": "publié",
       "publicationDate": "2024-05-05T09:35:44.815Z"
@@ -73,12 +73,12 @@
       "durationTag": "4 mois",
       "stageDescription": "llllloppppppppppppppppp",
       "competences": {
-        "Linux": "Intermédiaire",
-        "Windows Server": "Intermédiaire",
-        "Virtualisation": "Avancé"
+        "Linux": "intermédiaire",
+        "Windows Server": "intermédiaire",
+        "Virtualisation": "maîtrise"
       },
-      "OfferStatus": "en cours de validation",
-      "publicationDate": "2024-05-05T09:35:26.014Z"
+      "OfferStatus": "publié",
+      "publicationDate": "2024-05-11T22:23:37.909Z"
     }
   ],
   "Students": [
@@ -222,7 +222,8 @@
       "OfferId": "2",
       "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-19T15:30:24.555Z",
-      "refuseReason": "Motivation insuffisante"
+      "refuseReason": "Motivation insuffisante",
+      "technicallyEvaluated ": false
     },
     {
       "id": "3",
@@ -231,7 +232,8 @@
       "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-20T12:30:45.789Z",
       "refuseReason": "Autre opportunité professionnelle",
-      "technicalValidatorId": "2"
+      "technicalValidatorId": "2",
+      "technicallyEvaluated ": false
     },
     {
       "id": "4",
@@ -239,7 +241,8 @@
       "OfferId": "2",
       "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-19T15:30:24.555Z",
-      "refuseReason": "Profil Non conforme aux attentes"
+      "refuseReason": "Profil Non conforme aux attentes",
+      "technicallyEvaluated ": false
     },
     {
       "id": "5",
@@ -248,7 +251,30 @@
       "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-17T18:45:12.321Z",
       "refuseReason": "Compétences techniques non adaptées",
-      "technicalValidatorId": "3"
+      "technicalValidatorId": "3",
+      "technicallyEvaluated ": false,
+      "competencesCandidat": [
+        {
+          "nom": "HTML",
+          "niveauDemande": "maîtrise",
+          "niveauAcquis": "connaissance pratique",
+          "pourcentageAdequation": "40.00"
+        },
+        {
+          "nom": "CSS",
+          "niveauDemande": "intermédiaire",
+          "niveauAcquis": "intermédiaire",
+          "pourcentageAdequation": "100.00"
+        },
+        {
+          "nom": "JS",
+          "niveauDemande": "connaissance pratique",
+          "niveauAcquis": "connaissance pratique",
+          "pourcentageAdequation": "100.00"
+        }
+      ],
+      "adequacyPercentage": 80,
+      "technicallyEvaluated": true
     },
     {
       "id": "6",
@@ -257,7 +283,8 @@
       "candidatureStatus": "refusé",
       "candidatureDate": "2024-04-20T12:30:45.789Z",
       "refuseReason": "Motivation insuffisante",
-      "technicalValidatorId": "3"
+      "technicalValidatorId": "3",
+      "technicallyEvaluated ": false
     },
     {
       "id": "7",
@@ -266,35 +293,40 @@
       "candidatureStatus": "accepté",
       "candidatureDate": "2024-04-21T09:45:30.123Z",
       "refuseReason": "",
-      "acceptMessage": "Vos compétences technique et soft skills sont convenable à ce stage,Bienvenue"
+      "acceptMessage": "Vos compétences technique et soft skills sont convenable à ce stage,Bienvenue",
+      "technicallyEvaluated ": false
     },
     {
       "id": "8",
       "studentId": "1",
       "OfferId": "4",
       "candidatureStatus": "en cours",
-      "candidatureDate": "2024-04-22T15:20:10.456Z"
+      "candidatureDate": "2024-04-22T15:20:10.456Z",
+      "technicallyEvaluated ": false
     },
     {
       "id": "9",
       "studentId": "2",
       "OfferId": "8",
       "candidatureStatus": "en cours",
-      "candidatureDate": "2024-04-23T13:49:31.735Z"
+      "candidatureDate": "2024-04-23T13:49:31.735Z",
+      "technicallyEvaluated ": false
     },
     {
       "id": "10",
       "studentId": "5",
       "OfferId": "8",
       "candidatureStatus": "en cours",
-      "candidatureDate": "2024-04-23T13:49:44.589Z"
+      "candidatureDate": "2024-04-23T13:49:44.589Z",
+      "technicallyEvaluated ": false
     },
     {
       "id": "11",
       "studentId": "4",
       "OfferId": "4",
       "candidatureStatus": "en cours",
-      "candidatureDate": "2024-04-23T19:55:35.408Z"
+      "candidatureDate": "2024-04-23T19:55:35.408Z",
+      "technicallyEvaluated ": false
     },
     {
       "id": "12",
@@ -302,7 +334,8 @@
       "OfferId": "1",
       "candidatureStatus": "en cours",
       "candidatureDate": "2024-04-23T19:56:29.268Z",
-      "refuseReason": ""
+      "refuseReason": "",
+      "technicallyEvaluated ": false
     },
     {
       "id": "13",
@@ -310,7 +343,8 @@
       "OfferId": "3",
       "candidatureStatus": "en cours",
       "candidatureDate": "2024-04-23T20:49:51.437Z",
-      "refuseReason": ""
+      "refuseReason": "",
+      "technicallyEvaluated ": false
     },
     {
       "id": "14",
@@ -318,7 +352,74 @@
       "OfferId": "5",
       "candidatureStatus": "en cours",
       "candidatureDate": "2024-04-26T18:55:26.995Z",
-      "refuseReason": ""
+      "refuseReason": "",
+      "technicallyEvaluated ": false
+    },
+    {
+      "id": "01030632-fac4-4c03-bdd4-10ebb468d803",
+      "studentId": "1",
+      "OfferId": "3d2c1607-cefd-4aa1-8db1-a46f565c7750",
+      "candidatureStatus": "entretien RH programmé",
+      "candidatureDate": "2024-05-12T00:05:44.207Z",
+      "technicalValidatorId": null,
+      "technicallyEvaluated ": false,
+      "technicallyEvaluated": false
+    },
+    {
+      "id": "dc05a18a-50b6-44e2-b7b9-ce95dd12feb3",
+      "studentId": "1",
+      "OfferId": "8",
+      "candidatureStatus": "refusé",
+      "candidatureDate": "2024-05-12T02:52:44.120Z",
+      "technicalValidatorId": null,
+      "technicallyEvaluated": false,
+      "competencesCandidat": [
+        {
+          "nom": "cyberSecurity",
+          "niveauDemande": "intermédiaire",
+          "niveauAcquis": "débutant",
+          "pourcentageAdequation": "75.00"
+        },
+        {
+          "nom": "penetrationTesting",
+          "niveauDemande": "débutant",
+          "niveauAcquis": "connaissance théorique",
+          "pourcentageAdequation": "33.33"
+        }
+      ],
+      "adequacyPercentage": 54.16,
+      "refuseReason": "Motivation insuffisante"
+    },
+    {
+      "id": "09d6a2e9-7957-4a2c-83cf-f3fb921c15b5",
+      "studentId": "1",
+      "OfferId": "2",
+      "candidatureStatus": "accepté",
+      "candidatureDate": "2024-05-12T02:57:31.421Z",
+      "technicalValidatorId": "1",
+      "technicallyEvaluated": true,
+      "competencesCandidat": [
+        {
+          "nom": "marketing",
+          "niveauDemande": "connaissance pratique",
+          "niveauAcquis": "intermédiaire",
+          "pourcentageAdequation": "200.00"
+        },
+        {
+          "nom": "communication",
+          "niveauDemande": "débutant",
+          "niveauAcquis": "connaissance pratique",
+          "pourcentageAdequation": "66.67"
+        },
+        {
+          "nom": "analytics",
+          "niveauDemande": "intermédiaire",
+          "niveauAcquis": "débutant",
+          "pourcentageAdequation": "75.00"
+        }
+      ],
+      "adequacyPercentage": 113.89,
+      "acceptMessage": "accepté "
     }
   ],
   "Interviews": [
@@ -461,6 +562,72 @@
       "address": "lac2",
       "link": "",
       "technicalValidatorId": "2"
+    },
+    {
+      "id": "",
+      "CandidatureId": "01030632-fac4-4c03-bdd4-10ebb468d803",
+      "type": "technique",
+      "date": "2024-05-29T23:00:00.000Z",
+      "heure": "15:23",
+      "mode": "en ligne",
+      "address": "",
+      "link": "link234",
+      "technicalValidatorId": "3"
+    },
+    {
+      "id": "",
+      "CandidatureId": "01030632-fac4-4c03-bdd4-10ebb468d803",
+      "type": "RH",
+      "date": "2024-05-29T23:00:00.000Z",
+      "heure": "10:47",
+      "mode": "en ligne",
+      "address": "",
+      "link": "llll",
+      "technicalValidatorId": null
+    },
+    {
+      "id": "",
+      "CandidatureId": "dc05a18a-50b6-44e2-b7b9-ce95dd12feb3",
+      "type": "technique",
+      "date": "2024-05-21T23:00:00.000Z",
+      "heure": "07:57",
+      "mode": "présentiel",
+      "address": "lac1",
+      "link": "",
+      "technicalValidatorId": "1"
+    },
+    {
+      "id": "",
+      "CandidatureId": "dc05a18a-50b6-44e2-b7b9-ce95dd12feb3",
+      "type": "RH",
+      "date": "2024-05-20T23:00:00.000Z",
+      "heure": "09:00",
+      "mode": "en ligne",
+      "address": "",
+      "link": "meet",
+      "technicalValidatorId": null
+    },
+    {
+      "id": "",
+      "CandidatureId": "09d6a2e9-7957-4a2c-83cf-f3fb921c15b5",
+      "type": "technique",
+      "date": "2024-05-20T23:00:00.000Z",
+      "heure": "12:00",
+      "mode": "en ligne",
+      "address": "",
+      "link": "meet123",
+      "technicalValidatorId": "1"
+    },
+    {
+      "id": "",
+      "CandidatureId": "09d6a2e9-7957-4a2c-83cf-f3fb921c15b5",
+      "type": "RH",
+      "date": "2024-05-16T23:00:00.000Z",
+      "heure": "17:03",
+      "mode": "présentiel",
+      "address": "lac1",
+      "link": "meet123",
+      "technicalValidatorId": "1"
     }
   ],
   "TechnicalValidators": [
@@ -494,11 +661,12 @@
   ],
   "Domaines": [
     {
-      "domainName": "Data Science",
+      "domainName": "Data Sciencej",
       "competences": [
         "Python",
         "Machine Learning",
-        "data"
+        "data",
+        "docker"
       ],
       "id": "0154"
     },

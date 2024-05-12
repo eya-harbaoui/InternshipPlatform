@@ -8,7 +8,9 @@ import { VTNavbarLinks } from "../../components/Navbar/VTNavbarLinks";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { SkillsLevel } from "../../components/OffresCard/SkillsLevel";
+import { competenceLevelsMapping } from "../../components/OffresCard/SkillsLevel";
+import { refuseReasons } from "../../components/CandidatureCard/refuseReasons";
+import CompetenceDetails from "../../components/CandidatureCard/CompetenceDetails";
 const ListeCandidaturesVT = () => {
   const { Option } = Select;
   const [candidatures, setCandidatures] = useState({});
@@ -19,21 +21,13 @@ const ListeCandidaturesVT = () => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isCandidatureFileModalOpen, setIsCandidatureFileModalOpen] =
     useState(false);
+
   const [isRefuseModalOpen, setIsRefuseModalOpen] = useState(false);
   const [acceptMessage, setAcceptMessage] = useState("");
   const [refuseMessage, setRefuseMessage] = useState("");
-  const [competenceLevels, setCompetenceLevels] = useState({});
+  const [acquiredLevels, setAcquiredLevels] = useState({});
   const [adequacyPercentage, setAdequacyPercentage] = useState(0);
-  const [selectedNiveaux, setSelectedNiveaux] = useState({});
-
-  const refuseReasons = [
-    "Profil non conforme aux attentes",
-    "Manque d'expérience professionnelle",
-    "Autre opportunité professionnelle",
-    "Motivation insuffisante",
-    "Compétences techniques non adaptées",
-  ];
-
+  const [competencesCandidat, setCompetencesCandidat] = useState([]);
   const getStudentApplicationsForOffer = async () => {
     console.log(id, "idddddddddd");
     try {
@@ -153,7 +147,27 @@ const ListeCandidaturesVT = () => {
     setSelectedCandidature(candidat);
     setIsCandidatureFileModalOpen(true);
   };
+  const endInterviewFunc = async () => {
+    setIsCandidatureFileModalOpen(false);
+    try {
+      const updatedCandidatureData = {
+        ...selectedCandidature["CandidatureInfos"],
+        competencesCandidat: competencesCandidat,
+        adequacyPercentage: adequacyPercentage,
+        technicallyEvaluated: true,
+      };
 
+      // Effectuez la requête PUT vers le backend pour mettre à jour la candidature
+      await axios.put(
+        `http://localhost:8000/Student_Application/${selectedCandidature["CandidatureInfos"].id}`,
+        updatedCandidatureData
+      );
+
+      // Fermez le modal après avoir terminé la mise à jour
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour de la candidature :", error);
+    }
+  };
   const viewCandidatureFileCancel = () => {
     setIsCandidatureFileModalOpen(false);
   };
@@ -167,9 +181,7 @@ const ListeCandidaturesVT = () => {
     {
       name: "accepter",
       onClick: () => acceptCandidate(candidat),
-      disabled:
-        candidat["CandidatureInfos"].candidatureStatus !==
-        "entretien technique confirmé",
+      disabled: candidat["CandidatureInfos"].candidatureStatus === "refusé",
       Icon: BsPersonCheck,
     },
     {
@@ -179,32 +191,61 @@ const ListeCandidaturesVT = () => {
       Icon: BsPersonDash,
     },
   ];
+  const handleLevelChange = (competence, value) => {
+    setAcquiredLevels((prevState) => ({
+      ...prevState,
+      [competence]: value,
+    }));
+  };
+  // Ajoutez un état local pour stocker les pourcentages d'adéquation pour chaque compétence
+  const [competenceAdequacyPercentages, setCompetenceAdequacyPercentages] =
+    useState({});
 
-  // State pour stocker le pourcentage d'adéquation calculé
-  const [pourcentageAdequation, setPourcentageAdequation] = useState(null);
+  // Modifiez la fonction calculateAdequacyPercentage pour calculer les pourcentages d'adéquation pour chaque compétence
+  const calculateAdequacyPercentage = () => {
+    const competencePercentages = {};
+    const newCompetencesCandidat = [];
 
-  // Fonction pour calculer le pourcentage d'adéquation
-  const calculerPourcentageAdequation = () => {
-    let total = 0;
-    let totalDemande = 0;
-
-    // Parcourir chaque compétence et calculer le total des notes pour chaque compétence
     Object.entries(selectedCandidature["OfferInfos"].competences).forEach(
-      ([competence, niveauDemande]) => {
-        const niveauSelectionne = selectedNiveaux[competence] || 0;
-        total += parseInt(niveauSelectionne);
-        totalDemande += parseInt(SkillsLevel.indexOf(niveauDemande));
+      ([competence, niveau]) => {
+        if (acquiredLevels[competence]) {
+          const acquiredLevel =
+            competenceLevelsMapping[acquiredLevels[competence]];
+          const demandedLevel = competenceLevelsMapping[niveau];
+
+          if (!isNaN(acquiredLevel) && !isNaN(demandedLevel)) {
+            const percentage = ((acquiredLevel / demandedLevel) * 100).toFixed(
+              2
+            );
+            newCompetencesCandidat.push({
+              nom: competence,
+              niveauDemande: niveau,
+              niveauAcquis: acquiredLevels[competence],
+              pourcentageAdequation: percentage,
+            });
+            competencePercentages[competence] = percentage;
+          }
+        }
       }
     );
 
-    // Calculer le pourcentage d'adéquation
-    const moyenne =
-      total / Object.keys(selectedCandidature["OfferInfos"].competences).length;
-    const moyenneDemande =
-      totalDemande /
-      Object.keys(selectedCandidature["OfferInfos"].competences).length;
-    const pourcentage = (moyenne / moyenneDemande) * 100;
-    setPourcentageAdequation(pourcentage);
+    setCompetenceAdequacyPercentages(competencePercentages);
+
+    let total = 0;
+    let count = 0;
+
+    Object.values(competencePercentages).forEach((percentage) => {
+      total += parseFloat(percentage);
+      count++;
+    });
+
+    const average = count > 0 ? total / count : 0;
+    const globalPercentage = average.toFixed(2);
+    const globalPercentageNumber = parseFloat(globalPercentage);
+    setAdequacyPercentage(
+      isNaN(globalPercentageNumber) ? 0 : globalPercentageNumber
+    );
+    setCompetencesCandidat(newCompetencesCandidat);
   };
 
   return (
@@ -285,9 +326,10 @@ const ListeCandidaturesVT = () => {
         <Modal
           title="Fiche de candidature"
           visible={isCandidatureFileModalOpen}
-          onOk={viewCandidatureFileCancel}
+          onOk={endInterviewFunc}
           onCancel={viewCandidatureFileCancel}
-          okText="Fermer"
+          okText="Sauvegarder"
+          cancelText="Annuler"
         >
           <div>
             <p>
@@ -315,28 +357,66 @@ const ListeCandidaturesVT = () => {
               <strong>Heure de l'entretien:</strong>{" "}
               {selectedCandidature["InterviewInfos"].heure}
             </p>
-            <div>
-              {Object.entries(
-                selectedCandidature["OfferInfos"].competences
-              ).map(([competence, niveau]) => (
-                <div key={competence} className="competence-container">
-                  <p>
-                    <strong>
-                      {competence} (Niveau demandé: {niveau}):
-                    </strong>{" "}
-                    {SkillsLevel[selectedNiveaux[competence]]}
-                  </p>
-                </div>
-              ))}
-            </div>
-            {pourcentageAdequation !== null && (
-              <p>
-                Pourcentage d'adéquation: {pourcentageAdequation.toFixed(2)}%
-              </p>
+            {!selectedCandidature["CandidatureInfos"].technicallyEvaluated && (
+              <div>
+                <h3>Liste des compétences : </h3>
+                {Object.entries(
+                  selectedCandidature["OfferInfos"].competences
+                ).map(([competence, niveau]) => (
+                  <div key={competence} className="competence-container">
+                    <p>
+                      <strong>{competence}</strong>
+                    </p>
+                    <p>Niveau demandé: {niveau}</p>
+                    <p>
+                      Niveau acquis:
+                      <Select
+                        defaultValue="aucune compétence"
+                        style={{ width: 200 }}
+                        onChange={(value) =>
+                          handleLevelChange(competence, value)
+                        }
+                      >
+                        <Option value="aucune compétence">
+                          Aucune compétence
+                        </Option>
+                        <Option value="connaissance théorique">
+                          Connaissance théorique
+                        </Option>
+                        <Option value="connaissance pratique">
+                          Connaissance pratique
+                        </Option>
+                        <Option value="débutant">Débutant</Option>
+                        <Option value="intermédiaire">Intermédiaire</Option>
+                        <Option value="maîtrise">Maîtrise</Option>
+                      </Select>
+                    </p>
+                    <p>
+                      Pourcentage d'adéquation :{" "}
+                      {competenceAdequacyPercentages[competence] || "N/A"}%
+                    </p>
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    calculateAdequacyPercentage();
+                  }}
+                >
+                  Calculer pourcentage d'adéquation
+                </button>
+                <p>
+                  Pourcentage d'adéquation globale:{" "}
+                  {adequacyPercentage && adequacyPercentage.toFixed(2)}%
+                </p>
+              </div>
             )}
-            <button onClick={calculerPourcentageAdequation}>
-              Pourcentage d'adéquation
-            </button>
+            {selectedCandidature["CandidatureInfos"].technicallyEvaluated && (
+              <div>
+                <CompetenceDetails
+                  candidatureId={selectedCandidature["CandidatureInfos"].id}
+                ></CompetenceDetails>
+              </div>
+            )}
           </div>
         </Modal>
       )}

@@ -10,7 +10,7 @@ import StudentForm from "../../components/StudentForm/StudentForm";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { v4 as uuidv4 } from "uuid"; // Pour générer des identifiants uniques
 const Postuler = () => {
   const isSignedIn = localStorage.getItem("isSignedIn");
   const location = useLocation();
@@ -101,21 +101,14 @@ const Postuler = () => {
 
   const handleSubmitApplication = async (e) => {
     const candidatureDate = getCurrentDate(); // Obtenez la date actuelle
+    const id = uuidv4(); // Générer un ID unique
     try {
       const response = await axios.post(
         "http://localhost:8000/Student_Application",
         {
-          id: formData.id,
+          id: id,
+          studentId: formData.id,
           OfferId: jobDetails.id,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          phoneNumber: formData.phoneNumber,
-          email: formData.email,
-          studyLevel: formData.studyLevel,
-          establishment: formData.establishment,
-          address: formData.address,
-          cv: formData.cv,
-          recommendationLetter: formData.recommendationLetter,
           candidatureStatus: "en cours",
           candidatureDate: candidatureDate, // Utilisez la date actuelle
         }

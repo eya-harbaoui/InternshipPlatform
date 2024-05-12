@@ -8,6 +8,8 @@ import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks"; // Import
 import Navbar from "../../components/Navbar/Navbar"; // Importation du composant de barre de navigation
 import axios from "axios"; // Importation du module Axios pour les requêtes HTTP
 import { useParams } from "react-router-dom"; // Importation du hook useParams pour extraire les paramètres d'URL
+import { v4 as uuidv4 } from "uuid"; // Pour générer des identifiants uniques
+import CompetenceDetails from "../../components/CandidatureCard/CompetenceDetails";
 
 // Définition du composant ListeCandidatures
 const ListeCandidaturesRH = () => {
@@ -121,22 +123,28 @@ const ListeCandidaturesRH = () => {
   });
 
   // Fonction pour gérer la programmation d'un entretien
-  const handleProgramInterview = (candidature) => {
-    setSelectedCandidature(candidature);
-    setInterview({ ...interview, CandidatureId: candidature.id });
+  const handleProgramInterview = (candidat) => {
+    setSelectedCandidature(candidat);
+    setInterview({
+      ...interview,
+      CandidatureId: candidat["CandidatureInfos"].id,
+    });
     showModal();
   };
 
   // Fonction pour envoyer les détails de l'entretien au serveur
   const sendInterview = async () => {
+    const id = uuidv4(); // Générer un ID unique
     try {
       const response = await axios.post("http://localhost:8000/Interviews", {
+        id: id,
         ...interview,
         technicalValidatorId: selectedTechnicalValidator,
       });
       console.log("Entretien programmé avec succès", response.data);
 
       // Mise à jour du statut de la candidature après la programmation de l'entretien
+      const technicallyEvaluated = interview.type == "RH" ? true : false;
       const newStatus =
         interview.type === "RH"
           ? "entretien RH programmé"
@@ -144,7 +152,8 @@ const ListeCandidaturesRH = () => {
       const updatedCandidature = {
         ...selectedCandidature["CandidatureInfos"],
         candidatureStatus: newStatus,
-        technicalValidatorId : selectedTechnicalValidator
+        technicalValidatorId: selectedTechnicalValidator,
+        technicallyEvaluated: technicallyEvaluated,
       };
 
       // Mise à jour de la candidature sur le serveur
@@ -224,6 +233,21 @@ const ListeCandidaturesRH = () => {
     }
   };
 
+  const confirmRHInterview = async () => {
+    try {
+      await axios.put(
+        `http://localhost:8000/Student_Application/${selectedCandidature["CandidatureInfos"].id}`,
+        {
+          ...selectedCandidature["CandidatureInfos"],
+          candidatureStatus: "entretien RH confirmé",
+        }
+      );
+      setIsRefuseModalOpen(false); // Fermeture du modal après le refus du candidat
+    } catch (error) {
+      console.error("Erreur lors du refus du candidat", error);
+    }
+  };
+
   // Fonction pour annuler le refus d'un candidat
   const handleRefuseModalCancel = () => {
     setIsRefuseModalOpen(false);
@@ -232,6 +256,7 @@ const ListeCandidaturesRH = () => {
   // Fonction pour afficher le profil d'un candidat
   const viewProfile = (candidat) => {
     setSelectedCandidature(candidat);
+    console.log("pp", selectedCandidature);
     setIsProfileModalOpen(true);
   };
 
@@ -243,6 +268,7 @@ const ListeCandidaturesRH = () => {
   // Fonction pour afficher la fiche de candidature d'un candidat
   const viewCandidatureFile = (candidat) => {
     setSelectedCandidature(candidat);
+    console.log("vv", selectedCandidature);
     setIsCandidatureFileModalOpen(true);
   };
 
@@ -541,16 +567,32 @@ const ListeCandidaturesRH = () => {
               <strong>Heure de l'entretien:</strong>{" "}
               {selectedCandidature["InterviewInfos"].heure}
             </p>
-            <div className="competences-container">
-              <h3>Compétences demandées :</h3>
-              {Object.entries(
-                selectedCandidature["OfferInfos"].competences
-              ).map(([competence, niveau]) => (
-                <p key={competence}>
-                  {competence}: {niveau}
-                </p>
-              ))}
-            </div>
+            {!selectedCandidature["CandidatureInfos"].technicallyEvaluated && (
+              <div className="competences-container">
+                <h3>Compétences demandées :</h3>
+                {Object.entries(
+                  selectedCandidature["OfferInfos"].competences
+                ).map(([competence, niveau]) => (
+                  <p key={competence}>
+                    {competence}: {niveau}
+                  </p>
+                ))}
+              </div>
+            )}
+            {selectedCandidature["CandidatureInfos"].technicallyEvaluated && (
+              <div>
+                <CompetenceDetails
+                  candidatureId={selectedCandidature["CandidatureInfos"].id}
+                ></CompetenceDetails>
+                <button
+                  onClick={() => {
+                    confirmRHInterview();
+                  }}
+                >
+                  Entretien RH confirmé
+                </button>
+              </div>
+            )}
 
             {selectedCandidature["CandidatureInfos"].refuseReason && (
               <p>
