@@ -475,17 +475,6 @@
       "candidatureDate": "2024-05-12T10:27:02.987Z",
       "technicalValidatorId": "2",
       "technicallyEvaluated": false
-    },
-    {
-      "id": "93cdb9ba-0032-4ddd-83b8-ee38d3428fa0",
-      "studentId": "1",
-      "OfferId": "8",
-      "candidatureStatus": "entretien technique programmé",
-      "candidatureDate": "2024-05-17T19:44:48.561Z",
-      "technicalValidatorId": "1",
-      "technicallyEvaluated": true,
-      "competencesCandidat": [],
-      "adequacyPercentage": 0
     }
   ],
   "Interviews": [
