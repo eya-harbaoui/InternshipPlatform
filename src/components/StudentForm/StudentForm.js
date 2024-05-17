@@ -13,7 +13,7 @@ function StudentForm({
 }) {
   return (
     <>
-      <div className="form-row">
+      <div className="student-form-row">
         <input
           type="text"
           name="firstName"
@@ -33,7 +33,7 @@ function StudentForm({
           disabled={true}
         />
       </div>
-      <div className="form-row">
+      <div className="student-form-row">
         <input
           type="tel"
           name="phoneNumber"
@@ -54,7 +54,7 @@ function StudentForm({
         />
       </div>
 
-      <div className="form-row">
+      <div className="student-form-row">
         <input
           type="text"
           name="studyLevel"
@@ -75,7 +75,7 @@ function StudentForm({
         />
       </div>
 
-      <div className="form-row">
+      <div className="student-form-row">
         <input
           type="text"
           name="address"
@@ -114,7 +114,7 @@ function StudentForm({
           </button>
         )}
       </div>
-      <div className="form-row">
+      <div className="student-form-row">
         <textarea
           name="recommendationLetter"
           placeholder="Lettre de recommendation"
@@ -126,7 +126,7 @@ function StudentForm({
           disabled={disabled}
         />
       </div>
-      <div className="form-row">
+      <div className="student-form-row">
         <button
           type="submit"
           className="candidature-button"

@@ -91,20 +91,18 @@ const InternDetails = () => {
           champs sont obligatoires)
         </p>
       </div>
-      <div className="form-intern-details">
-        <StudentForm
-          formData={formData}
-          handleChange={handleChange}
-          handleDeleteFile={handleDeleteFile}
-          handleFileChange={handleFileChange}
-          fileInputKey={fileInputKey}
-          buttonName={
-            editing ? "Enregistrer mon profil" : "Modifier mon profil"
-          }
-          disabled={!editing}
-          handleOnClickButtonForm={!editing ? handleEdit : handleSave}
-        />
-      </div>
+      <div className="intern-details-form"></div>
+
+      <StudentForm
+        formData={formData}
+        handleChange={handleChange}
+        handleDeleteFile={handleDeleteFile}
+        handleFileChange={handleFileChange}
+        fileInputKey={fileInputKey}
+        buttonName={editing ? "Enregistrer mon profil" : "Modifier mon profil"}
+        disabled={!editing}
+        handleOnClickButtonForm={!editing ? handleEdit : handleSave}
+      />
     </div>
   );
 };

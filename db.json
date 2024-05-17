@@ -79,6 +79,37 @@
       },
       "OfferStatus": "publié",
       "publicationDate": "2024-05-11T22:23:37.909Z"
+    },
+    {
+      "id": "9afe74dc-bd1b-48d5-ae18-753b6e9b0423",
+      "stageTitle": "stage en designgg",
+      "stageNature": "PFA",
+      "modeTag": "Hybride",
+      "domainTag": "Design graphique",
+      "durationTag": "6 mois",
+      "stageDescription": "lkkkkkkkk",
+      "competences": {
+        "Adobe Photoshop": "connaissance théorique",
+        "Adobe Illustrator": "débutant",
+        "UI/UX Design": "connaissance pratique"
+      },
+      "OfferStatus": "publié",
+      "publicationDate": "2024-05-12T10:15:31.209Z"
+    },
+    {
+      "id": "1bb1eebc-d5a1-4f43-ab06-c5cdffc5df8a",
+      "stageTitle": "stage en data ",
+      "stageNature": "PFE",
+      "modeTag": "Remote",
+      "domainTag": "intelligence artificielle",
+      "durationTag": "4 mois",
+      "stageDescription": "lll",
+      "competences": {
+        "ML": "débutant",
+        "DL": "intermédiaire"
+      },
+      "OfferStatus": "publié",
+      "publicationDate": "2024-05-12T10:25:40.279Z"
     }
   ],
   "Students": [
@@ -90,7 +121,7 @@
       "password": " azertyu123@",
       "phoneNumber": "96386045",
       "studyLevel": "Bachelor",
-      "establishment": "ecole nationale des sciences de l'info ENSI",
+      "establishment": "ecole nationale des sciences de l'info ENSI manouba specialité AI",
       "address": "Impasse Bahr omen Cité Ennkhilet",
       "recommendationLetter": "[Nom Prénom]\n\n[Entreprise]\n\n[Fonction occupée, service ou département]\n\n[Adresse de l’entreprise]\n\n[Coordonnées]\n\nÀ [ville], le [date]\n\nObjet : Lettre de recommandation de [Prénom Nom]\n\nMadame, Monsieur,\n\nJe soussigné [Prénom Nom], [fonction occupée] au sein de l’entreprise [nom de l’entreprise], certifie avoir collaboré avec [Prénom Nom] du [indiquer date de début de la collaboration] au [indiquer la date de fin de la collaboration].\n\nPar la présente, je souhaite vous recommander la candidature de [Prénom Nom], pour le poste de [intitulé de poste à pourvoir].\n\nDans le cadre de son expérience professionnelle au sein de notre entreprise, [Prénom Nom] a su présenter de nombreuses qualités. Sa grande adaptabilité à l’environnement lui a permis de rapidement trouver ses marques parmi nos collaborateurs, témoignant d’un esprit d’équipe indéniable. Autonome et efficace, [Prénom Nom] a su faire preuve d’initiative et de professionnalisme.\n\nDes plus dynamiques et responsables, [Prénom Nom] a su s’intégrer à notre équipe et représenter un réel atout pour l’entreprise. Sa curiosité et son implication nous ont permis de développer et améliorer notre fonctionnement interne, afin que chaque collaborateur puisse travailler dans d’excellentes conditions.\n\nPour toutes les raisons citées ci-dessus, et pour de nombreuses autres encore, je ne peux que vous recommander de faire appel à [Prénom Nom], pour le poste de [intitulé du poste à pourvoir].\n\nJe me tiens à votre disposition pour toute information complémentaire concernant l’expérience de [Prénom Nom] au sein de notre entreprise.\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes sentiments distingués.\n\n[Signature]",
       "CV": "CVeyaHarbaoui.pdf"
@@ -284,7 +315,29 @@
       "candidatureDate": "2024-04-20T12:30:45.789Z",
       "refuseReason": "Motivation insuffisante",
       "technicalValidatorId": "3",
-      "technicallyEvaluated ": false
+      "technicallyEvaluated ": false,
+      "competencesCandidat": [
+        {
+          "nom": "Android",
+          "niveauDemande": "débutant",
+          "niveauAcquis": "connaissance pratique",
+          "pourcentageAdequation": "66.67"
+        },
+        {
+          "nom": "iOS",
+          "niveauDemande": "débutant",
+          "niveauAcquis": "débutant",
+          "pourcentageAdequation": "100.00"
+        },
+        {
+          "nom": "React Native",
+          "niveauDemande": "débutant",
+          "niveauAcquis": "débutant",
+          "pourcentageAdequation": "100.00"
+        }
+      ],
+      "adequacyPercentage": 88.89,
+      "technicallyEvaluated": true
     },
     {
       "id": "7",
@@ -420,6 +473,46 @@
       ],
       "adequacyPercentage": 113.89,
       "acceptMessage": "accepté "
+    },
+    {
+      "id": "5102ca4c-a6d1-459f-91cb-48f6e10fd439",
+      "studentId": "1",
+      "OfferId": "9afe74dc-bd1b-48d5-ae18-753b6e9b0423",
+      "candidatureStatus": "refusé",
+      "candidatureDate": "2024-05-12T10:16:52.836Z",
+      "technicalValidatorId": "2",
+      "technicallyEvaluated": true,
+      "competencesCandidat": [
+        {
+          "nom": "Adobe Photoshop",
+          "niveauDemande": "connaissance théorique",
+          "niveauAcquis": "connaissance théorique",
+          "pourcentageAdequation": "100.00"
+        },
+        {
+          "nom": "Adobe Illustrator",
+          "niveauDemande": "débutant",
+          "niveauAcquis": "connaissance théorique",
+          "pourcentageAdequation": "33.33"
+        },
+        {
+          "nom": "UI/UX Design",
+          "niveauDemande": "connaissance pratique",
+          "niveauAcquis": "connaissance pratique",
+          "pourcentageAdequation": "100.00"
+        }
+      ],
+      "adequacyPercentage": 77.78,
+      "refuseReason": "Autre opportunité professionnelle"
+    },
+    {
+      "id": "99383bb7-155d-4468-9efe-222034099469",
+      "studentId": "1",
+      "OfferId": "1bb1eebc-d5a1-4f43-ab06-c5cdffc5df8a",
+      "candidatureStatus": "entretien technique programmé",
+      "candidatureDate": "2024-05-12T10:27:02.987Z",
+      "technicalValidatorId": "2",
+      "technicallyEvaluated": false
     }
   ],
   "Interviews": [
@@ -628,6 +721,50 @@
       "address": "lac1",
       "link": "meet123",
       "technicalValidatorId": "1"
+    },
+    {
+      "id": "",
+      "CandidatureId": "5102ca4c-a6d1-459f-91cb-48f6e10fd439",
+      "type": "technique",
+      "date": "2024-05-22T23:00:00.000Z",
+      "heure": "14:20",
+      "mode": "en ligne",
+      "address": "",
+      "link": "lien 11",
+      "technicalValidatorId": "2"
+    },
+    {
+      "id": "",
+      "CandidatureId": "5102ca4c-a6d1-459f-91cb-48f6e10fd439",
+      "type": "RH",
+      "date": "2024-05-24T23:00:00.000Z",
+      "heure": "16:22",
+      "mode": "présentiel",
+      "address": "lac1",
+      "link": "lien 11",
+      "technicalValidatorId": "2"
+    },
+    {
+      "id": "",
+      "CandidatureId": "99383bb7-155d-4468-9efe-222034099469",
+      "type": "technique",
+      "date": "2024-05-14T23:00:00.000Z",
+      "heure": "14:30",
+      "mode": "en ligne",
+      "address": "",
+      "link": "lien 111",
+      "technicalValidatorId": "2"
+    },
+    {
+      "id": "",
+      "CandidatureId": "99383bb7-155d-4468-9efe-222034099469",
+      "type": "technique",
+      "date": "2024-05-14T23:00:00.000Z",
+      "heure": "14:30",
+      "mode": "en ligne",
+      "address": "",
+      "link": "lien 111",
+      "technicalValidatorId": "2"
     }
   ],
   "TechnicalValidators": [

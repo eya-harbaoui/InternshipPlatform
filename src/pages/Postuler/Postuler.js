@@ -48,7 +48,7 @@ const Postuler = () => {
 
   useEffect(() => {
     fetchProfileInfo();
-  }, []);
+  });
 
   const navigate = useNavigate();
 
@@ -167,7 +167,7 @@ const Postuler = () => {
           <button className="postuler-button" onClick={handleEdit}>
             Modifier Mes Infos
           </button>
-          <div>
+          <div className="student-form-container">
             <StudentForm
               formData={formData}
               handleChange={handleChange}

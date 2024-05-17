@@ -1,10 +1,11 @@
-.form-row {
+
+.student-form-row {
   display: flex;
   margin-bottom: 10px;
-  width: 70%;
+  width: 80%;
 }
 
-.form-row input {
+.student-form-row input {
   width: 100%;
   height: 50px;
   font-size: 14px;
@@ -18,7 +19,7 @@
   position: relative;
 }
 
-.form-row textarea {
+.student-form-row textarea {
   width: 100%;
   height: 70px;
   font-size: 14px;
@@ -31,7 +32,7 @@
   box-sizing: border-box;
   position: relative;
 }
-.form-row input:focus,
+.student-form-row input:focus,
 .cover-letter:focus {
   border-color: #ff735c;
 }
@@ -67,7 +68,7 @@
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .form-row {
+  .student-form-row {
     flex-direction: column;
   }
 
@@ -75,8 +76,8 @@
     width: 100%;
   }
 
-  .form-row input,
-  .form-row textarea {
+  .student-form-row input,
+  .student-form-row textarea {
     width: 100%;
   }
   .postuler-button,
