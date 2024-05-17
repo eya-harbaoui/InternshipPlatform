@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Select, Row, Col, Modal, DatePicker, Input, Radio } from "antd";
+import { Select, Row, Col, Modal, DatePicker, Input, Radio,Button } from "antd";
 import { FaRegUser } from "react-icons/fa";
 import { BsCalendar, BsPersonCheck, BsPersonDash } from "react-icons/bs";
 import CandidatsCard from "../../components/CandidatsCard/CandidatsCard";
@@ -201,52 +201,53 @@ const ListeCandidaturesVT = () => {
   const [competenceAdequacyPercentages, setCompetenceAdequacyPercentages] =
     useState({});
 
-  // Modifiez la fonction calculateAdequacyPercentage pour calculer les pourcentages d'adéquation pour chaque compétence
-  const calculateAdequacyPercentage = () => {
-    const competencePercentages = {};
-    const newCompetencesCandidat = [];
+  // la fonction calculateAdequacyPercentage pour calculer les pourcentages d'adéquation pour chaque compétence
+  
+const calculateAdequacyPercentage = () => {
+  if (!selectedCandidature || !selectedCandidature["OfferInfos"]) return;
 
-    Object.entries(selectedCandidature["OfferInfos"].competences).forEach(
-      ([competence, niveau]) => {
-        if (acquiredLevels[competence]) {
-          const acquiredLevel =
-            competenceLevelsMapping[acquiredLevels[competence]];
-          const demandedLevel = competenceLevelsMapping[niveau];
+  const competencePercentages = {};
+  const newCompetencesCandidat = [];
 
-          if (!isNaN(acquiredLevel) && !isNaN(demandedLevel)) {
-            const percentage = ((acquiredLevel / demandedLevel) * 100).toFixed(
-              2
-            );
-            newCompetencesCandidat.push({
-              nom: competence,
-              niveauDemande: niveau,
-              niveauAcquis: acquiredLevels[competence],
-              pourcentageAdequation: percentage,
-            });
-            competencePercentages[competence] = percentage;
-          }
+  Object.entries(selectedCandidature["OfferInfos"].competences).forEach(
+    ([competence, niveau]) => {
+      if (acquiredLevels[competence]) {
+        const acquiredLevel =
+          competenceLevelsMapping[acquiredLevels[competence]];
+        const demandedLevel = competenceLevelsMapping[niveau];
+
+        if (!isNaN(acquiredLevel) && !isNaN(demandedLevel)) {
+          const percentage = ((acquiredLevel / demandedLevel) * 100).toFixed(2);
+          newCompetencesCandidat.push({
+            nom: competence,
+            niveauDemande: niveau,
+            niveauAcquis: acquiredLevels[competence],
+            pourcentageAdequation: percentage,
+          });
+          competencePercentages[competence] = percentage;
         }
       }
-    );
+    }
+  );
 
-    setCompetenceAdequacyPercentages(competencePercentages);
+  setCompetenceAdequacyPercentages(competencePercentages);
 
-    let total = 0;
-    let count = 0;
+  let total = 0;
+  let count = 0;
 
-    Object.values(competencePercentages).forEach((percentage) => {
-      total += parseFloat(percentage);
-      count++;
-    });
+  Object.values(competencePercentages).forEach((percentage) => {
+    total += parseFloat(percentage);
+    count++;
+  });
 
-    const average = count > 0 ? total / count : 0;
-    const globalPercentage = average.toFixed(2);
-    const globalPercentageNumber = parseFloat(globalPercentage);
-    setAdequacyPercentage(
-      isNaN(globalPercentageNumber) ? 0 : globalPercentageNumber
-    );
-    setCompetencesCandidat(newCompetencesCandidat);
-  };
+  const average = count > 0 ? total / count : 0;
+  const globalPercentage = average.toFixed(2);
+  const globalPercentageNumber = parseFloat(globalPercentage);
+  setAdequacyPercentage(
+    isNaN(globalPercentageNumber) ? 0 : globalPercentageNumber
+  );
+  setCompetencesCandidat(newCompetencesCandidat);
+};
 
   return (
     <div className="offres-page">
@@ -280,6 +281,11 @@ const ListeCandidaturesVT = () => {
           visible={isProfileModalOpen}
           onOk={viewProfileCancel}
           onCancel={viewProfileCancel}
+          footer={[
+            <Button key="ok" type="primary" onClick={viewProfileCancel}>
+              Fermer
+            </Button>,
+          ]}
         >
           <div>
             <p>
@@ -397,13 +403,13 @@ const ListeCandidaturesVT = () => {
                     </p>
                   </div>
                 ))}
-                <button
+                <Button
                   onClick={() => {
                     calculateAdequacyPercentage();
                   }}
                 >
                   Calculer pourcentage d'adéquation
-                </button>
+                </Button>
                 <p>
                   Pourcentage d'adéquation globale:{" "}
                   {adequacyPercentage && adequacyPercentage.toFixed(2)}%

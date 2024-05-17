@@ -284,27 +284,8 @@
       "refuseReason": "Compétences techniques non adaptées",
       "technicalValidatorId": "3",
       "technicallyEvaluated ": false,
-      "competencesCandidat": [
-        {
-          "nom": "HTML",
-          "niveauDemande": "maîtrise",
-          "niveauAcquis": "connaissance pratique",
-          "pourcentageAdequation": "40.00"
-        },
-        {
-          "nom": "CSS",
-          "niveauDemande": "intermédiaire",
-          "niveauAcquis": "intermédiaire",
-          "pourcentageAdequation": "100.00"
-        },
-        {
-          "nom": "JS",
-          "niveauDemande": "connaissance pratique",
-          "niveauAcquis": "connaissance pratique",
-          "pourcentageAdequation": "100.00"
-        }
-      ],
-      "adequacyPercentage": 80,
+      "competencesCandidat": [],
+      "adequacyPercentage": 0,
       "technicallyEvaluated": true
     },
     {
@@ -316,27 +297,8 @@
       "refuseReason": "Motivation insuffisante",
       "technicalValidatorId": "3",
       "technicallyEvaluated ": false,
-      "competencesCandidat": [
-        {
-          "nom": "Android",
-          "niveauDemande": "débutant",
-          "niveauAcquis": "connaissance pratique",
-          "pourcentageAdequation": "66.67"
-        },
-        {
-          "nom": "iOS",
-          "niveauDemande": "débutant",
-          "niveauAcquis": "débutant",
-          "pourcentageAdequation": "100.00"
-        },
-        {
-          "nom": "React Native",
-          "niveauDemande": "débutant",
-          "niveauAcquis": "débutant",
-          "pourcentageAdequation": "100.00"
-        }
-      ],
-      "adequacyPercentage": 88.89,
+      "competencesCandidat": [],
+      "adequacyPercentage": 0,
       "technicallyEvaluated": true
     },
     {
@@ -513,6 +475,17 @@
       "candidatureDate": "2024-05-12T10:27:02.987Z",
       "technicalValidatorId": "2",
       "technicallyEvaluated": false
+    },
+    {
+      "id": "93cdb9ba-0032-4ddd-83b8-ee38d3428fa0",
+      "studentId": "1",
+      "OfferId": "8",
+      "candidatureStatus": "entretien technique programmé",
+      "candidatureDate": "2024-05-17T19:44:48.561Z",
+      "technicalValidatorId": "1",
+      "technicallyEvaluated": true,
+      "competencesCandidat": [],
+      "adequacyPercentage": 0
     }
   ],
   "Interviews": [
@@ -765,6 +738,17 @@
       "address": "",
       "link": "lien 111",
       "technicalValidatorId": "2"
+    },
+    {
+      "id": "",
+      "CandidatureId": "93cdb9ba-0032-4ddd-83b8-ee38d3428fa0",
+      "type": "technique",
+      "date": "2024-05-22T23:00:00.000Z",
+      "heure": "12:51",
+      "mode": "en ligne",
+      "address": "",
+      "link": "meeting link google meet",
+      "technicalValidatorId": "1"
     }
   ],
   "TechnicalValidators": [

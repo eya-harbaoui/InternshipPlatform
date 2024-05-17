@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"; // Importation des hooks useState et useEffect depuis React
-import { Select, Row, Col, Modal, DatePicker, Input, Radio } from "antd"; // Importation de certains composants depuis Ant Design
+import { Select, Row, Col, Modal, DatePicker, Input, Radio,Button } from "antd"; // Importation de certains composants depuis Ant Design
 import { FaRegUser } from "react-icons/fa"; // Importation de l'icône d'utilisateur depuis React Icons
 import { BsCalendar, BsPersonCheck, BsPersonDash } from "react-icons/bs"; // Importation d'icônes de calendrier, de validation et de refus depuis React Icons
 import CandidatsCard from "../../components/CandidatsCard/CandidatsCard"; // Importation d'un composant de carte de candidats
@@ -355,6 +355,11 @@ const ListeCandidaturesRH = () => {
           visible={isProfileModalOpen}
           onOk={viewProfileCancel}
           onCancel={viewProfileCancel}
+          footer={[
+            <Button key="ok" type="primary" onClick={viewProfileCancel}>
+              Fermer
+            </Button>,
+          ]}
         >
           <div>
             <p>
@@ -540,6 +545,11 @@ const ListeCandidaturesRH = () => {
           onOk={viewCandidatureFileCancel}
           onCancel={viewCandidatureFileCancel}
           okText="Fermer"
+          footer={[
+            <Button key="ok" type="primary" onClick={viewCandidatureFileCancel}>
+              Fermer
+            </Button>,
+          ]}
         >
           <div>
             <p>

@@ -33,7 +33,7 @@ const Filter = ({ filter, setFilter, handleClear }) => {
   };
   useEffect(() => {
     fetchDomains();
-  }, []);
+  });
 
   return (
     <div className="filter-container">

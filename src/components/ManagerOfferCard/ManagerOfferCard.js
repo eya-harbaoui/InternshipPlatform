@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaArchive } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 import "./ManagerOfferCard.css";
-import { Tag, Modal, Select } from "antd";
+import { Tag, Modal, Select,Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import StageCard from "../OffresCard/StageCard.js";
@@ -89,7 +89,13 @@ const ManagerOfferCard = ({
             title="Détails de l'offre"
             visible={isModalOpen}
             onOk={handleViewOfferClick}
-            okText="Revenir au liste des offres à valider"
+            onCancel={handleViewOfferClick}
+            
+            footer={[
+              <Button key="ok" type="primary" onClick={handleViewOfferClick}>
+               Fermer
+              </Button>,
+            ]}
           >
             <div className="modal-content">
               <label htmlFor="stageTitle">Titre de stage :</label>
@@ -142,13 +148,11 @@ const ManagerOfferCard = ({
               />
               <div className="competences-container">
                 <h3>Compétences demandées :</h3>
-                {Object.entries(competences).map(
-                  ([competence, niveau]) => (
-                    <p key={competence}>
-                      {competence}: {niveau}
-                    </p>
-                  )
-                )}
+                {Object.entries(competences).map(([competence, niveau]) => (
+                  <p key={competence}>
+                    {competence}: {niveau}
+                  </p>
+                ))}
               </div>
             </div>
           </Modal>
