@@ -66,20 +66,38 @@ const Domstages = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [addingCompetences, setAddingCompetences] = useState([]);
   const [editRecord, setEditRecord] = useState(null);
+    const [competences, setCompetences] = useState([]);
+
 
   // récupérer les données
 
   useEffect(() => {
-    fetchData();
+    fetchDomains();
+    fetchSkills();
   });
 
-  const fetchData = async () => {
+  const fetchDomains = async () => {
     try {
       const response = await axios.get("http://localhost:8000/domain");
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+  
+
+  const fetchSkills = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/skill");
+      setCompetences(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  
+  const handleCompetenceChange = (value) => {
+    setAddingCompetences(value);
   };
   // Vérifie si un enregistrement est en cours d'édition
 
@@ -132,7 +150,7 @@ const Domstages = () => {
         ...editRecord, // Envoyer toutes les données du record existant
         ...updatedData, // Mise à jour des données modifiées
       });
-      fetchData();
+      fetchDomains();
       setIsEditModalVisible(false);
       form.resetFields();
       setAddingCompetences([]);
@@ -163,13 +181,10 @@ const Domstages = () => {
       const values = await form.validateFields();
       await axios.post("http://localhost:8000/domain", {
         name: values.name,
-        //competences: addingCompetences,
+        skills: addingCompetences,
       });
-      await axios.post("http://localhost:8000/skill", {
-        //name: values.name,
-        competences: addingCompetences,
-      });
-      fetchData();
+      
+      fetchDomains();
       setIsAddModalVisible(false);
       form.resetFields();
       setAddingCompetences([]);
@@ -286,7 +301,7 @@ const Domstages = () => {
   return (
     <>
       <Typography.Title level={2} style={{ marginBottom: "20px" }}>
-        Domaines et Compétences
+        Gestion des Domaines
       </Typography.Title>
       <Button
         type="primary"
@@ -346,12 +361,18 @@ const Domstages = () => {
             ]}
           >
             <Select
-              mode="tags"
+              mode="multiple"
               style={{ width: "100%" }}
-              placeholder="Ajouter compétences"
-              onChange={handleAddingCompetenceChange}
+              placeholder="Sélectionner les compétences"
+              onChange={handleCompetenceChange}
               value={addingCompetences}
-            />
+            >
+              {competences.map((competence) => (
+                <Option key={competence.id} value={competence.name}>
+                  {competence.name}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
         </Form>
       </Modal>

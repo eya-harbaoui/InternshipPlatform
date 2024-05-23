@@ -19,6 +19,7 @@ import Domstages from "./components/Admin/DomaineStages";
 import ManagerValidation from "./pages/ManagerValidation/ManagerValidation";
 import ManagerDomains from "./pages/ManagerDomains/ManagerDomains";
 import ListeCandidaturesVT from "./pages/ListeCandidatureVT/ListeCandidauteVT";
+import CompetencesStages from "./components/Admin/CompetencesStages";
 const App = () => {
   return (
     <BrowserRouter>
@@ -40,12 +41,19 @@ const App = () => {
             path="manager_validation"
             element={<ManagerValidation />}
           ></Route>
-          <Route path="/Domaines_et_Compétences" element={<ManagerDomains/>}></Route>
-          <Route path="Candidatures_Assignées/:id" element={<ListeCandidaturesVT/>}></Route>
-          <Route path="/portal" element={<Portal />}>
-            <Route path="domainedestages" element={<Domstages />} />
+          <Route
+            path="/Domaines_et_Compétences"
+            element={<ManagerDomains />}
+          ></Route>
+          <Route
+            path="Candidatures_Assignées/:id"
+            element={<ListeCandidaturesVT />}
+          ></Route>
+          <Route path="/Admin" element={<Portal />}>
+            <Route path="Gestion_Des_Domaines" element={<Domstages />} />
+            <Route path="Gestion_Des_Compétences" element={<CompetencesStages/>} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="user-list" element={<TabUtilisateurs />} />
+            <Route path="users" element={<TabUtilisateurs />} />
           </Route>
         </Routes>
       </div>
