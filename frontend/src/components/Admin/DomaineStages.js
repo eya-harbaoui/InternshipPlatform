@@ -75,7 +75,7 @@ const Domstages = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/Domain");
+      const response = await axios.get("http://localhost:8000/domain");
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -88,7 +88,7 @@ const Domstages = () => {
 
   const edit = (record) => {
     form.setFieldsValue({
-      domainName: record.domainName,
+      name: record.name,
     });
     setEditingKey(record.id);
     setEditRecord(record);
@@ -104,14 +104,14 @@ const Domstages = () => {
 
   const save = async (record) => {
     try {
-      const updatedData = await form.validateFields(["domainName"]); // Validation des champs du formulaire
+      const updatedData = await form.validateFields(["name"]); // Validation des champs du formulaire
       const newData = data.map((item) => {
         if (item.id === record.id) {
           return { ...item, ...updatedData };
         }
         return item;
       });
-      await axios.put(`http://localhost:8000/Domain/${record.id}`, {
+      await axios.put(`http://localhost:8000/domain/${record.id}`, {
         ...record,
         ...updatedData,
       }); // Appel réseau pour mettre à jour les données sur le serveur
@@ -128,7 +128,7 @@ const Domstages = () => {
     if (!editRecord) return;
     try {
       const updatedData = await form.validateFields();
-      await axios.put(`http://localhost:8000/Domain/${editRecord.id}`, {
+      await axios.put(`http://localhost:8000/domain/${editRecord.id}`, {
         ...editRecord, // Envoyer toutes les données du record existant
         ...updatedData, // Mise à jour des données modifiées
       });
@@ -144,7 +144,7 @@ const Domstages = () => {
 
   const handleDelete = async (key) => {
     try {
-      await axios.delete(`http://localhost:8000/Domain/${key}`);
+      await axios.delete(`http://localhost:8000/domain/${key}`);
       const newData = data.filter((item) => item.id !== key);
       setData(newData);
     } catch (error) {
@@ -161,8 +161,12 @@ const Domstages = () => {
   const handleAddModalOk = async () => {
     try {
       const values = await form.validateFields();
-      await axios.post("http://localhost:8000/Domain", {
-        domainName: values.domainName,
+      await axios.post("http://localhost:8000/domain", {
+        name: values.name,
+        //competences: addingCompetences,
+      });
+      await axios.post("http://localhost:8000/skill", {
+        //name: values.name,
         competences: addingCompetences,
       });
       fetchData();
@@ -187,7 +191,7 @@ const Domstages = () => {
     setIsEditModalVisible(true);
     setAddingCompetences(record.competences);
     form.setFieldsValue({
-      domainName: record.domainName,
+      name: record.name,
     });
   };
   // Annule la modification des compétences
@@ -207,7 +211,7 @@ const Domstages = () => {
   const columns = [
     {
       title: "Nom du domaine",
-      dataIndex: "domainName",
+      dataIndex: "name",
       width: "15%",
       editable: true,
     },
@@ -320,7 +324,7 @@ const Domstages = () => {
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            name="domainName"
+            name="name"
             label="Nom du domaine"
             rules={[
               {
