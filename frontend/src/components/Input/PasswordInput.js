@@ -15,7 +15,7 @@ const PasswordInput = ({ placeholder, value, onChange, className }) => {
   };
 
   return (
-    <div className={`input-password-div ${className}`}>
+    <div className="input-password-div-container">
       <input
         type={showPassword ? "text" : "password"}
         placeholder={placeholder}

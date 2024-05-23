@@ -28,7 +28,7 @@ const InternDetails = () => {
       const response = await axios.get("http://localhost:8000/Students");
       if (response.data) {
         console.log("responseeee", response.data);
-        setFormData(response.data[0]);
+        setFormData(response.data[1]);
       }
     } catch (error) {
       console.error(
