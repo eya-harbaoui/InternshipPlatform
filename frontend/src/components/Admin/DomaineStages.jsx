@@ -21,6 +21,7 @@ import {
 import axios from "axios";
 
 const { Option } = Select;
+// Composant pour gérer les cellules éditables dans le tableau
 
 const EditableCell = ({
   editing,
@@ -66,20 +67,24 @@ const Domstages = () => {
   const [addingCompetences, setAddingCompetences] = useState([]);
   const [editRecord, setEditRecord] = useState(null);
 
+  // récupérer les données
+
   useEffect(() => {
     fetchData();
   });
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/Domaines");
+      const response = await axios.get("http://localhost:8000/Domain");
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+  // Vérifie si un enregistrement est en cours d'édition
 
   const isEditing = (record) => record.id === editingKey;
+  // Commence l'édition d'un enregistrement
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -88,25 +93,25 @@ const Domstages = () => {
     setEditingKey(record.id);
     setEditRecord(record);
   };
+  // Annule l'édition
 
   const cancel = () => {
     setEditingKey("");
     form.resetFields();
     setEditRecord(null);
   };
+  // Sauvegarde les modifications apportées à un enregistrement
 
   const save = async (record) => {
     try {
-      const updatedData = await form.validateFields([
-        "domainName",
-      ]); // Validation des champs du formulaire
+      const updatedData = await form.validateFields(["domainName"]); // Validation des champs du formulaire
       const newData = data.map((item) => {
         if (item.id === record.id) {
           return { ...item, ...updatedData };
         }
         return item;
       });
-      await axios.put(`http://localhost:8000/Domaines/${record.id}`, {
+      await axios.put(`http://localhost:8000/Domain/${record.id}`, {
         ...record,
         ...updatedData,
       }); // Appel réseau pour mettre à jour les données sur le serveur
@@ -119,12 +124,11 @@ const Domstages = () => {
     }
   };
 
-
   const handleEditModalOk = async () => {
     if (!editRecord) return;
     try {
       const updatedData = await form.validateFields();
-      await axios.put(`http://localhost:8000/Domaines/${editRecord.id}`, {
+      await axios.put(`http://localhost:8000/Domain/${editRecord.id}`, {
         ...editRecord, // Envoyer toutes les données du record existant
         ...updatedData, // Mise à jour des données modifiées
       });
@@ -136,15 +140,18 @@ const Domstages = () => {
       console.log("Validation failed:", errorInfo);
     }
   };
+  // Supprime un domaine
+
   const handleDelete = async (key) => {
     try {
-      await axios.delete(`http://localhost:8000/Domaines/${key}`);
+      await axios.delete(`http://localhost:8000/Domain/${key}`);
       const newData = data.filter((item) => item.id !== key);
       setData(newData);
     } catch (error) {
       console.error("Error deleting domain:", error);
     }
   };
+  // Ouvre la modal d'ajout de domaine
 
   const handleAddDomain = () => {
     setIsAddModalVisible(true);
@@ -154,7 +161,7 @@ const Domstages = () => {
   const handleAddModalOk = async () => {
     try {
       const values = await form.validateFields();
-      await axios.post("http://localhost:8000/Domaines", {
+      await axios.post("http://localhost:8000/Domain", {
         domainName: values.domainName,
         competences: addingCompetences,
       });
@@ -166,12 +173,14 @@ const Domstages = () => {
       console.log("Validation failed:", errorInfo);
     }
   };
+  // Valide et ajoute un nouveau domaine
 
   const handleAddModalCancel = () => {
     setIsAddModalVisible(false);
     form.resetFields();
     setAddingCompetences([]);
   };
+  // Ouvre la modal de modification des compétences
 
   const handleEditCompetences = (record) => {
     setEditRecord(record);
@@ -181,17 +190,19 @@ const Domstages = () => {
       domainName: record.domainName,
     });
   };
-
+  // Annule la modification des compétences
 
   const handleEditModalCancel = () => {
     setIsEditModalVisible(false);
     form.resetFields();
     setAddingCompetences([]);
   };
+  // Gère le changement des compétences en cours d'ajout
 
   const handleAddingCompetenceChange = (value) => {
     setAddingCompetences(value);
   };
+  // Colonnes du tableau
 
   const columns = [
     {

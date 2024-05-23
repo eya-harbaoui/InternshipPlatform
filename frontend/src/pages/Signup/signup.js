@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import PasswordInput from "../../components/Input/PasswordInput";
 import "./signup.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ const Signup = () => {
     passwordRetyped: "",
     phoneNumber: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,7 +50,7 @@ const Signup = () => {
     }
 
     axios
-      .post("http://localhost:8000/user", {
+      .post("http://localhost:8000/users", {
         firstName,
         lastName,
         email,
@@ -101,36 +102,49 @@ const Signup = () => {
             onChange={handleChange}
             placeholder="Numéro de téléphone"
           />
-          <input
-            className="input-signup-right"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Adresse e-mail"
-          />
-          <PasswordInput
-            name="password"
-            placeholder="Mot de passe"
-            value={formData.password}
-            onChange={(value) =>
-              setFormData((prevFormData) => ({
-                ...prevFormData,
-                password: value,
-              }))
-            }
-          />
-          <PasswordInput
-            name="passwordRetyped"
-            placeholder="Re-tapez Mot de passe"
-            value={formData.passwordRetyped}
-            onChange={(value) =>
-              setFormData((prevFormData) => ({
-                ...prevFormData,
-                passwordRetyped: value,
-              }))
-            }
-          />
+          <div className="password-input-container">
+            <input
+              className="input-password-signup-right"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Mot de passe"
+            />
+            {showPassword ? (
+              <FaEye
+                className="eye-icon"
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            ) : (
+              <FaEyeSlash
+                className="eye-icon"
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            )}
+          </div>
+          <div className="password-input-container">
+            <input
+              className="input-password-signup-right"
+              type={showPassword ? "text" : "password"}
+              name="passwordRetyped"
+              value={formData.passwordRetyped}
+              onChange={handleChange}
+              placeholder="Mot de passe"
+            />
+            {showPassword ? (
+              <FaEye
+                className="eye-icon"
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            ) : (
+              <FaEyeSlash
+                className="eye-icon"
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            )}
+          </div>
+
           <button className="btn-signup" onClick={handleSubmit}>
             S'inscrire
           </button>

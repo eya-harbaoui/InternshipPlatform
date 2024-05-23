@@ -17,7 +17,7 @@ const corsOptions = {
 };
 app.use(function (req, res, next) {
   //Enabling CORS
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8888');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader(
     'Access-Control-Allow-Methods',
     'GET, POST, OPTIONS, PUT, PATCH, DELETE'
@@ -68,7 +68,7 @@ app.use(function (req, res) {
 }); // response upon wrong http
 
 // Create a Server
-  let server = app.listen('8000', 'localhost', function () {
+let server = app.listen('8000', 'localhost', function () {
   let host = server.address().address;
   let port = server.address().port;
   let msg = 'App listening at http://' + host + ':' + port;

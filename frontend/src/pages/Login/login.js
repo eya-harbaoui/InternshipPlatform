@@ -3,20 +3,19 @@ import { Link } from "react-router-dom";
 import "./login.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import PasswordInput from "../../components/Input/PasswordInput";
 import axios from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
-  const handlePasswordChange = (value) => {
-    setPassword(value);
-  };
 
  const handleSubmit = (e) => {
    e.preventDefault();
@@ -57,15 +56,32 @@ function Login() {
            onChange={handleEmailChange}
            placeholder="Adresse e-mail"
          />
-         <PasswordInput
-           name="password"
-           placeholder="Mot de passe"
-           value={password}
-           onChange={handlePasswordChange}
-         />
+         <div className="password-input-container">
+           <input
+             className="input-password-signup-right"
+             type={showPassword ? "text" : "password"}
+             name="password"
+             value={password}
+             onChange={(e)=>{setPassword(e.target.value)}}
+             placeholder="Mot de passe"
+           />
+           {showPassword ? (
+             <FaEye
+               className="eye-icon"
+               onClick={() => setShowPassword(!showPassword)}
+             />
+           ) : (
+             <FaEyeSlash
+               className="eye-icon"
+               onClick={() => setShowPassword(!showPassword)}
+             />
+           )}
+         </div>
+
          <button className="login-btn" type="submit" onClick={handleSubmit}>
            Se Connecter
          </button>
+
          <p className="login-text">
            Vous n'avez pas de compte ? <Link to="/signup">Inscrivez-vous</Link>
          </p>

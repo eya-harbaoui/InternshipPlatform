@@ -4,7 +4,8 @@ const UserController = require('../controllers/usersController');
 const { IsAdmin } = require('../middlewares/middleware');
 
 // Routes for CRUD operations on users
-router.post('/', IsAdmin, UserController.createUser);
+//router.post('/', IsAdmin, UserController.createUser);
+router.post('/', UserController.createUser);
 router.post('/login', UserController.login);
 router.get('/', UserController.getAllUsers);
 router.get('/:id', UserController.getUserById);
