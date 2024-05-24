@@ -19,15 +19,15 @@ const { Option } = Select;
 
 const OffresRHCard = ({
   id,
-  stageTitle,
-  stageNature,
-  stageDescription,
-  domainTag,
-  modeTag,
-  durationTag,
-  OfferStatus,
-  competences,
-  publicationDate,
+  title,
+  nature,
+  details,
+  domain,
+  mode,
+  period,
+  status,
+  skills,
+  createdAt,
 }) => {
   //Define the states and functions
   const [domainOptions, setDomainOptions] = useState([]);
@@ -35,8 +35,8 @@ const OffresRHCard = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState({});
   const [domaineSelectionne, setDomaineSelectionne] = useState();
-  const [competencesDomaine, setCompetencesDomaine] = useState();
-  const [changeCompetences, setChangeCompetences] = useState(false);
+  const [skillsDomaine, setskillsDomaine] = useState();
+  const [changeskills, setChangeskills] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -86,8 +86,8 @@ const OffresRHCard = ({
       const response = await axios.get(`http://localhost:8000/offers/${id}`);
       if (response.data) {
         setSelectedOffer(response.data);
-        setDomaineSelectionne(response.data.domainTag);
-        setCompetencesDomaine(response.data.competences || {});
+        setDomaineSelectionne(response.data.domain);
+        setskillsDomaine(response.data.skills || {});
         console.log("***selected offer****", selectedOffer);
       }
     } catch (error) {
@@ -101,28 +101,28 @@ const OffresRHCard = ({
   const handleCancel = () => {
     setSelectedOffer({
       id: id,
-      stageTitle: stageTitle,
-      stageNature: stageNature,
-      modeTag: modeTag,
-      domainTag: domainTag,
-      durationTag: durationTag,
-      stageDescription: stageDescription,
-      competences: competences,
-      OfferStatus: OfferStatus,
-      publicationDate: publicationDate,
+      title: title,
+      nature: nature,
+      mode: mode,
+      domain: domain,
+      period: period,
+      details: details,
+      skills: skills,
+      status: status,
+      createdAt: createdAt,
     });
     setIsModalOpen(false);
-    setChangeCompetences(false);
+    setChangeskills(false);
   };
   const navigate = useNavigate();
-  let { tagColor, tagText } = getStatusTag(OfferStatus);
+  let { tagColor, tagText } = getStatusTag(status);
 
   const handlePublishClick = async () => {
     try {
       // Implement your publish logic here
       await axios.put(`http://localhost:8000/offers/${selectedOffer.id}`, {
         ...selectedOffer,
-        OfferStatus: "en cours de validation",
+        status: "en cours de validation",
       });
       toast.success("Offre en cours de validation");
     } catch (error) {
@@ -137,7 +137,7 @@ const OffresRHCard = ({
         `http://localhost:8000/offers/${selectedOffer.id}`,
         selectedOffer
       );
-      setChangeCompetences(false);
+      setChangeskills(false);
       setIsModalOpen(false);
       toast.success("Offre modifiée");
     } catch (error) {
@@ -161,7 +161,7 @@ const OffresRHCard = ({
     try {
       await axios.put(`http://localhost:8000/offers/${selectedOffer.id}`, {
         ...selectedOffer,
-        OfferStatus: "archivé",
+        status: "archivé",
       });
       toast.success("Offre archivée avec succès");
     } catch (error) {
@@ -173,20 +173,20 @@ const OffresRHCard = ({
     setDomaineSelectionne(domaine);
     setSelectedOffer({
       ...selectedOffer,
-      domainTag: domaine,
-      competences: {},
+      domain: domaine,
+      skills: {},
     });
-    setChangeCompetences(true);
-    const competences =
-      domains.find((d) => d.domainName === domaine)?.competences || [];
-    setCompetencesDomaine({ ...competencesDomaine, [domaine]: competences });
+    setChangeskills(true);
+    const skills =
+      domains.find((d) => d.domainName === domaine)?.skills || [];
+    setskillsDomaine({ ...skillsDomaine, [domaine]: skills });
   };
   const handleCompetenceChange = (competence, niveau) => {
-    const updatedCompetences = {
-      ...selectedOffer.competences,
+    const updatedskills = {
+      ...selectedOffer.skills,
       [competence]: niveau,
     };
-    setSelectedOffer({ ...selectedOffer, competences: updatedCompetences });
+    setSelectedOffer({ ...selectedOffer, skills: updatedskills });
   };
 
   useEffect(() => {
@@ -197,24 +197,24 @@ const OffresRHCard = ({
       <div className="stage-card">
         <StageCard
           student={false}
-          stageTitle={stageTitle}
-          stageNature={stageNature}
-          stageDescription={stageDescription}
-          modeTag={modeTag}
-          domainTag={domainTag}
-          durationTag={durationTag}
+          title={title}
+          nature={nature}
+          details={details}
+          mode={mode}
+          domain={domain}
+          period={period}
           buttonName={"publier"}
           handleButtonFunction={handlePublishClick}
-          OfferStatus={OfferStatus}
+          status={status}
         />
         <div className="actions">
           <span
             className="action"
             onClick={showModal}
-            disabled={OfferStatus === "publié"}
+            disabled={status === "publié"}
             style={{
-              pointerEvents: OfferStatus === "publié" ? "none" : "auto",
-              opacity: OfferStatus === "publié" ? 0.5 : 1,
+              pointerEvents: status === "publié" ? "none" : "auto",
+              opacity: status === "publié" ? 0.5 : 1,
             }}
           >
             <FaEdit className="action-icon" />
@@ -223,10 +223,10 @@ const OffresRHCard = ({
           <span
             className="action"
             onClick={handleDeleteClick}
-            disabled={OfferStatus === "publié"}
+            disabled={status === "publié"}
             style={{
-              pointerEvents: OfferStatus === "publié" ? "none" : "auto",
-              opacity: OfferStatus === "publié" ? 0.5 : 1,
+              pointerEvents: status === "publié" ? "none" : "auto",
+              opacity: status === "publié" ? 0.5 : 1,
             }}
           >
             <FaTrash className="action-icon" />
@@ -261,11 +261,11 @@ const OffresRHCard = ({
                 type="text"
                 placeholder="Titre de stage"
                 className="input-text-design"
-                value={selectedOffer.stageTitle}
+                value={selectedOffer.title}
                 onChange={(e) =>
                   setSelectedOffer({
                     ...selectedOffer,
-                    stageTitle: e.target.value,
+                    title: e.target.value,
                   })
                 }
               />
@@ -273,11 +273,11 @@ const OffresRHCard = ({
                 type="text"
                 placeholder="description de stage"
                 className="textarea-design"
-                value={selectedOffer.stageDescription}
+                value={selectedOffer.details}
                 onChange={(e) =>
                   setSelectedOffer({
                     ...selectedOffer,
-                    stageDescription: e.target.value,
+                    details: e.target.value,
                   })
                 }
               />
@@ -298,9 +298,9 @@ const OffresRHCard = ({
                 placeholder="Mode de stage"
                 className="modal-input"
                 style={{ width: "100%" }}
-                value={selectedOffer.modeTag}
+                value={selectedOffer.mode}
                 onChange={(value) => {
-                  setSelectedOffer({ ...selectedOffer, modeTag: value });
+                  setSelectedOffer({ ...selectedOffer, mode: value });
                 }}
               >
                 {modeOptions.map((option) => (
@@ -313,9 +313,9 @@ const OffresRHCard = ({
                 placeholder="Durée de stage"
                 className="modal-input"
                 style={{ width: "100%" }}
-                value={selectedOffer.durationTag}
+                value={selectedOffer.period}
                 onChange={(value) =>
-                  setSelectedOffer({ ...selectedOffer, durationTag: value })
+                  setSelectedOffer({ ...selectedOffer, period: value })
                 }
               >
                 {durationOptions.map((option) => (
@@ -328,9 +328,9 @@ const OffresRHCard = ({
                 placeholder="Nature de stage"
                 className="modal-input"
                 style={{ width: "100%" }}
-                value={selectedOffer.stageNature}
+                value={selectedOffer.nature}
                 onChange={(value) =>
-                  setSelectedOffer({ ...selectedOffer, stageNature: value })
+                  setSelectedOffer({ ...selectedOffer, nature: value })
                 }
               >
                 {natureOptions.map((option) => (
@@ -339,19 +339,19 @@ const OffresRHCard = ({
                   </Option>
                 ))}
               </Select>
-              <div className="competences-container">
+              <div className="skills-container">
                 <h3>Compétences demandées :</h3>
-                {!changeCompetences &&
-                  selectedOffer.competences &&
-                  Object.entries(selectedOffer.competences).map(
+                {!changeskills &&
+                  selectedOffer.skills &&
+                  Object.entries(selectedOffer.skills).map(
                     ([competence, niveau]) => (
                       <p key={competence}>
                         {competence}: {niveau}
                       </p>
                     )
                   )}
-                {changeCompetences &&
-                  competencesDomaine[domaineSelectionne]?.map((competence) => (
+                {changeskills &&
+                  skillsDomaine[domaineSelectionne]?.map((competence) => (
                     <div key={competence} className="competence-input">
                       <span>{competence}</span>
                       <Select

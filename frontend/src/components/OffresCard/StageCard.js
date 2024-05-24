@@ -6,13 +6,13 @@ import { MdUpdate } from "react-icons/md";
 
 const StageCard = ({
   id,
-  stageTitle,
-  stageNature,
-  stageDescription,
-  domainTag,
-  modeTag,
-  durationTag,
-  publicationDate,
+  title,
+  nature,
+  details,
+  domain,
+  mode,
+  period,
+  createdAt,
   student,
   buttonName,
   handleButtonFunction,
@@ -25,23 +25,23 @@ const StageCard = ({
   };
 
   const getDescriptionPreview = () => {
-    const words = stageDescription.split(" ");
+    const words = details.split(" ");
     return words.slice(0, maxWords).join(" ");
   };
 
   return (
     <>
       <div className="title-and-publish">
-        <h2>{stageTitle}</h2>
+        <h2>{title}</h2>
         <button className="small-button" onClick={handleButtonFunction}>
           {buttonName}
         </button>
       </div>
       <div className="content">
-        <p>{stageNature}</p>
+        <p>{nature}</p>
         <p>
-          {showFullDescription ? stageDescription : getDescriptionPreview()}
-          {stageDescription.split(" ").length > maxWords && (
+          {showFullDescription ? details : getDescriptionPreview()}
+          {details.split(" ").length > maxWords && (
             <span>
               {" "}
               {/* Espace avant le lien "Read More" */}
@@ -61,17 +61,17 @@ const StageCard = ({
         </p>
         <div className="tags">
           <div className="tag">
-            <FaRegLightbulb /> {domainTag}
+            <FaRegLightbulb /> {domain}
           </div>
           <div className="tag">
-            <FiHome /> {modeTag}
+            <FiHome /> {mode}
           </div>
           <div className="tag">
-            <FaRegCalendarAlt /> {durationTag}
+            <FaRegCalendarAlt /> {period}
           </div>
           {student && (
             <div className="tag">
-              <MdUpdate /> {publicationDate}
+              <MdUpdate /> {createdAt}
             </div>
           )}
         </div>

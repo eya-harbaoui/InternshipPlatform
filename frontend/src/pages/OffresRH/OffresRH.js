@@ -55,6 +55,7 @@ const OffresRH = () => {
           value: domain.domainName,
           label: domain.domainName,
         }));
+        
         setDomainOptions([
           { value: "", label: "Tous les domaines" },
           ...domains,

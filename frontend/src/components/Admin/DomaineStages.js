@@ -85,6 +85,7 @@ const Domstages = () => {
         };
       });
       setData(domainsWithSkillNames);
+      console.log(domainsWithSkillNames,"domainwithskillnames");
     } catch (error) {
       console.error("Error fetching data:", error);
     }

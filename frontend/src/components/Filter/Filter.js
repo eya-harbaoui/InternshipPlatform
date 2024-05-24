@@ -10,15 +10,18 @@ const Filter = ({ filter, setFilter, handleClear }) => {
   };
 
   const [domainOptions, setDomainOptions] = useState([]);
+
+  // Fonctions pour récupérer les domaines depuis l'API
+
   const fetchDomains = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/Domaines");
+      const response = await axios.get("http://localhost:8000/Domain");
       if (response.data) {
-        console.log("responseeee", response.data);
         const domains = response.data.map((domain) => ({
-          value: domain.domainName,
-          label: domain.domainName,
+          value: domain.name,
+          label: domain.name,
         }));
+        console.log(domains, "domainWithSkillNames");
         setDomainOptions([
           { value: "", label: "Tous les domaines" },
           ...domains,
