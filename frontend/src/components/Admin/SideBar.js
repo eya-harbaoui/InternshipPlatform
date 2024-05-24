@@ -8,8 +8,6 @@ import { faUserShield } from '@fortawesome/free-solid-svg-icons';
 
 // Ajouter l'icône d'administrateur à la bibliothèque
 library.add(faUserShield);
-
-
 function Sidebar() {
     return (
       <ul

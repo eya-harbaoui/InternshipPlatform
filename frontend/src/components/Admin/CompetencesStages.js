@@ -10,8 +10,7 @@ import {
   Modal,
   Select,
 } from "antd";
-import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 const { Option } = Select;
@@ -52,14 +51,14 @@ const EditableCell = ({
   );
 };
 
-// Composant principal de la page des utilisateurs
+// Composant principal de la page des compétences
 const CompetencesStages = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  // Fonction pour récupérer les données des utilisateurs depuis l'API
+  // Fonction pour récupérer les données des compétences depuis l'API
   useEffect(() => {
     fetchData();
   });
@@ -74,20 +73,23 @@ const CompetencesStages = () => {
     }
   };
 
+  //Quand on commence une modification
+
   const isEditing = (record) => record._id === editingKey;
 
   const edit = (record) => {
     form.setFieldsValue({
-      name:record.name,
+      name: record.name,
     });
     setEditingKey(record._id);
   };
+  //Quand on annule une modification
 
   const cancel = () => {
     setEditingKey("");
   };
 
-  // Fonction pour sauvegarder les modifications d'un utilisateur
+  // Fonction pour sauvegarder les modifications d'une compétence
   const save = async (key) => {
     try {
       const row = await form.validateFields();
@@ -115,7 +117,7 @@ const CompetencesStages = () => {
     }
   };
 
-  // Fonction pour supprimer un utilisateur
+  // Fonction pour supprimer une compétence
   const handleDelete = async (key) => {
     try {
       await axios.delete(`http://localhost:8000/skill/${key}`);
@@ -130,7 +132,7 @@ const CompetencesStages = () => {
     setIsModalVisible(true);
     form.resetFields(); // Réinitialise les champs du formulaire à l'ouverture du modal
   };
-  // Fonction pour ajouter un nouveau utilisateur
+  // Fonction pour ajouter une nouvelle compétence
 
   const handleModalOk = async () => {
     try {
@@ -259,7 +261,6 @@ const CompetencesStages = () => {
           >
             <Input />
           </Form.Item>
-        
         </Form>
       </Modal>
     </>

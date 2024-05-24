@@ -11,18 +11,12 @@ import {
   Select,
   Tag,
 } from "antd";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-  CheckOutlined,
-  CloseOutlined,
-} from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 const { Option } = Select;
-// Composant pour gérer les cellules éditables dans le tableau
 
+// Composant pour gérer les cellules éditables dans le tableau
 const EditableCell = ({
   editing,
   dataIndex,
@@ -66,26 +60,9 @@ const Domstages = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [addingCompetences, setAddingCompetences] = useState([]);
   const [editRecord, setEditRecord] = useState(null);
-    const [competences, setCompetences] = useState([]);
+  const [competences, setCompetences] = useState([]);
 
-
-  // récupérer les données
-
-  useEffect(() => {
-    fetchDomains();
-    fetchSkills();
-  });
-
-  const fetchDomains = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/domain");
-      setData(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-  
-
+  // Récupérer les données : les domaines et les compétences correspondante à chaque domaine
   const fetchSkills = async () => {
     try {
       const response = await axios.get("http://localhost:8000/skill");
@@ -95,86 +72,138 @@ const Domstages = () => {
     }
   };
 
-  
+  const fetchDomains = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/domain");
+      const domainsWithSkillNames = response.data.map((domain) => {
+        return {
+          ...domain,
+          skills: domain.skills.map((skillId) => {
+            const skill = competences.find((c) => c._id === skillId);
+            return skill ? skill.name : skillId;
+          }),
+        };
+      });
+      setData(domainsWithSkillNames);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSkills();
+    fetchDomains();
+  });
+
+  //Ajout des compétences lors de l'ajout ou la modification d'un domaine
+
   const handleCompetenceChange = (value) => {
     setAddingCompetences(value);
+    console.log(addingCompetences, "after adding");
   };
-  // Vérifie si un enregistrement est en cours d'édition
+  //Quand on commence la modification
 
-  const isEditing = (record) => record.id === editingKey;
-  // Commence l'édition d'un enregistrement
+  const isEditing = (record) => record._id === editingKey;
 
   const edit = (record) => {
     form.setFieldsValue({
       name: record.name,
+      skills: record.skills,
     });
-    setEditingKey(record.id);
+    setEditingKey(record._id);
     setEditRecord(record);
+    setAddingCompetences(record.skills);
   };
-  // Annule l'édition
+
+  //Quand on annule la modification
 
   const cancel = () => {
     setEditingKey("");
     form.resetFields();
     setEditRecord(null);
+    setAddingCompetences([]);
   };
-  // Sauvegarde les modifications apportées à un enregistrement
 
-  const save = async (record) => {
+  //Enregistrer une modification
+
+  const save = async (key) => {
     try {
-      const updatedData = await form.validateFields(["name"]); // Validation des champs du formulaire
-      const newData = data.map((item) => {
-        if (item.id === record.id) {
-          return { ...item, ...updatedData };
-        }
-        return item;
+      const row = await form.validateFields();
+      const newData = [...data];
+      const index = newData.findIndex((item) => key === item._id);
+
+      const addingCompetencesWithIds = addingCompetences.map((skill) => {
+        const competence = competences.find((c) => c.name === skill);
+        return competence ? competence._id : null;
       });
-      await axios.put(`http://localhost:8000/domain/${record.id}`, {
-        ...record,
-        ...updatedData,
-      }); // Appel réseau pour mettre à jour les données sur le serveur
-      setData(newData); // Mise à jour de l'état local avec les nouvelles données
-      setEditingKey(""); // Réinitialisation de l'état d'édition
-      setEditRecord(null);
-    } catch (errorInfo) {
-      console.error("Validation failed:", errorInfo); // Gestion des erreurs de validation
-      // Afficher un message d'erreur à l'utilisateur ou effectuer d'autres actions appropriées
+
+      if (index > -1) {
+        const item = newData[index];
+        const updatedItem = {
+          ...item,
+          ...row,
+          skills: addingCompetencesWithIds, // Ici, les IDs des compétences sont envoyés
+        };
+
+        newData.splice(index, 1, updatedItem);
+
+        await axios.put(`http://localhost:8000/domain/${key}`, updatedItem);
+        setData(newData);
+        setEditingKey("");
+      } else {
+        newData.push(row);
+        await axios.post("http://localhost:8000/domain", {
+          ...row,
+          skills: addingCompetencesWithIds,
+        });
+        setData(newData);
+        setEditingKey("");
+      }
+    } catch (errInfo) {
+      console.error("Validation failed:", errInfo);
     }
   };
+  //Modification des compétences d'un domaine existant (ajout, ou supression..)
 
   const handleEditModalOk = async () => {
     if (!editRecord) return;
     try {
       const updatedData = await form.validateFields();
-      await axios.put(`http://localhost:8000/domain/${editRecord.id}`, {
-        ...editRecord, // Envoyer toutes les données du record existant
-        ...updatedData, // Mise à jour des données modifiées
+      const addingCompetencesWithIds = addingCompetences.map((skill) => {
+        const competence = competences.find((c) => c.name === skill);
+        return competence ? competence._id : null;
       });
-      fetchDomains();
+      await axios.put(`http://localhost:8000/domain/${editRecord._id}`, {
+        ...editRecord,
+        ...updatedData,
+        skills: addingCompetencesWithIds,
+      });
       setIsEditModalVisible(false);
+      fetchDomains();
       form.resetFields();
       setAddingCompetences([]);
     } catch (errorInfo) {
       console.log("Validation failed:", errorInfo);
     }
   };
-  // Supprime un domaine
+  //Suppression d'un domaine
 
   const handleDelete = async (key) => {
     try {
       await axios.delete(`http://localhost:8000/domain/${key}`);
-      const newData = data.filter((item) => item.id !== key);
+      const newData = data.filter((item) => item._id !== key);
       setData(newData);
     } catch (error) {
       console.error("Error deleting domain:", error);
     }
   };
-  // Ouvre la modal d'ajout de domaine
+  //Ouvrir le modal pour l'ajout d'un domaine
 
   const handleAddDomain = () => {
     setIsAddModalVisible(true);
-    form.resetFields(); // Réinitialiser les champs du formulaire lors de l'ouverture de la modalité
+    form.resetFields();
   };
+  //Ajout d'un domaine
 
   const handleAddModalOk = async () => {
     try {
@@ -183,45 +212,46 @@ const Domstages = () => {
         name: values.name,
         skills: addingCompetences,
       });
-      
-      fetchDomains();
       setIsAddModalVisible(false);
+      fetchDomains();
       form.resetFields();
       setAddingCompetences([]);
     } catch (errorInfo) {
       console.log("Validation failed:", errorInfo);
     }
   };
-  // Valide et ajoute un nouveau domaine
+  //Annuler l'ajout d'un domaine
 
   const handleAddModalCancel = () => {
     setIsAddModalVisible(false);
     form.resetFields();
     setAddingCompetences([]);
   };
-  // Ouvre la modal de modification des compétences
+  //Quand on commence la modifcation des compétences
 
   const handleEditCompetences = (record) => {
     setEditRecord(record);
     setIsEditModalVisible(true);
-    setAddingCompetences(record.competences);
+    setAddingCompetences(
+      record.skills.map((skill) => {
+        const competence = competences.find((c) => c.name === skill);
+        return competence ? competence._id : skill;
+      })
+    );
     form.setFieldsValue({
       name: record.name,
+      skills: record.skills,
     });
   };
-  // Annule la modification des compétences
+  //Ouvrir le modal de modification des compétences
 
   const handleEditModalCancel = () => {
     setIsEditModalVisible(false);
     form.resetFields();
     setAddingCompetences([]);
   };
-  // Gère le changement des compétences en cours d'ajout
 
-  const handleAddingCompetenceChange = (value) => {
-    setAddingCompetences(value);
-  };
-  // Colonnes du tableau
+  //Les colonnes de la table
 
   const columns = [
     {
@@ -232,15 +262,10 @@ const Domstages = () => {
     },
     {
       title: "Compétences Requises",
-      dataIndex: "competences",
+      dataIndex: "skills",
       width: "15%",
-      render: (competences) => (
-        <>
-          {competences &&
-            competences.map((competence) => (
-              <Tag key={competence}>{competence}</Tag>
-            ))}
-        </>
+      render: (skills) => (
+        <>{skills && skills.map((skill) => <Tag key={skill}>{skill}</Tag>)}</>
       ),
     },
     {
@@ -251,7 +276,7 @@ const Domstages = () => {
         const editable = isEditing(record);
         return editable ? (
           <span>
-            <a onClick={() => save(record)} style={{ marginRight: 8 }}>
+            <a onClick={() => save(record._id)} style={{ marginRight: 8 }}>
               Enregistrer
             </a>
             <Popconfirm title="Voulez-vous annuler?" onConfirm={cancel}>
@@ -264,8 +289,8 @@ const Domstages = () => {
               Modifier
             </a>
             <Popconfirm
-              title="Voulez-vous supprimer cet utilisateur?"
-              onConfirm={() => handleDelete(record.id)}
+              title="Voulez-vous supprimer ce domaine?"
+              onConfirm={() => handleDelete(record._id)}
             >
               <a style={{ marginLeft: 8, color: "blue" }}>Supprimer</a>
             </Popconfirm>
@@ -341,34 +366,29 @@ const Domstages = () => {
           <Form.Item
             name="name"
             label="Nom du domaine"
-            rules={[
-              {
-                required: true,
-                message: "SVP entrez le nom du domaine",
-              },
-            ]}
+            rules={[{ required: true, message: "Veuillez entrer un nom" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name="competences"
-            label="Compétences Requises"
+            name="skills"
+            label="Compétences"
             rules={[
               {
                 required: true,
-                message: "SVP entrez les compétences requises pour ce domaine",
+                message: "Veuillez sélectionner des compétences",
               },
             ]}
           >
             <Select
               mode="multiple"
               style={{ width: "100%" }}
-              placeholder="Sélectionner les compétences"
+              placeholder="Sélectionnez des compétences"
               onChange={handleCompetenceChange}
               value={addingCompetences}
             >
               {competences.map((competence) => (
-                <Option key={competence.id} value={competence.name}>
+                <Option key={competence._id} value={competence._id}>
                   {competence.name}
                 </Option>
               ))}
@@ -384,27 +404,41 @@ const Domstages = () => {
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            name="competences"
-            label="Compétences Requises"
-            initialValue={editRecord ? editRecord.competences : []}
+            name="name"
+            label="Nom du domaine"
+            rules={[{ required: true, message: "Veuillez entrer un nom" }]}
+          >
+            <Input disabled />
+          </Form.Item>
+          <Form.Item
+            name="skills"
+            label="Compétences"
             rules={[
               {
                 required: true,
-                message: "SVP entrez les compétences requises pour ce domaine",
+                message: "Veuillez sélectionner des compétences",
               },
             ]}
           >
             <Select
-              mode="tags"
+              mode="multiple"
               style={{ width: "100%" }}
-              placeholder="Modifier compétences"
-              onChange={handleAddingCompetenceChange}
+              placeholder="Sélectionnez des compétences"
+              initialValue={editRecord ? editRecord.skills : []}
+              onChange={handleCompetenceChange}
               value={addingCompetences}
-            />
+            >
+              {competences.map((competence) => (
+                <Option key={competence.name} value={competence.name}>
+                  {competence.name}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
         </Form>
       </Modal>
     </>
   );
 };
+
 export default Domstages;
