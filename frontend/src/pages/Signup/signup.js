@@ -96,7 +96,11 @@ const Signup = () => {
       <h2 className="heading-signup">Bienvenue ! Créer un nouveau compte</h2>
       <div className="signup-form-container">
         <div className="left-signup">
-          <img className="img-signup" src="./SignUp.jpg" alt="signup" />
+          <img
+            className="img-signup"
+            src="./images/SignUp.jpg"
+            alt="signup"
+          />
         </div>
         <div className="right-signup">
           <input
