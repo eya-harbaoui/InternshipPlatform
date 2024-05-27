@@ -71,7 +71,7 @@ function Login() {
       </h2>
       <div className="login-form-container">
         <div className="login-left">
-          <img className="login-img" src="../Images/Login.jpg" alt="login" />
+          <img className="login-img" src="../../images/Login.jpg" alt="login" />
         </div>
         <div className="login-right">
           <input
