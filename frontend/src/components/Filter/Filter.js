@@ -15,13 +15,12 @@ const Filter = ({ filter, setFilter, handleClear }) => {
 
   const fetchDomains = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/Domain");
+      const response = await axios.get("http://localhost:8000/domain");
       if (response.data) {
         const domains = response.data.map((domain) => ({
-          value: domain.name,
+          value: domain._id,
           label: domain.name,
         }));
-        console.log(domains, "domainWithSkillNames");
         setDomainOptions([
           { value: "", label: "Tous les domaines" },
           ...domains,
@@ -54,8 +53,8 @@ const Filter = ({ filter, setFilter, handleClear }) => {
       </Select>
       <Select
         placeholder="Durée de stage"
-        value={filter.duration}
-        onChange={(value) => handleFilterChange("duration", value)}
+        value={filter.period}
+        onChange={(value) => handleFilterChange("period", value)}
         style={{ width: 150, marginRight: 10 }}
       >
         {durationOptions.map((option) => (

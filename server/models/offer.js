@@ -11,9 +11,7 @@ const offerSchema = new mongoose.Schema(
       required: true,
     },
     period: {
-      //type: Number,
-      type: String,
-      enum: ['6 mois', '4 mois'],
+      type: Number,
       required: true,
     },
     domain: {

@@ -32,13 +32,13 @@ const App = () => {
           <Route path="/Offres/:id" element={<Postuler />} />
           <Route path="/Mes_candidatures" element={<Candidatures />}></Route>
           <Route path="/UserDetails" element={<InternDetails />}></Route>
-          <Route path="/RH_Offres" element={<OffresRH />}></Route>
+          <Route path="/RH_Offres/:id" element={<OffresRH />}></Route>
           <Route
             path="/liste_candidatures/:id"
             element={<ListeCandidaturesRH />}
           />
           <Route
-            path="manager_validation"
+            path="manager_validation/:id"
             element={<ManagerValidation />}
           ></Route>
           <Route
@@ -51,7 +51,10 @@ const App = () => {
           ></Route>
           <Route path="/Admin" element={<Portal />}>
             <Route path="Gestion_Des_Domaines" element={<Domstages />} />
-            <Route path="Gestion_Des_Compétences" element={<CompetencesStages/>} />
+            <Route
+              path="Gestion_Des_Compétences"
+              element={<CompetencesStages />}
+            />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="users" element={<TabUtilisateurs />} />
           </Route>

@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const offerController = require('../Controllers/offerController');
 
-
 router.get('/', offerController.getAllOffers);
 router.get('/students', offerController.getPublishedOffersForStudents);
+router.get('/none_validated_offres', offerController.getNoneValidatedOffers);
 router.get('/search', offerController.searchOffers);
 router.get('/:id', offerController.getOfferById);
 router.get('/historique_offres', offerController.gethistorique_offres);

@@ -1,4 +1,4 @@
-export const ManagerNavbarLinks = [
+export const ManagerNavbarLinks = (id) => [
   {
     title: "Offres",
     url: "/Liste_des_Offres",
@@ -6,7 +6,7 @@ export const ManagerNavbarLinks = [
   },
   {
     title: " Validation des Offres",
-    url: "/manager_validation",
+    url: `/manager_validation/${id}`,
     cName: "nav-links",
   },
   {

@@ -7,23 +7,25 @@ import axios from "axios";
 import Filter from "../../components/Filter/Filter";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
 import { ManagerNavbarLinks } from "../../components/Navbar/ManagerNavbarLinks";
+import getUserIdFromLocalStorage from "../../UserAuth.js";
 
 const ManagerValidation = () => {
   //Define the states and functions
   const [filter, setFilter] = useState({
     searchTerm: "",
     domain: "",
-    duration: "",
+    period: "",
     mode: "",
     nature: "",
   });
   const [data, setData] = useState([]);
+  const userId = getUserIdFromLocalStorage();
 
   const handleClearFilter = () => {
     setFilter({
       searchTerm: "",
       domain: "",
-      duration: "",
+      period: "",
       mode: "",
       nature: "",
     });
@@ -33,27 +35,23 @@ const ManagerValidation = () => {
     setFilter({ ...filter, [key]: value });
   };
 
+  // Fonction pour filtrer les données des offres en fonction des filtres sélectionnés
   const filteredStageData = data.filter((stage) => {
     return (
-      stage.stageTitle
-        .toLowerCase()
-        .includes(filter.searchTerm.toLowerCase()) &&
-      (filter.domain === "" || stage.domainTag === filter.domain) &&
-      (filter.duration === "" || stage.durationTag === filter.duration) &&
-      (filter.mode === "" || stage.modeTag === filter.mode) &&
-      (filter.nature === "" || stage.stageNature === filter.nature)
+      stage.title.toLowerCase().includes(filter.searchTerm.toLowerCase()) &&
+      (filter.domain === "" || stage.domain._id === filter.domain) &&
+      (filter.period === "" || stage.period === filter.period) &&
+      (filter.mode === "" || stage.mode === filter.mode) &&
+      (filter.nature === "" || stage.nature === filter.nature)
     );
   });
-
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/offers", {
-        params: {
-          OfferStatus: "en cours de validation", // Spécifiez le statut de l'offre à filtrer ici
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:8000/offre/none_validated_offres"
+      );
       const sortedData = response.data.sort((a, b) => {
-        return new Date(b.publicationDate) - new Date(a.publicationDate);
+        return new Date(b.createdAt) - new Date(a.createdAt);
       });
       setData(sortedData);
     } catch (error) {
@@ -67,7 +65,7 @@ const ManagerValidation = () => {
 
   return (
     <div className="offres-RH-page">
-      <Navbar links={ManagerNavbarLinks} />
+      <Navbar links={ManagerNavbarLinks(userId)} />
       <h2 className="title-offre-RH">Validation des Offres</h2>
       <MdOutlineContentPasteSearch className="icon-offre-RH" />
       <Filter
@@ -77,7 +75,7 @@ const ManagerValidation = () => {
       />
       <div className="stage-cards-RH">
         {filteredStageData.map((stage, index) => (
-          <ManagerOfferCard key={index} {...stage} />
+          <ManagerOfferCard key={index} {...stage} userId={userId}/>
         ))}
       </div>
     </div>

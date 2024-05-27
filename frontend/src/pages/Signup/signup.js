@@ -18,6 +18,8 @@ const Signup = () => {
     phoneNumber: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [showRetypedPassword, setShowRetypedPassword] = useState(false);
+  const [role, setRole] = useState("Student");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,9 +29,7 @@ const Signup = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     const {
       firstName,
       lastName,
@@ -39,16 +39,35 @@ const Signup = () => {
       phoneNumber,
     } = formData;
 
+    // Vérifier si tous les champs sont remplis
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !passwordRetyped ||
+      !phoneNumber
+    ) {
+      toast.error("Veuillez remplir tous les champs");
+      return;
+    }
+
+    // Vérifier si le mot de passe a une longueur minimale de 6 caractères et contient au moins une lettre, un chiffre et un caractère spécial
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+    if (!password.match(passwordRegex)) {
+      toast.error(
+        "Le mot de passe doit avoir au moins 6 caractères avec des lettres, des chiffres et un caractère spécial"
+      );
+      return;
+    }
+
     if (password !== passwordRetyped) {
       toast.error("Les mots de passe ne correspondent pas");
       return;
     }
 
-    if (!password || !password.trim()) {
-      toast.error("Veuillez entrer un mot de passe");
-      return;
-    }
-
+    // Envoi de la requête
     axios
       .post("http://localhost:8000/users", {
         firstName,
@@ -56,6 +75,7 @@ const Signup = () => {
         email,
         password,
         phoneNumber,
+        role,
       })
       .then((response) => {
         if (response.data.error) {
@@ -67,6 +87,7 @@ const Signup = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
+        toast.error(error);
       });
   };
 
@@ -77,7 +98,7 @@ const Signup = () => {
         <div className="left-signup">
           <img className="img-signup" src="./images/SignUp.jpg" alt="signup" />
         </div>
-        <form className="right-signup" onSubmit={handleSubmit}>
+        <div className="right-signup">
           <input
             className="input-signup-right"
             type="text"
@@ -93,6 +114,14 @@ const Signup = () => {
             value={formData.firstName}
             onChange={handleChange}
             placeholder="Prénom"
+          />
+          <input
+            className="input-signup-right"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Adresse Email"
           />
           <input
             className="input-signup-right"
@@ -126,21 +155,21 @@ const Signup = () => {
           <div className="password-input-container">
             <input
               className="input-password-signup-right"
-              type={showPassword ? "text" : "password"}
+              type={showRetypedPassword ? "text" : "password"}
               name="passwordRetyped"
               value={formData.passwordRetyped}
               onChange={handleChange}
-              placeholder="Mot de passe"
+              placeholder="Retapez le mot de passe"
             />
-            {showPassword ? (
+            {showRetypedPassword ? (
               <FaEye
                 className="eye-icon"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() => setShowRetypedPassword(!showRetypedPassword)}
               />
             ) : (
               <FaEyeSlash
                 className="eye-icon"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() => setShowRetypedPassword(!showRetypedPassword)}
               />
             )}
           </div>
@@ -151,7 +180,7 @@ const Signup = () => {
           <p className="text-signup">
             Vous avez déjà un compte ? <Link to="/login">Connectez-vous</Link>
           </p>
-        </form>
+        </div>
       </div>
     </div>
   );

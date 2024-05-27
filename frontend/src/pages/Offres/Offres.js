@@ -12,29 +12,31 @@ import { NavbarLinks } from "../../components/Navbar/NavbarLinks";
 const Offres = () => {
   const navigate = useNavigate();
 
+  //Naviguer vers les détails de l'offre pour postuler
+
   const handlePostulerClick = (
-    id,
-    stageTitle,
-    stageNature,
-    stageDescription,
-    domainTag,
-    modeTag,
-    durationTag,
-    competences,
-    publicationDate
+    _id,
+    title,
+    nature,
+    details,
+    domain,
+    mode,
+    period,
+    skills,
+    createdAt
   ) => {
-    navigate(`/Offres/${id}`, {
+    navigate(`/Offres/${_id}`, {
       state: {
         jobDetails: {
-          id,
-          stageTitle,
-          stageNature,
-          stageDescription,
-          domainTag,
-          modeTag,
-          durationTag,
-          competences,
-          publicationDate,
+          _id,
+          title,
+          nature,
+          details,
+          domain,
+          mode,
+          period,
+          skills,
+          createdAt,
         },
       },
     });
@@ -43,7 +45,7 @@ const Offres = () => {
   const [filter, setFilter] = useState({
     searchTerm: "",
     domain: "",
-    duration: "",
+    period: "",
     mode: "",
     nature: "",
   });
@@ -52,7 +54,7 @@ const Offres = () => {
     setFilter({
       searchTerm: "",
       domain: "",
-      duration: "",
+      period: "",
       mode: "",
       nature: "",
     });
@@ -60,14 +62,13 @@ const Offres = () => {
 
   const [data, setData] = useState([]);
 
+  //Les offres avec le status publié
+
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/offers", {
-      params: {
-        OfferStatus: "publié" // Spécifiez le statut de l'offre à filtrer ici
-      }});
+      const response = await axios.get("http://localhost:8000/offre/students");
       const sortedData = response.data.sort((a, b) => {
-        return new Date(b.publicationDate) - new Date(a.publicationDate);
+        return new Date(b.createdAt) - new Date(a.createdAt);
       });
       setData(sortedData);
     } catch (error) {
@@ -77,20 +78,21 @@ const Offres = () => {
 
   useEffect(() => {
     fetchData();
+    console.log(data);
   });
 
-  const filteredStageData = data
-    .filter((stage) => {
-      return (
-        stage.stageTitle
-          .toLowerCase()
-          .includes(filter.searchTerm.toLowerCase()) &&
-        (filter.domain === "" || stage.domainTag === filter.domain) &&
-        (filter.duration === "" || stage.durationTag === filter.duration) &&
-        (filter.mode === "" || stage.modeTag === filter.mode) &&
-        (filter.nature === "" || stage.stageNature === filter.nature)
-      );
-    });
+  //Rechercher les offres par criteres : mode,durée,domaine et nature
+
+  const filteredStageData = data.filter((stage) => {
+    return (
+      stage.title.toLowerCase().includes(filter.searchTerm.toLowerCase()) &&
+      (filter.domain === "" || stage.domain._id === filter.domain) &&
+      (filter.period === "" || stage.period === filter.period) &&
+      (filter.mode === "" || stage.mode === filter.mode) &&
+      (filter.nature === "" || stage.nature === filter.nature)
+    );
+  });
+
   return (
     <div className="offres-page">
       <Navbar links={NavbarLinks} />
@@ -110,14 +112,14 @@ const Offres = () => {
               buttonName={"Voir plus"}
               handleButtonFunction={() =>
                 handlePostulerClick(
-                  stage.id,
-                  stage.stageTitle,
-                  stage.stageNature,
-                  stage.stageDescription,
-                  stage.domainTag,
-                  stage.modeTag,
-                  stage.durationTag,
-                  stage.competences
+                  stage._id,
+                  stage.title,
+                  stage.nature,
+                  stage.details,
+                  stage.domain,
+                  stage.mode,
+                  stage.period,
+                  stage.skills
                 )
               }
             />

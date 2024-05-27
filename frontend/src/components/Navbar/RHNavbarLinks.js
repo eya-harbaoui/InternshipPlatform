@@ -1,5 +1,5 @@
-export const RHNavbarLinks = [
-  { title: " Gestion des Offres", url: "/RH_Offres", cName: "nav-links" },
+export const RHNavbarLinks = (id) => [
+  { title: " Gestion des Offres", url: `/RH_Offres/${id}`, cName: "nav-links" },
   {
     title: "Mon Profil",
     url: "/RH_details",

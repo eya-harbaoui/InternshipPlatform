@@ -5,7 +5,7 @@ import "./OffresCard.css";
 import { MdUpdate } from "react-icons/md";
 
 const StageCard = ({
-  id,
+  _id,
   title,
   nature,
   details,
@@ -61,13 +61,13 @@ const StageCard = ({
         </p>
         <div className="tags">
           <div className="tag">
-            <FaRegLightbulb /> {domain}
+            <FaRegLightbulb /> {domain.name}
           </div>
           <div className="tag">
             <FiHome /> {mode}
           </div>
           <div className="tag">
-            <FaRegCalendarAlt /> {period}
+            <FaRegCalendarAlt /> {period +" Mois"}
           </div>
           {student && (
             <div className="tag">

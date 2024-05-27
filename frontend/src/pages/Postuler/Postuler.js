@@ -30,6 +30,7 @@ const Postuler = () => {
   });
   const [fileInputKey, setFileInputKey] = useState(null);
   const [editing, setEditing] = useState(false);
+  const [skillNames, setSkillNames] = useState({});
 
   const fetchProfileInfo = async () => {
     try {
@@ -45,10 +46,46 @@ const Postuler = () => {
       );
     }
   };
+  // Fonction pour récupérer le nom d'une compétence par son ID
+  const fetchSkillNameById = async (skillId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/skill/${skillId}`
+      );
+      return response.data.name; // Suppose que votre endpoint renvoie le nom de la compétence
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération du nom de la compétence :",
+        error
+      );
+      return null;
+    }
+  };
 
   useEffect(() => {
     fetchProfileInfo();
   });
+
+  useEffect(() => {
+    // Vérifiez si jobDetails.skills existe et n'est pas vide
+    if (jobDetails.skills && Object.keys(jobDetails.skills).length > 0) {
+      const fetchSkills = async () => {
+        const skillsPromises = Object.keys(jobDetails.skills).map(
+          async (skillId) => {
+            const skillName = await fetchSkillNameById(skillId);
+            return { name: skillName, level: jobDetails.skills[skillId] };
+          }
+        );
+        const skills = await Promise.all(skillsPromises);
+        const skillNamesObj = skills.reduce((acc, skill) => {
+          if (skill.name) acc[skill.name] = skill.level;
+          return acc;
+        }, {});
+        setSkillNames(skillNamesObj);
+      };
+      fetchSkills();
+    }
+  }, [jobDetails.skills]);
 
   const navigate = useNavigate();
 
@@ -134,28 +171,27 @@ const Postuler = () => {
         <h2 className="title-postuler">Postuler vers cette offre !</h2>
         <GrDocumentUser className="icon-postuler" />
       </div>
-      <h2>{jobDetails.stageTitle}</h2>
-      <p>{jobDetails.stageNature}</p>
-      <p>{jobDetails.stageDescription}</p>
+      <h2>{jobDetails.title}</h2>
+      <p>{jobDetails.nature}</p>
+      <p>{jobDetails.details}</p>
       <div className="tags">
         <div className="tag">
-          <FaRegLightbulb /> {jobDetails.domainTag}
+          <FaRegLightbulb /> {jobDetails.domain.name}
         </div>
         <div className="tag">
-          <FiHome /> {jobDetails.modeTag}
+          <FiHome /> {jobDetails.mode}
         </div>
         <div className="tag">
-          <FaRegCalendarAlt /> {jobDetails.durationTag}
+          <FaRegCalendarAlt /> {jobDetails.period + "Mois"}
         </div>
       </div>
       <div>
         <h3>Les compétences demandées : </h3>
-        {jobDetails.competences &&
-          Object.entries(jobDetails.competences).map(([competence, niveau]) => (
-            <p key={competence}>
-              {competence}: {niveau}
-            </p>
-          ))}
+        {Object.keys(skillNames).map((skill) => (
+          <p key={skill}>
+            {skill}: {skillNames[skill]}
+          </p>
+        ))}
       </div>
       {!showForm && (
         <button className="postuler-button" onClick={handlePostulerForm}>

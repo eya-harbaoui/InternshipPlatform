@@ -4,62 +4,79 @@ import OffresRHCard from "../../components/OffresCard/OffresRHCard.js"; // Compo
 import "./OffresRH.css"; // Styles spécifiques pour cette page
 import Navbar from "../../components/Navbar/Navbar"; // Barre de navigation
 import axios from "axios"; // Pour les requêtes HTTP
-import { Select, Modal } from "antd"; // Composants d'interface utilisateur Ant Design
+import { Select, Modal, Input, InputNumber, Form } from "antd"; // Composants d'interface utilisateur Ant Design
 import {
-  durationOptions,
   modeOptions,
   natureOptions,
-} from "../../components/Filter/FilterOptions.js"; // Options pour les filtres
+} from "../../components/OffresCard/Options.js"; // Options pour les filtres
 import Filter from "../../components/Filter/Filter"; // Composant pour filtrer les offres
 import { MdOutlineContentPasteSearch } from "react-icons/md"; // Icône de recherche
 import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks"; // Liens spécifiques à la barre de navigation RH
-import { v4 as uuidv4 } from "uuid"; // Pour générer des identifiants uniques
 import { toast } from "react-toastify"; // Bibliothèque pour les notifications
 import { SkillsLevel } from "../../components/OffresCard/SkillsLevel.js"; //liste des compétences recquises
+import getUserIdFromLocalStorage from "../../UserAuth.js";
+import { useParams } from "react-router-dom";
 const { Option } = Select; // Option de sélection pour Ant Design
+const { TextArea } = Input;
 
 // Composant principal OffresRH
 const OffresRH = () => {
+  const userId = getUserIdFromLocalStorage();
+
   // Définition des états et fonctions
   const [filter, setFilter] = useState({
     searchTerm: "",
     domain: "",
-    duration: "",
+    period: "",
     mode: "",
     nature: "",
   }); // État pour les filtres
   const [data, setData] = useState([]); // État pour stocker les données des offres
   const [domainOptions, setDomainOptions] = useState([]); // Options de domaine pour les filtres
-  const [domains, setDomains] = useState([]); // État pour stocker les domaines
-  const [offer, setOffer] = useState({});
-
+  const [skillsWithNames, setSkillsWithNames] = useState([]); // État pour stocker les domaines
+  const [skills, setSkills] = useState([]); // État pour stocker les domaines
+  const [offer, setOffer] = useState({
+    title: "",
+    nature: "",
+    details: "",
+    domain: "",
+    mode: "",
+    period: "",
+    skills: [],
+  });
+  const [errorMessage, setErrorMessage] = useState("");
   // Fonction pour effacer les filtres
   const handleClearFilter = () => {
     setFilter({
       searchTerm: "",
       domain: "",
-      duration: "",
+      period: "",
       mode: "",
       nature: "",
     });
   };
 
-  // Fonction pour récupérer les domaines depuis l'API
+  // Fonctions pour récupérer les domaines et les compétences depuis l'API
+  const fetchSkills = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/skill");
+      setSkills(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  //liste des domaines avec leurs compétences
   const fetchDomains = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/Domaines");
+      const response = await axios.get("http://localhost:8000/domain");
       if (response.data) {
-        console.log("responseeee", response.data);
-        setDomains(response.data);
-        const domains = response.data.map((domain) => ({
-          value: domain.domainName,
-          label: domain.domainName,
+        const domainOptions = response.data.map((domain) => ({
+          value: domain._id, // Utiliser l'ID du domaine comme valeur
+          label: domain.name,
+          skills: domain.skills,
         }));
-        
-        setDomainOptions([
-          { value: "", label: "Tous les domaines" },
-          ...domains,
-        ]);
+        setDomainOptions(domainOptions);
       }
     } catch (error) {
       console.error(
@@ -77,113 +94,167 @@ const OffresRH = () => {
   // Fonction pour filtrer les données des offres en fonction des filtres sélectionnés
   const filteredStageData = data.filter((stage) => {
     return (
-      stage.stageTitle
-        .toLowerCase()
-        .includes(filter.searchTerm.toLowerCase()) &&
-      (filter.domain === "" || stage.domainTag === filter.domain) &&
-      (filter.duration === "" || stage.durationTag === filter.duration) &&
-      (filter.mode === "" || stage.modeTag === filter.mode) &&
-      (filter.nature === "" || stage.stageNature === filter.nature)
+      stage.title.toLowerCase().includes(filter.searchTerm.toLowerCase()) &&
+      (filter.domain === "" || stage.domain._id === filter.domain) &&
+      (filter.period === "" || stage.period === filter.period) &&
+      (filter.mode === "" || stage.mode === filter.mode) &&
+      (filter.nature === "" || stage.nature === filter.nature)
     );
   });
 
   // Fonction pour récupérer les données des offres depuis l'API
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/offers");
+      const response = await axios.get("http://localhost:8000/offre");
+      //console.log(response,"reeees")
       const sortedData = response.data.sort((a, b) => {
-        return new Date(b.publicationDate) - new Date(a.publicationDate);
+        return new Date(b.createdAt) - new Date(a.createdAt);
       });
       setData(sortedData);
+      console.log(data);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
   };
 
-  // Fonction ajouter une offre 
+  // Fonction ajouter une offre
   const sendOffer = async () => {
     try {
-      const id = uuidv4(); // Générer un ID unique
-      const offerWithId = {
-        id: id,
+      // Créer la nouvelle offre avec les données formatées
+      const newOffer = {
         ...offer,
-        OfferStatus: "brouillon",
+        status: "brouillon",
+        createdBy: userId,
       };
+      console.log(newOffer, "newoffer");
+
       const response = await axios.post(
-        "http://localhost:8000/offers",
-        offerWithId
+        "http://localhost:8000/offre",
+        newOffer
       );
-      console.log("Offre ajoutée avec succès:", response.data);
+      //console.log("Offre ajoutée avec succès:", response.data);
       toast.success("Offre ajoutée avec succès !");
-      setIsModalOpen(false);
-      setOffer({
-        stageTitle: "",
-        stageNature: "",
-        stageDescription: "",
-        domainTag: "",
-        modeTag: "",
-        durationTag: "",
-        competences: [],
-      });
     } catch (error) {
-      console.error("Erreur lors de l'ajout de l'offre:", error);
+      toast.error("Erreur lors de l'ajout de l'offre:", error);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    fetchSkills();
     fetchDomains();
+    fetchData();
   });
 
   // États pour la gestion de la fenêtre modale d'ajout d'offre
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
+    setErrorMessage("");
     setIsModalOpen(true);
   };
   const handleOk = () => {
-    setIsModalOpen(false);
-    sendOffer();
+    // Vérification de chaque champ s'il est vide
+    if (
+      !offer.title ||
+      !offer.details ||
+      !offer.domain ||
+      !offer.nature ||
+      !offer.mode ||
+      !offer.period ||
+      !offer.skills
+    ) {
+      console.log(offer, "offff");
+      // Mettre à jour le message d'erreur pour indiquer les champs manquants
+      setErrorMessage("Veuillez remplir tous les champs ! ");
+    } else {
+      setErrorMessage("");
+      // Fermer le modal
+      setIsModalOpen(false);
+      // Envoyer l'offre
+      sendOffer();
+      setOffer({
+        title: "",
+        nature: "",
+        details: "",
+        domain: "",
+        mode: "",
+        period: "",
+        skills: [],
+      });
+    }
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setErrorMessage("");
     setOffer({
-      stageTitle: "",
-      stageNature: "",
-      stageDescription: "",
-      domainTag: "",
-      modeTag: "",
-      durationTag: "",
-      competences: [],
+      title: "",
+      nature: "",
+      details: "",
+      domain: "",
+      mode: "",
+      period: "",
+      skills: [],
     });
   };
 
-  // États pour la sélection de domaine, niveau de compétence et compétences pour chaque domaine
-  const [domaineSelectionne, setDomaineSelectionne] = useState("");
-  const [competencesDomaine, setCompetencesDomaine] = useState({});
-
   // Fonction pour gérer le changement de domaine
-  const handleDomaineChange = (domaine) => {
-    setDomaineSelectionne(domaine);
-    setOffer({ ...offer, domainTag: domaine });
-    const competences =
-      domains.find((d) => d.domainName === domaine)?.competences || [];
-    setCompetencesDomaine({ ...competencesDomaine, [domaine]: competences });
+  const handleDomaineChange = (domaineId) => {
+    // Réinitialiser les compétences avec les noms à une liste vide
+    setOffer({ ...offer, domain: domaineId, skills: [] });
+    // Trouver le domaine sélectionné dans les options de domaine
+    const selectedDomain = domainOptions.find(
+      (domain) => domain.value === domaineId
+    );
+    // Récupérer les compétences associées au domaine sélectionné
+    const skillsOfSelectedDomain = selectedDomain ? selectedDomain.skills : [];
+
+    // Stocker les compétences avec leurs IDs et noms dans un état
+    const skillsWithIdsAndNames = skillsOfSelectedDomain.map((skillId) => {
+      // Trouver la compétence correspondant à l'ID
+      const skill = skills.find((skill) => skill._id === skillId);
+      // Retourner un objet avec l'ID et le nom de la compétence
+      return { _id: skill._id, name: skill.name };
+    });
+    // Mettre à jour l'état des compétences avec IDs et noms
+    setSkillsWithNames(skillsWithIdsAndNames);
+    // Mettre à jour le domaine sélectionné
   };
 
-  // Fonction pour gérer le changement de compétence et son niveau
-  const handleCompetenceChange = (competence, niveau) => {
-    const updatedCompetences = {
-      ...offer.competences,
-      [competence]: niveau,
-    };
-    setOffer({ ...offer, competences: updatedCompetences });
+  const handleskillChange = (skillId, level) => {
+    // Vérifier si la compétence existe déjà dans la liste des compétences de l'offre
+    const existingSkillIndex = offer.skills.findIndex(
+      (skill) => skill.skill === skillId
+    );
+
+    if (existingSkillIndex !== -1) {
+      // Si la compétence existe déjà, mettre à jour son niveau de compétence
+      const updatedSkills = [...offer.skills];
+      updatedSkills[existingSkillIndex].level = level;
+
+      // Mettre à jour l'état de l'offre avec les compétences mises à jour
+      setOffer((prevOffer) => ({
+        ...prevOffer,
+        skills: updatedSkills,
+      }));
+    } else {
+      // Si la compétence n'existe pas, ajouter une nouvelle compétence à la liste
+      const newSkill = {
+        skill: skillId,
+        level: level,
+      };
+
+      // Mettre à jour l'état de l'offre en ajoutant la nouvelle compétence
+      setOffer((prevOffer) => ({
+        ...prevOffer,
+        skills: [...prevOffer.skills, newSkill],
+      }));
+    }
   };
 
   // Rendu du composant OffresRH
   return (
     <div className="offres-RH-page">
-      <Navbar links={RHNavbarLinks} />
+      <Navbar links={RHNavbarLinks(userId)} />
       <h2 className="title-offre-RH">Gestion des offres</h2>
       <MdOutlineContentPasteSearch className="icon-offre-RH" />
       <div className="button-container">
@@ -198,110 +269,153 @@ const OffresRH = () => {
       />
       <div className="stage-cards-RH">
         {filteredStageData.map((stage, index) => (
-          <OffresRHCard key={index} {...stage} id={stage.id} />
+          <OffresRHCard key={index} {...stage} _id={stage._id} />
         ))}
       </div>
       {isModalOpen && (
         <Modal
           title="Ajouter une offre de stage"
-          visible={isModalOpen}
+          open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
           okText="Ajouter Offre"
           cancelText="Annuler l'ajout de cette offre"
+          width={600}
         >
           <div className="modal-content">
             <h3>Remplir les informations de l'offre</h3>
-            <input
-              type="text"
-              placeholder="Titre de stage"
-              className="input-text-design"
-              value={offer.stageTitle}
-              onChange={(e) =>
-                setOffer({ ...offer, stageTitle: e.target.value })
-              }
-            />
-            <textarea
-              type="text"
-              placeholder="description de stage"
-              className="textarea-design"
-              value={offer.stageDescription}
-              onChange={(e) =>
-                setOffer({ ...offer, stageDescription: e.target.value })
-              }
-            />
-            <Select
-              placeholder="Domaine de stage"
-              className="modal-input"
-              style={{ width: "100%" }}
-              onChange={handleDomaineChange}
-              value={offer.domainTag}
-            >
-              {domainOptions.map((option) => (
-                <Option key={option.value} value={option.value}>
-                  {option.label}
-                </Option>
-              ))}
-            </Select>
-            <Select
-              placeholder="Nature de stage"
-              className="modal-input"
-              style={{ width: "100%" }}
-              value={offer.stageNature}
-              onChange={(value) => setOffer({ ...offer, stageNature: value })}
-            >
-              {natureOptions.map((option) => (
-                <Option key={option.value} value={option.value}>
-                  {option.label}
-                </Option>
-              ))}
-            </Select>
-            <Select
-              placeholder="Mode de stage"
-              className="modal-input"
-              style={{ width: "100%" }}
-              value={offer.modeTag}
-              onChange={(value) => setOffer({ ...offer, modeTag: value })}
-            >
-              {modeOptions.map((option) => (
-                <Option key={option.value} value={option.value}>
-                  {option.label}
-                </Option>
-              ))}
-            </Select>
-            <Select
-              placeholder="Durée de stage"
-              className="modal-input"
-              style={{ width: "100%" }}
-              value={offer.durationTag}
-              onChange={(value) => setOffer({ ...offer, durationTag: value })}
-            >
-              {durationOptions.map((option) => (
-                <Option key={option.value} value={option.value}>
-                  {option.label}
-                </Option>
-              ))}
-            </Select>
-            <div className="competences-container">
-              <h3>Compétences demandées :</h3>
-              {competencesDomaine[domaineSelectionne]?.map((competence) => (
-                <div key={competence} className="competence-input">
-                  <span>{competence}</span>
-                  <Select
-                    className="modal-input"
-                    onChange={(value) =>
-                      handleCompetenceChange(competence, value)
-                    }
-                  >
-                    {SkillsLevel.map((level, index) => (
-                      <option key={index} value={level}>
-                        {level}
-                      </option>
-                    ))}
-                  </Select>
-                </div>
-              ))}
-            </div>
+
+            <Form layout="vertical">
+              <Form.Item
+                name="title"
+                label="Titre de stage"
+                rules={[{ required: true }]}
+              >
+                <Input
+                  type="text"
+                  placeholder="Titre de stage"
+                  className="modal-input"
+                  value={offer.title}
+                  onChange={(e) =>
+                    setOffer({ ...offer, title: e.target.value })
+                  }
+                />
+              </Form.Item>
+              <Form.Item
+                name="details"
+                label="Description de stage"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <TextArea
+                  type="text"
+                  placeholder="description de stage"
+                  className="modal-input"
+                  value={offer.details}
+                  onChange={(e) =>
+                    setOffer({ ...offer, details: e.target.value })
+                  }
+                />
+              </Form.Item>
+              <Form.Item
+                name="domain"
+                label="Domaine de stage"
+                rules={[{ required: true }]}
+              >
+                <Select
+                  placeholder="Domaine de stage"
+                  className="modal-input"
+                  style={{ width: "100%" }}
+                  onChange={handleDomaineChange}
+                  value={offer.domain}
+                >
+                  {domainOptions.map((option) => (
+                    <Option key={option.value} value={option.value}>
+                      {option.label}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                name="nature"
+                label="Nature de stage"
+                rules={[{ required: true }]}
+              >
+                <Select
+                  placeholder="Nature de stage"
+                  className="modal-input"
+                  style={{ width: "100%" }}
+                  value={offer.nature}
+                  onChange={(value) => setOffer({ ...offer, nature: value })}
+                >
+                  {natureOptions.map((option) => (
+                    <Option key={option.value} value={option.value}>
+                      {option.label}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                name="mode"
+                label="Mode de stage"
+                rules={[{ required: true }]}
+              >
+                <Select
+                  placeholder="Mode de stage"
+                  className="modal-input"
+                  style={{ width: "100%" }}
+                  value={offer.mode}
+                  onChange={(value) => setOffer({ ...offer, mode: value })}
+                >
+                  {modeOptions.map((option) => (
+                    <Option key={option.value} value={option.value}>
+                      {option.label}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                name="period"
+                label="Durée de stage"
+                rules={[{ required: true }]}
+              >
+                <InputNumber
+                  min={1}
+                  max={10}
+                  placeholder="Durée de stage"
+                  className="modal-input"
+                  style={{ width: "100%" }}
+                  value={offer.period}
+                  onChange={(value) => setOffer({ ...offer, period: value })}
+                />
+              </Form.Item>
+
+              <div className="skills-container">
+                <h3>Compétences demandées :</h3>
+                {skillsWithNames.map((skill) => (
+                  <div key={skill._id} className="skill-input">
+                    <span>{skill.name}</span>
+
+                    <Select
+                      className="modal-input"
+                      onChange={(value) => handleskillChange(skill._id, value)}
+                      required
+                    >
+                      {SkillsLevel.map((level, index) => (
+                        <Option key={index} value={level}>
+                          {level}
+                        </Option>
+                      ))}
+                    </Select>
+                  </div>
+                ))}
+              </div>
+              {/* Affichage du message d'erreur */}
+              {errorMessage && <h4 style={{ color: "red" }}>{errorMessage}</h4>}
+            </Form>
           </div>
         </Modal>
       )}
