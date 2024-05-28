@@ -19,7 +19,7 @@ const ManagerValidation = () => {
     nature: "",
   });
   const [data, setData] = useState([]);
-  const userId = getUserIdFromLocalStorage();
+ const { role, userId } = getUserIdFromLocalStorage() || {};
 
   const handleClearFilter = () => {
     setFilter({

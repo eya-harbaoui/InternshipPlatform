@@ -21,7 +21,7 @@ const { TextArea } = Input;
 
 // Composant principal OffresRH
 const OffresRH = () => {
-  const userId = getUserIdFromLocalStorage();
+ const { role, userId } = getUserIdFromLocalStorage() || {};
 
   // Définition des états et fonctions
   const [filter, setFilter] = useState({

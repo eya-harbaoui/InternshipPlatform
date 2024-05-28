@@ -1,4 +1,4 @@
-import React from "react";
+import {React,useEffect} from "react";
 import "./StudentForm.css";
 import { FaTrash, FaUpload } from "react-icons/fa";
 function StudentForm({
@@ -11,6 +11,7 @@ function StudentForm({
   handleOnClickButtonForm,
   disabled,
 }) {
+
   return (
     <>
       <div className="student-form-row">
@@ -85,7 +86,7 @@ function StudentForm({
           required
           disabled={disabled}
         />
-        {!formData.cvFile ? (
+        {!formData.cv ? (
           <>
             <button
               className="CV-button"
@@ -105,13 +106,18 @@ function StudentForm({
             />
           </>
         ) : (
-          <button
-            className="CV-button"
-            type="button"
-            onClick={handleDeleteFile}
-          >
-            <FaTrash /> {formData.cvFile.name}
-          </button>
+          <div className="cv-info">
+            <button
+              className="CV-button"
+              type="button"
+              onClick={handleDeleteFile}
+            >
+              <FaTrash style={{ color: "red" }} />
+              {formData.cvFileName}
+            </button>
+
+            {/* Affichez le nom du fichier */}
+          </div>
         )}
       </div>
       <div className="student-form-row">

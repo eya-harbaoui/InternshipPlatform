@@ -6,18 +6,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import { NavbarLinks } from "../../components/Navbar/NavbarLinks";
 import "./Postuler.css";
-import StudentForm from "../../components/StudentForm/StudentForm";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import getUserIdFromLocalStorage from "../../UserAuth.js";
 import { v4 as uuidv4 } from "uuid"; // Pour générer des identifiants uniques
+import { FaTrash, FaUpload } from "react-icons/fa";
+import "../../../src/components/StudentForm/StudentForm.css";
+
 const Postuler = () => {
-  const isSignedIn = localStorage.getItem("isSignedIn");
   const location = useLocation();
   const jobDetails = location.state ? location.state.jobDetails : null;
+  const { role, userId } = getUserIdFromLocalStorage() || {};
+
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
-    id: "",
     firstName: "",
     lastName: "",
     phoneNumber: "",
@@ -32,12 +35,16 @@ const Postuler = () => {
   const [editing, setEditing] = useState(false);
   const [skillNames, setSkillNames] = useState({});
 
+  //Récupérer les infos de l'etudiant
+
   const fetchProfileInfo = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/Students");
+      const response = await axios.get(
+        `http://localhost:8000/students/profile/${userId}`
+      );
       if (response.data) {
-        console.log("responseeee", response.data);
-        setFormData(response.data[0]);
+        //console.log("response", response.data);
+       setFormData({ ...formData, ...response.data });
       }
     } catch (error) {
       console.error(
@@ -67,59 +74,70 @@ const Postuler = () => {
   });
 
   useEffect(() => {
-    // Vérifiez si jobDetails.skills existe et n'est pas vide
-    if (jobDetails.skills && Object.keys(jobDetails.skills).length > 0) {
-      const fetchSkills = async () => {
-        const skillsPromises = Object.keys(jobDetails.skills).map(
-          async (skillId) => {
-            const skillName = await fetchSkillNameById(skillId);
-            return { name: skillName, level: jobDetails.skills[skillId] };
-          }
-        );
-        const skills = await Promise.all(skillsPromises);
-        const skillNamesObj = skills.reduce((acc, skill) => {
-          if (skill.name) acc[skill.name] = skill.level;
-          return acc;
-        }, {});
-        setSkillNames(skillNamesObj);
-      };
-      fetchSkills();
+    // Assurez-vous que jobDetails.skills existe et n'est pas vide
+    if (jobDetails && jobDetails.skills && jobDetails.skills.length > 0) {
+      // Créez un tableau pour stocker les noms des compétences
+      const skillNamesArray = [];
+
+      // Pour chaque compétence dans jobDetails.skills, récupérez son nom et niveau
+      jobDetails.skills.forEach(async (skill) => {
+        const skillName = await fetchSkillNameById(skill.skill);
+        // Ajoutez le nom de la compétence avec son niveau dans le tableau
+        skillNamesArray.push({ name: skillName, level: skill.level });
+
+        // Mettez à jour l'état skillNames avec le nouveau tableau
+        setSkillNames(skillNamesArray);
+      });
     }
-  }, [jobDetails.skills]);
+  }, [jobDetails]); // Exécutez cette fonction lorsque jobDetails est mis à jour
 
   const navigate = useNavigate();
+
+  //Modifier les infos de l'étudiant
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    console.log("netbadeeeel", formData);
-    console.log("jobDetails", jobDetails);
+    //console.log("formdata", formData);
+    //console.log("jobDetails", jobDetails);
   };
+
+  //Récupératon de CV
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    console.log("file", file);
     if (file.type === "application/pdf") {
-      setFormData({ ...formData, cv: file });
+      if (editing) {
+        setFormData({
+          ...formData,
+          cv: file,
+        });
+        console.log("Nom du fichier :", formData.cv);
+      } else {
+        // Ne rien faire si le mode édition n'est pas activé
+      }
     } else {
       alert("Veuillez sélectionner un fichier PDF.");
     }
   };
 
-  const handleDeleteFile = () => {
-    setFormData({ ...formData, cv: null });
-    setFileInputKey(Date.now()); // Pour forcer le re-render de l'input file
-  };
+  //Suppression de CV
+ 
+  //Voir si l'etudiant est connecté ou pas pour qu'il puisse postuler
 
   const handlePostulerForm = () => {
-    // Vérifier la variable dans le local storage
-    console.log(isSignedIn, "isSignedIn");
-    if (isSignedIn === "false") {
-      console.log(isSignedIn, "isSignedIn after if");
-      // Vérifier si la variable est nulle ou non définie
-      // Naviguer vers la page d'inscription si la variable est absente ou fausse
-      navigate("/signup");
-    } else {
-      setShowForm(true);
+    // Vérifier si l'utilisateur est connecté en vérifiant s'il existe un identifiant utilisateur dans le local storage
+    const isLoggedIn = userId !== null; // S'assurer que userId est défini et non nul
+
+    if (isLoggedIn) {
+      // Si l'utilisateur est connecté, vérifiez son rôle
+      if (role === "Student") {
+        setShowForm(true);
+      } else {
+        // Rediriger vers la page d'inscription si l'utilisateur n'est pas un étudiant
+        navigate("/signup");
+      }
     }
   };
 
@@ -131,10 +149,14 @@ const Postuler = () => {
     return null; // Masquer le composant si jobDetails n'est pas fourni
   }
 
+  //Pour la date de candidature
+
   const getCurrentDate = () => {
     const date = new Date();
     return date.toISOString();
   };
+
+  //Fonction pour lancer une candidature
 
   const handleSubmitApplication = async (e) => {
     const candidatureDate = getCurrentDate(); // Obtenez la date actuelle
@@ -185,14 +207,18 @@ const Postuler = () => {
           <FaRegCalendarAlt /> {jobDetails.period + "Mois"}
         </div>
       </div>
-      <div>
-        <h3>Les compétences demandées : </h3>
-        {Object.keys(skillNames).map((skill) => (
-          <p key={skill}>
-            {skill}: {skillNames[skill]}
-          </p>
-        ))}
-      </div>
+      {skillNames.length > 0 && (
+        <div>
+          <h3>Les compétences demandées :</h3>
+          {skillNames.map((skill, index) => (
+            <div key={index}>
+              <p>
+                {skill.name} : {skill.level}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
       {!showForm && (
         <button className="postuler-button" onClick={handlePostulerForm}>
           Postuler
@@ -204,16 +230,133 @@ const Postuler = () => {
             Modifier Mes Infos
           </button>
           <div className="student-form-container">
-            <StudentForm
-              formData={formData}
-              handleChange={handleChange}
-              handleDeleteFile={handleDeleteFile}
-              handleFileChange={handleFileChange}
-              fileInputKey={fileInputKey}
-              buttonName={"Envoyer ma candidature"}
-              handleOnClickButtonForm={handleSubmitApplication}
-              disabled={!editing}
-            />
+            <>
+              <div className="student-form-row">
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="Nom"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
+                  disabled={true}
+                />
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Prénom"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
+                  disabled={true}
+                />
+              </div>
+              <div className="student-form-row">
+                <input
+                  type="tel"
+                  name="phoneNumber"
+                  placeholder="Numéro de téléphone"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  required
+                  disabled={!editing}
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Adresse email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  disabled={true}
+                />
+              </div>
+
+              <div className="student-form-row">
+                <input
+                  type="text"
+                  name="studyLevel"
+                  placeholder="Niveau d'étude"
+                  value={formData.studyLevel}
+                  onChange={handleChange}
+                  required
+                  disabled={!editing}
+                />
+                <input
+                  type="text"
+                  name="establishment"
+                  placeholder="Établissement"
+                  value={formData.establishment}
+                  onChange={handleChange}
+                  required
+                  disabled={!editing}
+                />
+              </div>
+
+              <div className="student-form-row">
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="Adresse postale"
+                  value={formData.address}
+                  onChange={handleChange}
+                  required
+                  disabled={!editing}
+                />
+                {!formData.cv ? (
+                  <>
+                    <button
+                      className="CV-button"
+                      type="button"
+                      onClick={() =>
+                        document.getElementById("fileInput").click()
+                      }
+                    >
+                      <FaUpload /> Ajouter votre CV (PDF)
+                    </button>
+                    <input
+                      id="fileInput"
+                      key={fileInputKey}
+                      type="file"
+                      accept="application/pdf"
+                      style={{ display: "none" }}
+                      onChange={handleFileChange}
+                      disabled={!editing}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <button className="CV-button" type="button">
+                      <FaTrash style={{ color: "red" }} />
+                      {formData.cv.name}
+                    </button>
+
+                    {/* Affichez le nom du fichier */}
+                  </>
+                )}
+              </div>
+              <div className="student-form-row">
+                <textarea
+                  name="recommendationLetter"
+                  placeholder="Lettre de recommendation"
+                  value={formData.recommendationLetter}
+                  onChange={handleChange}
+                  required
+                  style={{ height: "200px" }}
+                  className="cover-letter"
+                  disabled={!editing}
+                />
+              </div>
+              <div className="student-form-row">
+                <button
+                  type="submit"
+                  className="candidature-button"
+                  onClick={handleSubmitApplication}
+                >
+                  "Envoyer ma candidature"
+                </button>
+              </div>
+            </>
           </div>
         </>
       )}
