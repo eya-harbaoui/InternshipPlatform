@@ -37,6 +37,7 @@ const Signup = () => {
       password,
       passwordRetyped,
       phoneNumber,
+      role
     } = formData;
 
     // Vérifier si tous les champs sont remplis

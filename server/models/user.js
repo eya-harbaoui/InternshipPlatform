@@ -40,7 +40,9 @@ const userSchema = new mongoose.Schema({
     required: this.role === 'Student',
   },
   cv: {
-    type: String,
+    content: Buffer, // Champ pour stocker les données binaires du fichier PDF
+    contentType: String, // Champ pour spécifier le type de contenu du fichier (application/pdf)
+    name: String,
     required: this.role === 'Student',
   },
   recommendationLetter: {

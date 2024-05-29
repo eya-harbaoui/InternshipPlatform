@@ -1,0 +1,164 @@
+.signup-etudiant-container {
+  width: 100vw;
+  height: 110vh;
+  background-color: #f0f8ff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-etudiant-form-container {
+  display: flex;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 70%;
+  height: 650px;
+  background-color: white;
+  box-shadow: 3px 4px 36px -6px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+}
+
+.heading-signup-etudiant {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #182e39;
+}
+
+.left-signup-etudiant {
+  flex: 1.5;
+  position: relative;
+}
+
+.img-signup-etudiant {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.right-signup-etudiant {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-signup-etudiant-right {
+  width: 70%;
+  max-width: 300px;
+  height: 40px;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input-signup-etudiant-right:focus {
+  border-color: #ff735c;
+}
+
+.input-password-signup-etudiant-right {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  margin: 5px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.input-password-signup-etudiant-right:focus {
+  border-color: #ff735c;
+}
+
+.password-input-etudiant-container {
+  width: 70%;
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.eye-icon:hover {
+  color: #ff735c;
+}
+
+.btn-signup-etudiant {
+  width: 70%;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 25px;
+  color: white;
+  background-color: #ff735c;
+  border-radius: 4px;
+  margin: 10px 0 0 0;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.text-signup-etudiant {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2f4f5a;
+  margin: 5px 0;
+  padding: 0;
+}
+
+.text-signup-etudiant > a {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ff735c;
+}
+.CV-button-etudiant {
+  width: 100%;
+  height: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .signup-etudiant-form-container {
+    width: 90%;
+    height: auto;
+    flex-direction: column;
+  }
+
+  .left-signup-etudiant,
+  .right-signup-etudiant {
+    flex: 1;
+    width: 100%;
+  }
+
+  .img-signup-etudiant {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .input-signup-etudiant-right,
+  .input-password-signup-etudiant-right,
+  .btn-signup-etudiant {
+    width: 90%;
+    margin: 5px 0;
+  }
+}

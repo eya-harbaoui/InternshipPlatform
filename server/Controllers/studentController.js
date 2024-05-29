@@ -71,9 +71,9 @@ module.exports = {
       establishment,
       address,
       studyLevel,
-      cv,
       recommendationLetter,
       phoneNumber,
+      cv,
       role,
       email,
     } = req.body;
@@ -83,6 +83,13 @@ module.exports = {
       // Envoyer le code de confirmation par e-mail
       sendCodeConfirmationEmail(email, confirmationCode);
       // Enregistrer l'étudiant dans la base de données avec le code de confirmation
+      console.log(cv);
+      const pdf = {
+        name: cv.name,
+        content: cv.buffer,
+        contentType: cv.type,
+      };
+      console.log(pdf);
       const newStudent = new Student({
         firstName,
         lastName,
@@ -90,7 +97,7 @@ module.exports = {
         establishment,
         address,
         studyLevel,
-        cv,
+        cv: pdf,
         recommendationLetter,
         phoneNumber,
         email,

@@ -34,6 +34,7 @@ const Postuler = () => {
   const [fileInputKey, setFileInputKey] = useState(null);
   const [editing, setEditing] = useState(false);
   const [skillNames, setSkillNames] = useState({});
+  const [selectedFileName, setSelectedFileName] = useState("");
 
   //Récupérer les infos de l'etudiant
 
@@ -44,7 +45,7 @@ const Postuler = () => {
       );
       if (response.data) {
         //console.log("response", response.data);
-       setFormData({ ...formData, ...response.data });
+        setFormData({ ...formData, ...response.data });
       }
     } catch (error) {
       console.error(
@@ -70,8 +71,10 @@ const Postuler = () => {
   };
 
   useEffect(() => {
-    fetchProfileInfo();
-  });
+    if (userId) {
+      fetchProfileInfo();
+    }
+  }, [userId]);
 
   useEffect(() => {
     // Assurez-vous que jobDetails.skills existe et n'est pas vide
@@ -113,7 +116,8 @@ const Postuler = () => {
           ...formData,
           cv: file,
         });
-        console.log("Nom du fichier :", formData.cv);
+        console.log("Nom du fichier :", file.name); // Afficher le nom du fichier sélectionné
+        setSelectedFileName(file.name); // Mettre à jour le nom du fichier sélectionné
       } else {
         // Ne rien faire si le mode édition n'est pas activé
       }
@@ -123,7 +127,17 @@ const Postuler = () => {
   };
 
   //Suppression de CV
- 
+
+  const handleDeleteFile = () => {
+    // Supprimer le fichier en mettant à jour l'état formData
+    setFormData({
+      ...formData,
+      cv: null,
+    });
+    // Réinitialiser le nom du fichier sélectionné
+    setSelectedFileName("");
+  };
+
   //Voir si l'etudiant est connecté ou pas pour qu'il puisse postuler
 
   const handlePostulerForm = () => {
@@ -136,7 +150,7 @@ const Postuler = () => {
         setShowForm(true);
       } else {
         // Rediriger vers la page d'inscription si l'utilisateur n'est pas un étudiant
-        navigate("/signup");
+        navigate("/signup_student");
       }
     }
   };
@@ -327,11 +341,11 @@ const Postuler = () => {
                 ) : (
                   <>
                     <button className="CV-button" type="button">
-                      <FaTrash style={{ color: "red" }} />
-                      {formData.cv.name}
+                      <span onClick={handleDeleteFile}>
+                        <FaTrash style={{ color: "red" }} />
+                        <a>{selectedFileName}</a>
+                      </span>
                     </button>
-
-                    {/* Affichez le nom du fichier */}
                   </>
                 )}
               </div>
@@ -353,7 +367,7 @@ const Postuler = () => {
                   className="candidature-button"
                   onClick={handleSubmitApplication}
                 >
-                  "Envoyer ma candidature"
+                  Envoyer ma candidature
                 </button>
               </div>
             </>
