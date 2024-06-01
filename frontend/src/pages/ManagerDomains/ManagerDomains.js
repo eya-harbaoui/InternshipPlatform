@@ -5,24 +5,28 @@ import axios from "axios";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
 import { ManagerNavbarLinks } from "../../components/Navbar/ManagerNavbarLinks";
 import DomainCard from "../../components/DomainCard/DomainCard";
-import { Modal, Input, Tag, Button } from "antd";
+import { Modal, Input, Tag, Button, Select } from "antd";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import getUserIdFromLocalStorage from "../../UserAuth.js";
 
 const ManagerDomains = () => {
+  const { Option } = Select;
+
   const [data, setData] = useState([]);
   const [selectedDomain, setSelectedDomain] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [name, setName] = useState("");
   const [skills, setSkills] = useState([]);
-  const [newSkill, setNewSkill] = useState("");
+  const { role, userId } = getUserIdFromLocalStorage() || {};
+  const [fetchedSkills, setFetchedSkills] = useState([]);
 
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8000/domain");
       setData(response.data);
-      console.log("data", data);
+      //console.log("data", data);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -31,7 +35,6 @@ const ManagerDomains = () => {
   const handleEdit = (domain) => {
     setSelectedDomain(domain);
     setName(domain.name);
-    setSkills(domain.skills);
     setModalVisible(true);
   };
 
@@ -39,9 +42,16 @@ const ManagerDomains = () => {
     try {
       await axios.delete(`http://localhost:8000/domain/${_id}`);
       toast.success("Domaine supprimé avec succès");
-      fetchData();
     } catch (error) {
       console.error("Error deleting domain: ", error);
+    }
+  };
+  const fetchSkills = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/skill");
+      setFetchedSkills(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -49,14 +59,21 @@ const ManagerDomains = () => {
     try {
       await axios.put(`http://localhost:8000/domain/${selectedDomain._id}`, {
         name,
-        skills,
+        skills: skills, // Utilisez les compétences modifiées
       });
       toast.success("Domaine modifié avec succès");
       setModalVisible(false);
-      fetchData();
+      setSelectedDomain(null);
+      setName(""); // Vider le nom du domaine après l'ajout
+      setSkills([]); // Vider les compétences après l'ajout
     } catch (error) {
       console.error("Error updating domain: ", error);
     }
+  };
+
+  const handleCompetenceChangeAddDomain = (value) => {
+    setSkills(value);
+    console.log(skills, "after adding");
   };
 
   const addDomain = async () => {
@@ -67,36 +84,24 @@ const ManagerDomains = () => {
       });
       toast.success("Domaine ajouté avec succès");
       setAddModalVisible(false);
+      setSelectedDomain(null);
+
       setName(""); // Vider le nom du domaine après l'ajout
       setSkills([]); // Vider les compétences après l'ajout
-      setNewSkill(""); // Vider la nouvelle compétence après l'ajout
-      fetchData();
     } catch (error) {
       console.error("Error adding domain: ", error);
     }
   };
 
-  const addSkill = () => {
-    if (newSkill.trim() !== "") {
-      setSkills([...skills, newSkill.trim()]);
-      setNewSkill("");
-    }
-  };
-
-  const deleteCompetence = (index) => {
-    const updatedskills = [...skills];
-    updatedskills.splice(index, 1);
-    setSkills(updatedskills);
-  };
-
   useEffect(() => {
     fetchData();
+    fetchSkills();
   }); // Correction: Ajout d'un tableau vide pour déclencher useEffect uniquement lors du montage initial
 
   return (
     <>
       <div className="domaines-Manager-page">
-        <Navbar links={ManagerNavbarLinks} />
+        <Navbar links={ManagerNavbarLinks(userId)} />
         <h2 className="title-Manager-page">Gestion des domaines</h2>
         <MdOutlineContentPasteSearch className="icon-Manager-page" />
         <div className="button-container">
@@ -108,19 +113,20 @@ const ManagerDomains = () => {
           </button>
         </div>
         {data &&
-          data.map((domaine, index) => (
+          data.map((domainItem) => (
             <DomainCard
-              key={index}
-              {...domaine}
+              key={domainItem._id}
+              domain={domainItem}
               handleEdit={() => {
-                handleEdit(domaine);
+                handleEdit(domainItem);
               }}
               handleDelete={() => {
-                handleDelete(domaine._id);
+                handleDelete(domainItem._id);
               }}
             />
           ))}
       </div>
+
       <Modal
         title="Modifier le domaine"
         visible={modalVisible}
@@ -128,18 +134,19 @@ const ManagerDomains = () => {
         onCancel={() => setModalVisible(false)}
       >
         <Input value={name} onChange={(e) => setName(e.target.value)} />
-        {skills.map((skill, index) => (
-          <Tag key={index} closable onClose={() => deleteCompetence(index)}>
-            {skill}
-          </Tag>
-        ))}
-        <Input
-          value={newSkill}
-          onChange={(e) => setNewSkill(e.target.value)}
-          placeholder="Nouvelle compétence"
-          onPressEnter={addSkill}
-          suffix={<Button onClick={addSkill}>Ajouter</Button>}
-        />
+        <Select
+          mode="multiple"
+          style={{ width: "100%" }}
+          placeholder="Sélectionnez des compétences"
+          onChange={handleCompetenceChangeAddDomain}
+          value={skills}
+        >
+          {fetchedSkills.map((competence) => (
+            <Option key={competence._id} value={competence._id}>
+              {competence.name}
+            </Option>
+          ))}
+        </Select>
       </Modal>
       {/* New Modal for adding domain */}
       <Modal
@@ -150,7 +157,6 @@ const ManagerDomains = () => {
           setAddModalVisible(false);
           setName(""); // Vider le nom du domaine si annulé
           setSkills([]); // Vider les compétences si annulé
-          setNewSkill(""); // Vider la nouvelle compétence si annulé
         }}
       >
         <Input
@@ -158,18 +164,20 @@ const ManagerDomains = () => {
           onChange={(e) => setName(e.target.value)}
           placeholder="Nom du domaine"
         />
-        {skills.map((competence, index) => (
-          <Tag key={index} closable onClose={() => deleteCompetence(index)}>
-            {competence}
-          </Tag>
-        ))}
-        <Input
-          value={newSkill}
-          onChange={(e) => setNewSkill(e.target.value)}
-          placeholder="Nouvelle compétence"
-          onPressEnter={addSkill}
-          suffix={<Button onClick={addSkill}>Ajouter</Button>}
-        />
+
+        <Select
+          mode="multiple"
+          style={{ width: "100%" }}
+          placeholder="Sélectionnez des compétences"
+          onChange={handleCompetenceChangeAddDomain}
+          value={skills}
+        >
+          {fetchedSkills.map((competence) => (
+            <Option key={competence._id} value={competence._id}>
+              {competence.name}
+            </Option>
+          ))}
+        </Select>
       </Modal>
     </>
   );

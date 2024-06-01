@@ -75,17 +75,9 @@ const Domstages = () => {
   const fetchDomains = async () => {
     try {
       const response = await axios.get("http://localhost:8000/domain");
-      const domainsWithSkillNames = response.data.map((domain) => {
-        return {
-          ...domain,
-          skills: domain.skills.map((skillId) => {
-            const skill = competences.find((c) => c._id === skillId);
-            return skill ? skill.name : skillId;
-          }),
-        };
-      });
-      setData(domainsWithSkillNames);
-      console.log(domainsWithSkillNames,"domainwithskillnames");
+
+      setData(response.data);
+      //console.log(data, "data");
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -94,9 +86,8 @@ const Domstages = () => {
   useEffect(() => {
     fetchSkills();
     fetchDomains();
+    //console.log(addingCompetences);
   });
-
-  //Ajout des compétences lors de l'ajout ou la modification d'un domaine
 
   const handleCompetenceChange = (value) => {
     setAddingCompetences(value);
@@ -107,6 +98,7 @@ const Domstages = () => {
   const isEditing = (record) => record._id === editingKey;
 
   const edit = (record) => {
+    console.log("record", record);
     form.setFieldsValue({
       name: record.name,
       skills: record.skills,
@@ -114,6 +106,7 @@ const Domstages = () => {
     setEditingKey(record._id);
     setEditRecord(record);
     setAddingCompetences(record.skills);
+    console.log(addingCompetences);
   };
 
   //Quand on annule la modification
@@ -134,7 +127,7 @@ const Domstages = () => {
       const index = newData.findIndex((item) => key === item._id);
 
       const addingCompetencesWithIds = addingCompetences.map((skill) => {
-        const competence = competences.find((c) => c.name === skill);
+        const competence = competences.find((c) => c.name === skill.name);
         return competence ? competence._id : null;
       });
 
@@ -170,14 +163,16 @@ const Domstages = () => {
     if (!editRecord) return;
     try {
       const updatedData = await form.validateFields();
+      console.log(updatedData);
       const addingCompetencesWithIds = addingCompetences.map((skill) => {
-        const competence = competences.find((c) => c.name === skill);
+        const competence = competences.find((c) => c.name === skill.name);
         return competence ? competence._id : null;
       });
+      console.log(addingCompetencesWithIds);
+
       await axios.put(`http://localhost:8000/domain/${editRecord._id}`, {
         ...editRecord,
         ...updatedData,
-        skills: addingCompetencesWithIds,
       });
       setIsEditModalVisible(false);
       fetchDomains();
@@ -231,17 +226,12 @@ const Domstages = () => {
   //Quand on commence la modifcation des compétences
 
   const handleEditCompetences = (record) => {
+    console.log("record", record);
     setEditRecord(record);
+    setAddingCompetences(record.skills.map((skill) => skill._id));
     setIsEditModalVisible(true);
-    setAddingCompetences(
-      record.skills.map((skill) => {
-        const competence = competences.find((c) => c.name === skill);
-        return competence ? competence._id : skill;
-      })
-    );
     form.setFieldsValue({
       name: record.name,
-      skills: record.skills,
     });
   };
   //Ouvrir le modal de modification des compétences
@@ -266,7 +256,10 @@ const Domstages = () => {
       dataIndex: "skills",
       width: "15%",
       render: (skills) => (
-        <>{skills && skills.map((skill) => <Tag key={skill}>{skill}</Tag>)}</>
+        <>
+          {skills &&
+            skills.map((skill) => <Tag key={skill._id}>{skill.name}</Tag>)}
+        </>
       ),
     },
     {
@@ -425,12 +418,11 @@ const Domstages = () => {
               mode="multiple"
               style={{ width: "100%" }}
               placeholder="Sélectionnez des compétences"
-              initialValue={editRecord ? editRecord.skills : []}
-              onChange={handleCompetenceChange}
               value={addingCompetences}
+              onChange={handleCompetenceChange}
             >
               {competences.map((competence) => (
-                <Option key={competence.name} value={competence.name}>
+                <Option key={competence._id} value={competence._id}>
                   {competence.name}
                 </Option>
               ))}

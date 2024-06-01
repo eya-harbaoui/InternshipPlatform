@@ -16,8 +16,8 @@ module.exports = {
   getAllDomains: async (req, res) => {
     try {
       const domains = await Domain.find().populate({
-        path: 'skills', // Assurez-vous que le chemin correspond à votre modèle de données
-        select: 'name', // Sélectionnez les champs que vous voulez récupérer
+        path: 'skills', 
+        select: 'name', 
       });
       res.json(domains);
     } catch (error) {

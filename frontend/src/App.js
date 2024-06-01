@@ -22,6 +22,7 @@ import ListeCandidaturesVT from "./pages/ListeCandidatureVT/ListeCandidauteVT";
 import CompetencesStages from "./components/Admin/CompetencesStages";
 import SignupEtudiant from "./pages/SignupEtudiant/SignupEtudiant";
 import EmailConfirmation from "./pages/EmailConfirmation/EmailConfirmation";
+import ManagerCompétences from "./pages/ManagerCompetences/ManagerCompetences";
 const App = () => {
   return (
     <BrowserRouter>
@@ -46,10 +47,8 @@ const App = () => {
             path="manager_validation/:id"
             element={<ManagerValidation />}
           ></Route>
-          <Route
-            path="/Domaines"
-            element={<ManagerDomains />}
-          ></Route>
+          <Route path="/Domaines" element={<ManagerDomains />}></Route>
+          <Route path="/Compétences" element={<ManagerCompétences />}></Route>
           <Route
             path="Candidatures_Assignées/:id"
             element={<ListeCandidaturesVT />}
