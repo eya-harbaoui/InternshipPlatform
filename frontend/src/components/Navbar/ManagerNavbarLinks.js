@@ -9,15 +9,15 @@ export const ManagerNavbarLinks = (id) => [
     url: `/manager_validation/${id}`,
     cName: "nav-links",
   },
-  {
-    title: "Mon Profil",
-    url: "/Manager_details",
-    cName: "nav-links",
-  },
 
   {
     title: "Gestion des domaines",
-    url: "/Domaines_et_Compétences",
+    url: "/Domaines",
+    cName: "nav-links",
+  },
+  {
+    title: "Gestion des compétences",
+    url: "/Compétences",
     cName: "nav-links",
   },
 ];

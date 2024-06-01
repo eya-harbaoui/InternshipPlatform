@@ -2,22 +2,23 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const CompetenceDetails = ({ candidatureId }) => {
-  const [competences, setCompetences] = useState([]);
+  const [applicantSkills, setApplicantSkills] = useState([]);
   const [adequacyPercentage, setAdequacyPercentage] = useState(0);
+  const fetchData = async () => {
+    try {
+      console.log(candidatureId);
+      const response = await axios.get(
+        `http://localhost:8000/application/candidature_by_Id/${candidatureId}`
+      );
 
+      setApplicantSkills(response.data.applicantSkills);
+      setAdequacyPercentage(response.data.adequacyPercentage);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/Student_Application/${candidatureId}`
-        );
-        const { competencesCandidat, adequacyPercentage } = response.data;
-        setCompetences(competencesCandidat);
-        setAdequacyPercentage(adequacyPercentage);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
     fetchData();
   }, [candidatureId]);
 
@@ -30,24 +31,24 @@ const CompetenceDetails = ({ candidatureId }) => {
 
   return (
     <div>
-      <h3>Compétences Candidats Après l'entretien technique</h3>
-      {competences.map((competence, index) => (
-        <div key={index}>
+      <h4>Compétences du candidats après l'entretien technique</h4>
+      {applicantSkills.map((skillItem) => (
+        <div key={skillItem._id}>
           <p>
             <strong>Nom de compétence: </strong>
-            {competence.nom}
+            {skillItem.skill.name}
           </p>
           <p>
             <strong>Niveau demandé: </strong>
-            {competence.niveauDemande}
+            {skillItem.levelRequired}
           </p>
           <p>
             <strong>Niveau acquis: </strong>
-            {competence.niveauAcquis}
+            {skillItem.levelAcquired}
           </p>
           <p>
             <strong>Pourcentage d'adéquation:</strong>{" "}
-            {competence.pourcentageAdequation}%{" "}
+            {skillItem.adequacyPercentage}%{" "}
           </p>
           <hr />
         </div>

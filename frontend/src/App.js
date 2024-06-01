@@ -21,6 +21,7 @@ import ManagerDomains from "./pages/ManagerDomains/ManagerDomains";
 import ListeCandidaturesVT from "./pages/ListeCandidatureVT/ListeCandidauteVT";
 import CompetencesStages from "./components/Admin/CompetencesStages";
 import SignupEtudiant from "./pages/SignupEtudiant/SignupEtudiant";
+import EmailConfirmation from "./pages/EmailConfirmation/EmailConfirmation";
 const App = () => {
   return (
     <BrowserRouter>
@@ -30,7 +31,8 @@ const App = () => {
           <Route path="/signup" exact element={<Signup />} />
 
           <Route path="/login" exact element={<Login />} />
-          <Route path="/signup_student" exact element={<SignupEtudiant/>} />
+          <Route path="/signup_student" exact element={<SignupEtudiant />} />
+          <Route path="/confirm_email" exact element={<EmailConfirmation />} />
           <Route path="/Offres" exact element={<Offres />} />
           <Route path="/Offres/:id" element={<Postuler />} />
           <Route path="/Mes_candidatures" element={<Candidatures />}></Route>
@@ -45,7 +47,7 @@ const App = () => {
             element={<ManagerValidation />}
           ></Route>
           <Route
-            path="/Domaines_et_Compétences"
+            path="/Domaines"
             element={<ManagerDomains />}
           ></Route>
           <Route

@@ -4,9 +4,9 @@ import { Popover } from "antd";
 import "./ListeCandidatureCard.css";
 
 const ListeCandidatureCard = ({
-  Title,
-  candidatureStatus,
-  candidatureDate,
+  title,
+  status,
+  createdAt,
   actions,
   statusRefusePopover,
   onClickTitle
@@ -14,9 +14,9 @@ const ListeCandidatureCard = ({
   return (
     <div className="candidature-card">
       <CandidatureCard
-        Title={Title}
-        candidatureDate={candidatureDate}
-        candidatureStatus={candidatureStatus}
+        title={title}
+        createdAt={createdAt}
+        status={status}
         statusRefusePopover={statusRefusePopover}
         onClickTitle={onClickTitle}
       />

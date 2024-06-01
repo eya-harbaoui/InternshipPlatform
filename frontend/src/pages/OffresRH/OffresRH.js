@@ -21,7 +21,7 @@ const { TextArea } = Input;
 
 // Composant principal OffresRH
 const OffresRH = () => {
- const { role, userId } = getUserIdFromLocalStorage() || {};
+  const { role, userId } = getUserIdFromLocalStorage() || {};
 
   // Définition des états et fonctions
   const [filter, setFilter] = useState({
@@ -35,6 +35,8 @@ const OffresRH = () => {
   const [domainOptions, setDomainOptions] = useState([]); // Options de domaine pour les filtres
   const [skillsWithNames, setSkillsWithNames] = useState([]); // État pour stocker les domaines
   const [skills, setSkills] = useState([]); // État pour stocker les domaines
+  const [domainsWithSkillNames, setDomainsWithSkillNames] = useState([]); // État pour stocker les domaines
+
   const [offer, setOffer] = useState({
     title: "",
     nature: "",
@@ -56,28 +58,20 @@ const OffresRH = () => {
     });
   };
 
-  // Fonctions pour récupérer les domaines et les compétences depuis l'API
-  const fetchSkills = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/skill");
-      setSkills(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
   //liste des domaines avec leurs compétences
   const fetchDomains = async () => {
     try {
       const response = await axios.get("http://localhost:8000/domain");
-      if (response.data) {
-        const domainOptions = response.data.map((domain) => ({
-          value: domain._id, // Utiliser l'ID du domaine comme valeur
-          label: domain.name,
-          skills: domain.skills,
-        }));
-        setDomainOptions(domainOptions);
-      }
+
+      // Stocker les domaines avec les compétences formatées dans l'état
+      setDomainsWithSkillNames(response.data);
+      console.log("res", response.data);
+      // Créer les options pour le menu déroulant de sélection de domaine
+      const domainOptions = domainsWithSkillNames.map((domain) => ({
+        value: domain._id, // Utiliser l'ID du domaine comme valeur
+        label: domain.name,
+      }));
+      setDomainOptions(domainOptions);
     } catch (error) {
       console.error(
         "Erreur lors de la récupération des informations de profil :",
@@ -140,7 +134,6 @@ const OffresRH = () => {
   };
 
   useEffect(() => {
-    fetchSkills();
     fetchDomains();
     fetchData();
   });
@@ -180,6 +173,7 @@ const OffresRH = () => {
         period: "",
         skills: [],
       });
+      setSkillsWithNames([]);
     }
   };
 
@@ -195,6 +189,7 @@ const OffresRH = () => {
       period: "",
       skills: [],
     });
+    setSkillsWithNames([]);
   };
 
   // Fonction pour gérer le changement de domaine
@@ -202,21 +197,15 @@ const OffresRH = () => {
     // Réinitialiser les compétences avec les noms à une liste vide
     setOffer({ ...offer, domain: domaineId, skills: [] });
     // Trouver le domaine sélectionné dans les options de domaine
-    const selectedDomain = domainOptions.find(
-      (domain) => domain.value === domaineId
+    const selectedDomain = domainsWithSkillNames.find(
+      (domain) => domain._id === domaineId
     );
     // Récupérer les compétences associées au domaine sélectionné
     const skillsOfSelectedDomain = selectedDomain ? selectedDomain.skills : [];
+    console.log(skillsOfSelectedDomain, "ttttttttttttttttt");
 
-    // Stocker les compétences avec leurs IDs et noms dans un état
-    const skillsWithIdsAndNames = skillsOfSelectedDomain.map((skillId) => {
-      // Trouver la compétence correspondant à l'ID
-      const skill = skills.find((skill) => skill._id === skillId);
-      // Retourner un objet avec l'ID et le nom de la compétence
-      return { _id: skill._id, name: skill.name };
-    });
     // Mettre à jour l'état des compétences avec IDs et noms
-    setSkillsWithNames(skillsWithIdsAndNames);
+    setSkillsWithNames(skillsOfSelectedDomain);
     // Mettre à jour le domaine sélectionné
   };
 

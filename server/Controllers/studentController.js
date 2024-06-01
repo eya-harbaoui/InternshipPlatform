@@ -1,10 +1,10 @@
 const Student = require('../models/user');
 const { sendCodeConfirmationEmail } = require('../config/Nodemailer');
-
+const bcrypt = require('bcrypt');
 module.exports = {
   getProfile: async (req, res) => {
     try {
-      const student = await Student.findById(req.params.id); // Suppose que vous stockez l'ID de l'utilisateur connecté dans req.userId
+      const student = await Student.findById(req.params.id); 
       if (!student) {
         return res.status(404).json({ message: 'Student not found' });
       }
@@ -20,14 +20,37 @@ module.exports = {
   },
   updateProfile: async (req, res) => {
     try {
+      const {
+        establishment,
+        address,
+        studyLevel,
+        recommendationLetter,
+        phoneNumber,
+      } = req.body;
+
+      const updateData = {
+        establishment,
+        address,
+        studyLevel,
+        recommendationLetter,
+        phoneNumber,
+      };
+
+      // Only set the CV if a file is uploaded
+      if (req.file && req.file.filename) {
+        updateData.cv = req.file.filename;
+      }
+
       const updatedStudent = await Student.findByIdAndUpdate(
         req.params.id,
-        req.body,
+        updateData,
         { new: true }
       );
+
       if (!updatedStudent) {
         return res.status(404).json({ message: 'Student not found' });
       }
+
       res.json(updatedStudent);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -73,37 +96,36 @@ module.exports = {
       studyLevel,
       recommendationLetter,
       phoneNumber,
-      cv,
       role,
       email,
     } = req.body;
+
     try {
-      // Générer un code de confirmation aléatoire
+      // Generate a confirmation code
       const confirmationCode = generateConfirmationCode();
-      // Envoyer le code de confirmation par e-mail
+
+      // Send the confirmation code via email
       sendCodeConfirmationEmail(email, confirmationCode);
-      // Enregistrer l'étudiant dans la base de données avec le code de confirmation
-      console.log(cv);
-      const pdf = {
-        name: cv.name,
-        content: cv.buffer,
-        contentType: cv.type,
-      };
-      console.log(pdf);
+
+      // Hachage du mot de passe
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Save the student in the database with the confirmation code and CV filename
       const newStudent = new Student({
         firstName,
         lastName,
-        password,
+        password: hashedPassword,
         establishment,
         address,
         studyLevel,
-        cv: pdf,
+        cv: req.file.filename, // Save the filename from the uploaded file
         recommendationLetter,
         phoneNumber,
         email,
         role,
         emailConfirmationCode: confirmationCode,
       });
+
       await newStudent.save();
       res.status(201).json(newStudent);
     } catch (error) {
@@ -111,6 +133,7 @@ module.exports = {
     }
   },
 };
+
 function generateConfirmationCode() {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }

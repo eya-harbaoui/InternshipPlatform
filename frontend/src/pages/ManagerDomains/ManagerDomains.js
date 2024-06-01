@@ -14,14 +14,15 @@ const ManagerDomains = () => {
   const [selectedDomain, setSelectedDomain] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
-  const [domainName, setDomainName] = useState("");
-  const [competences, setCompetences] = useState([]);
-  const [newCompetence, setNewCompetence] = useState("");
+  const [name, setName] = useState("");
+  const [skills, setSkills] = useState([]);
+  const [newSkill, setNewSkill] = useState("");
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/Domaines");
+      const response = await axios.get("http://localhost:8000/domain");
       setData(response.data);
+      console.log("data", data);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -29,14 +30,14 @@ const ManagerDomains = () => {
 
   const handleEdit = (domain) => {
     setSelectedDomain(domain);
-    setDomainName(domain.domainName);
-    setCompetences(domain.competences);
+    setName(domain.name);
+    setSkills(domain.skills);
     setModalVisible(true);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (_id) => {
     try {
-      await axios.delete(`http://localhost:8000/Domaines/${id}`);
+      await axios.delete(`http://localhost:8000/domain/${_id}`);
       toast.success("Domaine supprimé avec succès");
       fetchData();
     } catch (error) {
@@ -46,9 +47,9 @@ const ManagerDomains = () => {
 
   const handleModalOk = async () => {
     try {
-      await axios.put(`http://localhost:8000/Domaines/${selectedDomain.id}`, {
-        domainName,
-        competences,
+      await axios.put(`http://localhost:8000/domain/${selectedDomain._id}`, {
+        name,
+        skills,
       });
       toast.success("Domaine modifié avec succès");
       setModalVisible(false);
@@ -60,37 +61,37 @@ const ManagerDomains = () => {
 
   const addDomain = async () => {
     try {
-      await axios.post(`http://localhost:8000/Domaines`, {
-        domainName,
-        competences,
+      await axios.post(`http://localhost:8000/domain`, {
+        name,
+        skills,
       });
       toast.success("Domaine ajouté avec succès");
       setAddModalVisible(false);
-      setDomainName(""); // Vider le nom du domaine après l'ajout
-      setCompetences([]); // Vider les compétences après l'ajout
-      setNewCompetence(""); // Vider la nouvelle compétence après l'ajout
+      setName(""); // Vider le nom du domaine après l'ajout
+      setSkills([]); // Vider les compétences après l'ajout
+      setNewSkill(""); // Vider la nouvelle compétence après l'ajout
       fetchData();
     } catch (error) {
       console.error("Error adding domain: ", error);
     }
   };
 
-  const addCompetence = () => {
-    if (newCompetence.trim() !== "") {
-      setCompetences([...competences, newCompetence.trim()]);
-      setNewCompetence("");
+  const addSkill = () => {
+    if (newSkill.trim() !== "") {
+      setSkills([...skills, newSkill.trim()]);
+      setNewSkill("");
     }
   };
 
   const deleteCompetence = (index) => {
-    const updatedCompetences = [...competences];
-    updatedCompetences.splice(index, 1);
-    setCompetences(updatedCompetences);
+    const updatedskills = [...skills];
+    updatedskills.splice(index, 1);
+    setSkills(updatedskills);
   };
 
   useEffect(() => {
     fetchData();
-  }, []); // Correction: Ajout d'un tableau vide pour déclencher useEffect uniquement lors du montage initial
+  }); // Correction: Ajout d'un tableau vide pour déclencher useEffect uniquement lors du montage initial
 
   return (
     <>
@@ -115,7 +116,7 @@ const ManagerDomains = () => {
                 handleEdit(domaine);
               }}
               handleDelete={() => {
-                handleDelete(domaine.id);
+                handleDelete(domaine._id);
               }}
             />
           ))}
@@ -126,21 +127,18 @@ const ManagerDomains = () => {
         onOk={handleModalOk}
         onCancel={() => setModalVisible(false)}
       >
-        <Input
-          value={domainName}
-          onChange={(e) => setDomainName(e.target.value)}
-        />
-        {competences.map((competence, index) => (
+        <Input value={name} onChange={(e) => setName(e.target.value)} />
+        {skills.map((skill, index) => (
           <Tag key={index} closable onClose={() => deleteCompetence(index)}>
-            {competence}
+            {skill}
           </Tag>
         ))}
         <Input
-          value={newCompetence}
-          onChange={(e) => setNewCompetence(e.target.value)}
+          value={newSkill}
+          onChange={(e) => setNewSkill(e.target.value)}
           placeholder="Nouvelle compétence"
-          onPressEnter={addCompetence}
-          suffix={<Button onClick={addCompetence}>Ajouter</Button>}
+          onPressEnter={addSkill}
+          suffix={<Button onClick={addSkill}>Ajouter</Button>}
         />
       </Modal>
       {/* New Modal for adding domain */}
@@ -150,27 +148,27 @@ const ManagerDomains = () => {
         onOk={addDomain}
         onCancel={() => {
           setAddModalVisible(false);
-          setDomainName(""); // Vider le nom du domaine si annulé
-          setCompetences([]); // Vider les compétences si annulé
-          setNewCompetence(""); // Vider la nouvelle compétence si annulé
+          setName(""); // Vider le nom du domaine si annulé
+          setSkills([]); // Vider les compétences si annulé
+          setNewSkill(""); // Vider la nouvelle compétence si annulé
         }}
       >
         <Input
-          value={domainName}
-          onChange={(e) => setDomainName(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           placeholder="Nom du domaine"
         />
-        {competences.map((competence, index) => (
+        {skills.map((competence, index) => (
           <Tag key={index} closable onClose={() => deleteCompetence(index)}>
             {competence}
           </Tag>
         ))}
         <Input
-          value={newCompetence}
-          onChange={(e) => setNewCompetence(e.target.value)}
+          value={newSkill}
+          onChange={(e) => setNewSkill(e.target.value)}
           placeholder="Nouvelle compétence"
-          onPressEnter={addCompetence}
-          suffix={<Button onClick={addCompetence}>Ajouter</Button>}
+          onPressEnter={addSkill}
+          suffix={<Button onClick={addSkill}>Ajouter</Button>}
         />
       </Modal>
     </>

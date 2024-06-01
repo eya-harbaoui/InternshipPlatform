@@ -6,7 +6,7 @@ export const SkillsLevel = [
   "intermédiaire",
   "maîtrise",
 ];
-export const competenceLevelsMapping = {
+export const skillLevelsMapping = {
   "aucune compétence": 0,
   "connaissance théorique": 1,
   "connaissance pratique": 2,

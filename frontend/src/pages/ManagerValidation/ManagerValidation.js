@@ -19,7 +19,7 @@ const ManagerValidation = () => {
     nature: "",
   });
   const [data, setData] = useState([]);
- const { role, userId } = getUserIdFromLocalStorage() || {};
+  const { role, userId } = getUserIdFromLocalStorage() || {};
 
   const handleClearFilter = () => {
     setFilter({
@@ -54,6 +54,7 @@ const ManagerValidation = () => {
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
       setData(sortedData);
+      console.log(sortedData);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -75,7 +76,7 @@ const ManagerValidation = () => {
       />
       <div className="stage-cards-RH">
         {filteredStageData.map((stage, index) => (
-          <ManagerOfferCard key={index} {...stage} userId={userId}/>
+          <ManagerOfferCard key={index} {...stage} userId={userId} />
         ))}
       </div>
     </div>

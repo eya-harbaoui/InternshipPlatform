@@ -41,15 +41,16 @@ const SignupEtudiant = () => {
   //Récupératon de CV
 
   const handleFileChange = (e) => {
+    console.log(e.target.files);
     const file = e.target.files[0];
-    console.log("file", file);
-    if (file.type === "application/pdf") {
-      setFormData({
-        ...formData,
+    if (file && file.type === "application/pdf") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
         cv: file,
-      });
-
-      setSelectedFileName(file.name); // Mettre à jour le nom du fichier sélectionné
+      }));
+      setSelectedFileName(file.name);
+    } else {
+      toast.error("Veuillez télécharger un fichier PDF");
     }
   };
 
@@ -117,25 +118,29 @@ const SignupEtudiant = () => {
 
     // Envoi de la requête
     axios
-      .post("http://localhost:8000/students/register", {
-        firstName,
-        lastName,
-        password,
-        establishment,
-        address,
-        studyLevel,
-        cv,
-        recommendationLetter,
-        phoneNumber,
-        role,
-        email,
-      })
+      .post(
+        "http://localhost:8000/students/register",
+        {
+          firstName,
+          lastName,
+          password,
+          establishment,
+          address,
+          studyLevel,
+          cv,
+          recommendationLetter,
+          phoneNumber,
+          role,
+          email,
+        },
+        { headers: { "Content-Type": "multipart/form-data" } }
+      )
       .then((response) => {
         if (response.data.error) {
           toast.error(response.data.error);
         } else {
           toast.success("Inscription réussie !");
-          navigate("/login"); // Redirection vers la page de connexion
+          navigate("/confirm_email"); // Redirection vers la page de connexion
         }
       })
       .catch((error) => {

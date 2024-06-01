@@ -10,7 +10,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import getUserIdFromLocalStorage from "../../UserAuth.js";
-import { v4 as uuidv4 } from "uuid"; // Pour générer des identifiants uniques
 import { FaTrash, FaUpload } from "react-icons/fa";
 import "../../../src/components/StudentForm/StudentForm.css";
 
@@ -44,8 +43,9 @@ const Postuler = () => {
         `http://localhost:8000/students/profile/${userId}`
       );
       if (response.data) {
-        //console.log("response", response.data);
+        console.log("response", response.data);
         setFormData({ ...formData, ...response.data });
+        setSelectedFileName(response.data.cv);
       }
     } catch (error) {
       console.error(
@@ -54,45 +54,13 @@ const Postuler = () => {
       );
     }
   };
-  // Fonction pour récupérer le nom d'une compétence par son ID
-  const fetchSkillNameById = async (skillId) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/skill/${skillId}`
-      );
-      return response.data.name; // Suppose que votre endpoint renvoie le nom de la compétence
-    } catch (error) {
-      console.error(
-        "Erreur lors de la récupération du nom de la compétence :",
-        error
-      );
-      return null;
-    }
-  };
 
   useEffect(() => {
     if (userId) {
       fetchProfileInfo();
     }
+    console.log(jobDetails);
   }, [userId]);
-
-  useEffect(() => {
-    // Assurez-vous que jobDetails.skills existe et n'est pas vide
-    if (jobDetails && jobDetails.skills && jobDetails.skills.length > 0) {
-      // Créez un tableau pour stocker les noms des compétences
-      const skillNamesArray = [];
-
-      // Pour chaque compétence dans jobDetails.skills, récupérez son nom et niveau
-      jobDetails.skills.forEach(async (skill) => {
-        const skillName = await fetchSkillNameById(skill.skill);
-        // Ajoutez le nom de la compétence avec son niveau dans le tableau
-        skillNamesArray.push({ name: skillName, level: skill.level });
-
-        // Mettez à jour l'état skillNames avec le nouveau tableau
-        setSkillNames(skillNamesArray);
-      });
-    }
-  }, [jobDetails]); // Exécutez cette fonction lorsque jobDetails est mis à jour
 
   const navigate = useNavigate();
 
@@ -158,38 +126,40 @@ const Postuler = () => {
   const handleEdit = () => {
     setEditing(true);
   };
+  const handleSave = async () => {
+    try {
+      console.log(formData, "formData puuuuut");
+      console.log(userId, "userId");
+      await axios.put(
+        `http://localhost:8000/students/profile/${userId}`,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+      setEditing(false);
+      toast.success("Informations modifiées avec succès! ");
+    } catch (error) {
+      toast.error("Erreur lors de l'envoi des informations de profil :", error);
+    }
+  };
 
   if (!jobDetails) {
     return null; // Masquer le composant si jobDetails n'est pas fourni
   }
 
-  //Pour la date de candidature
-
-  const getCurrentDate = () => {
-    const date = new Date();
-    return date.toISOString();
-  };
-
   //Fonction pour lancer une candidature
 
   const handleSubmitApplication = async (e) => {
-    const candidatureDate = getCurrentDate(); // Obtenez la date actuelle
-    const id = uuidv4(); // Générer un ID unique
     try {
       const response = await axios.post(
-        "http://localhost:8000/Student_Application",
+        "http://localhost:8000/application/postuler",
         {
-          id: id,
-          studentId: formData.id,
-          OfferId: jobDetails.id,
-          candidatureStatus: "en cours",
-          candidatureDate: candidatureDate, // Utilisez la date actuelle
+          applicant: userId,
+          offer: jobDetails._id,
+          status: "en cours",
         }
       );
       console.log("Réponse du backend:", response.data);
-      toast.success(
-        "Candidature soumise avec succès. Vous recevrez un email de confirmation."
-      );
+      toast.success("Candidature soumise avec succès.");
       setShowForm(false);
       // Gérer la réponse du backend, par exemple afficher un message de succès
     } catch (error) {
@@ -221,13 +191,13 @@ const Postuler = () => {
           <FaRegCalendarAlt /> {jobDetails.period + "Mois"}
         </div>
       </div>
-      {skillNames.length > 0 && (
+      {jobDetails.skills.length > 0 && (
         <div>
           <h3>Les compétences demandées :</h3>
-          {skillNames.map((skill, index) => (
-            <div key={index}>
+          {jobDetails.skills.map((skillItem) => (
+            <div key={skillItem.skill._id}>
               <p>
-                {skill.name} : {skill.level}
+                {skillItem.skill.name} : {skillItem.level}
               </p>
             </div>
           ))}
@@ -240,8 +210,11 @@ const Postuler = () => {
       )}
       {showForm && (
         <>
-          <button className="postuler-button" onClick={handleEdit}>
-            Modifier Mes Infos
+          <button
+            className="postuler-button"
+            onClick={!editing ? handleEdit : handleSave}
+          >
+            {editing ? "Enregistrer mon profil" : "Modifier mon profil"}{" "}
           </button>
           <div className="student-form-container">
             <>
@@ -294,7 +267,7 @@ const Postuler = () => {
                   value={formData.studyLevel}
                   onChange={handleChange}
                   required
-                  disabled={!editing}
+                  disabled={true}
                 />
                 <input
                   type="text"
@@ -303,7 +276,7 @@ const Postuler = () => {
                   value={formData.establishment}
                   onChange={handleChange}
                   required
-                  disabled={!editing}
+                  disabled={true}
                 />
               </div>
 
@@ -315,7 +288,7 @@ const Postuler = () => {
                   value={formData.address}
                   onChange={handleChange}
                   required
-                  disabled={!editing}
+                  disabled={true}
                 />
                 {!formData.cv ? (
                   <>
@@ -335,12 +308,12 @@ const Postuler = () => {
                       accept="application/pdf"
                       style={{ display: "none" }}
                       onChange={handleFileChange}
-                      disabled={!editing}
+                      disabled={true}
                     />
                   </>
                 ) : (
                   <>
-                    <button className="CV-button" type="button">
+                    <button className="CV-button" type="button" disabled={true}>
                       <span onClick={handleDeleteFile}>
                         <FaTrash style={{ color: "red" }} />
                         <a>{selectedFileName}</a>
@@ -358,7 +331,7 @@ const Postuler = () => {
                   required
                   style={{ height: "200px" }}
                   className="cover-letter"
-                  disabled={!editing}
+                  disabled={true}
                 />
               </div>
               <div className="student-form-row">

@@ -51,7 +51,7 @@ function Login() {
           navigate(`/RH_Offres/${userId}`);
           break;
         case "Validator":
-          navigate(`/liste_candidatures/${userId}`);
+          navigate(`/Candidatures_Assignées/${userId}`);
           break;
         case "Student":
           navigate("/Offres");
@@ -112,10 +112,10 @@ function Login() {
           <p className="login-text">
             Vous n'avez pas de compte ? <Link to="/signup">Inscrivez-vous</Link>
           </p>
-          <p className="login-text">
+          {/*<p className="login-text">
             Mot de passe oublié ?{" "}
             <Link to="/reset">Réinitialiser votre mot de passe</Link>
-          </p>
+          </p>*/}
         </div>
       </div>
     </div>

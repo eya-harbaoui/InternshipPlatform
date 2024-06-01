@@ -32,27 +32,18 @@ module.exports = {
   getAllOffers: async (req, res) => {
     try {
       // Fetch all offers from the database
-      const offers = await Offer.find().populate('domain');
-
-      // Modify the offers array to include only the domain name and necessary fields from skills
-      const modifiedOffers = offers.map((offer) => {
-        const modifiedSkills = offer.skills.map((skill) => ({
-          skill: skill.skill,
-          level: skill.level,
-        }));
-
-        return {
-          ...offer.toObject(), // Convert Mongoose document to plain JavaScript object
-          domain: {
-            _id: offer.domain._id,
-            name: offer.domain.name,
-          },
-          skills: modifiedSkills,
-        };
-      });
+      const offers = await Offer.find()
+        .populate({
+          path: 'domain',
+          select: 'name',
+        })
+        .populate({
+          path: 'skills.skill',
+          select: 'name',
+        });
 
       // Respond with the modified array of offers
-      res.status(200).json(modifiedOffers);
+      res.status(200).json(offers);
     } catch (error) {
       // If an error occurs, respond with an error message
       res.status(500).json({ message: error.message });
@@ -61,7 +52,15 @@ module.exports = {
 
   getOfferById: async (req, res) => {
     try {
-      const offer = await Offer.findById(req.params.id);
+      const offer = await Offer.findById(req.params.id)
+        .populate({
+          path: 'domain',
+          select: 'name',
+        })
+        .populate({
+          path: 'skills.skill',
+          select: 'name',
+        });
       if (!offer) {
         return res.status(404).json({ message: 'Offer not found' });
       }
@@ -103,17 +102,35 @@ module.exports = {
     }
   },
 
-  // Contrôleur pour récupérer toutes les candidatures pour une offre de stage donnée
   getApplicationsForOffer: async (req, res) => {
     try {
-      const applications = await Application.find({
-        id: req.params.id,
-      });
+      const applications = await Application.find({ offer: req.params.id })
+        .populate({
+          path: 'offer',
+          populate: {
+            path: 'domain',
+            select: 'name',
+          },
+        })
+        .populate({
+          path: 'offer',
+          populate: {
+            path: 'skills.skill',
+            select: 'name',
+          },
+        })
+        .populate('applicant')
+        .populate({
+          path: 'applicantSkills.skill',
+          select: 'name',
+        }); // Populate applicant details
+
       res.json(applications);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   },
+
   deleteOffreById: async (req, res) => {
     try {
       const offer = await Offer.findByIdAndDelete(req.params.id);
@@ -206,25 +223,18 @@ module.exports = {
     try {
       const publishedOffers = await Offer.find({
         status: 'publié',
-      }).populate('domain');
-      const modifiedOffers = publishedOffers.map((offer) => {
-        const modifiedSkills = offer.skills.map((skill) => ({
-          skill: skill.skill,
-          level: skill.level,
-        }));
-
-        return {
-          ...offer.toObject(), // Convert Mongoose document to plain JavaScript object
-          domain: {
-            _id: offer.domain._id,
-            name: offer.domain.name,
-          },
-          skills: modifiedSkills,
-        };
-      });
+      })
+        .populate({
+          path: 'domain',
+          select: 'name',
+        })
+        .populate({
+          path: 'skills.skill',
+          select: 'name',
+        });
 
       // Respond with the modified array of offers
-      res.status(200).json(modifiedOffers);
+      res.status(200).json(publishedOffers);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -235,25 +245,18 @@ module.exports = {
     try {
       const NoneValidatedOffers = await Offer.find({
         status: 'en cours de validation',
-      }).populate('domain');
-      const modifiedOffers = NoneValidatedOffers.map((offer) => {
-        const modifiedSkills = offer.skills.map((skill) => ({
-          skill: skill.skill,
-          level: skill.level,
-        }));
-
-        return {
-          ...offer.toObject(), // Convert Mongoose document to plain JavaScript object
-          domain: {
-            _id: offer.domain._id,
-            name: offer.domain.name,
-          },
-          skills: modifiedSkills,
-        };
-      });
+      })
+        .populate({
+          path: 'domain',
+          select: 'name',
+        })
+        .populate({
+          path: 'skills.skill',
+          select: 'name',
+        });
 
       // Respond with the modified array of offers
-      res.status(200).json(modifiedOffers);
+      res.status(200).json(NoneValidatedOffers);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

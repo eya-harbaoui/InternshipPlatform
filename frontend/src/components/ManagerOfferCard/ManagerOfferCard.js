@@ -61,6 +61,17 @@ const ManagerOfferCard = ({
   const handleViewOfferClick = () => {
     setIsModalOpen(false);
   };
+  const maxWords = 20; // Nombre maximum de mots à afficher initialement
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
+  const getDescriptionPreview = () => {
+    const words = details.split(" ");
+    return words.slice(0, maxWords).join(" ");
+  };
 
   return (
     <>
@@ -97,59 +108,48 @@ const ManagerOfferCard = ({
             ]}
           >
             <div className="modal-content">
-              <label htmlFor="title">Titre de stage :</label>
-              <input
-                type="text"
-                id="title"
-                placeholder="Titre de stage"
-                className="input-text-design"
-                value={title}
-              />
-              <label htmlFor="details">Description de stage :</label>
-              <textarea
-                id="details"
-                type="text"
-                placeholder="Description de stage"
-                className="textarea-design"
-                value={details}
-              />
-              <label htmlFor="domaineSelectionne">Domaine de stage :</label>
-              <input
-                id="domaineSelectionne"
-                placeholder="Domaine de stage"
-                className="input-text-design"
-                style={{ width: "100%" }}
-                value={domain}
-              />
-              <label htmlFor="mode">Mode de stage :</label>
-              <input
-                id="mode"
-                placeholder="Mode de stage"
-                className="input-text-design"
-                style={{ width: "100%" }}
-                value={mode}
-              />
-              <label htmlFor="period">Durée de stage :</label>
-              <input
-                id="period"
-                placeholder="Durée de stage"
-                className="input-text-design"
-                style={{ width: "100%" }}
-                value={period}
-              />
-              <label htmlFor="nature">Nature de stage :</label>
-              <input
-                id="nature"
-                placeholder="Nature de stage"
-                className="input-text-design"
-                style={{ width: "100%" }}
-                value={nature}
-              />
+              <p>
+                <strong>Titre de stage: </strong> {title}{" "}
+              </p>
+              <p>
+                <strong>Description de stage: </strong>
+                {showFullDescription ? details : getDescriptionPreview()}
+                {details.split(" ").length > maxWords && (
+                  <span>
+                    {" "}
+                    {/* Espace avant le lien "Read More" */}
+                    <span
+                      className="read-more-link"
+                      onClick={toggleDescription}
+                      style={{
+                        color: "#FF735C",
+                        fontWeight: "bold",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {showFullDescription ? "Voir Moins" : "Voir Plus"}
+                    </span>
+                  </span>
+                )}
+              </p>
+              <p>
+                <strong>Domaine de stage : </strong> {domain.name}{" "}
+              </p>
+              <p>
+                <strong>Mode de stage : </strong> {mode}{" "}
+              </p>
+              <p>
+                <strong>Durée de stage : </strong> {period + " Mois"}{" "}
+              </p>
+              <p>
+                <strong>Nature de stage : </strong> {period + " Mois"}{" "}
+              </p>
+
               <div className="skills-container">
-                <h3>Compétences demandées :</h3>
-                {Object.entries(skills).map(([skill, level]) => (
-                  <p key={skill}>
-                    {skill}: {level}
+                <h4>Compétences demandées :</h4>
+                {skills.map((skillItem) => (
+                  <p key={skillItem.skill._id}>
+                    {skillItem.skill.name}: {skillItem.level}
                   </p>
                 ))}
               </div>

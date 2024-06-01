@@ -4,13 +4,13 @@ import "./ListeCandidatureCard.css";
 import { getStatusTag } from "./statusUtils";
 
 const CandidatureCard = ({
-  Title,
-  candidatureDate,
-  candidatureStatus,
+  title,
+  createdAt,
+  status,
   statusRefusePopover,
   onClickTitle,
 }) => {
-  const { tagColor, tagText } = getStatusTag(candidatureStatus);
+  const { tagColor, tagText } = getStatusTag(status);
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -31,8 +31,8 @@ const CandidatureCard = ({
   return (
     <>
       <div className="title-and-tag">
-        <h3 onClick={onClickTitle}>{Title}</h3>
-        {candidatureStatus === "refusé" && (
+        <h3 onClick={onClickTitle}>{title}</h3>
+        {status === "refusé" && (
           <Popover
             content={popoverContent}
             title="Motif du refus"
@@ -42,13 +42,13 @@ const CandidatureCard = ({
             </Tag>
           </Popover>
         )}
-        {candidatureStatus !== "refusé" && (
+        {status !== "refusé" && (
           <Tag color={tagColor} className="status_tag">
             {tagText}
           </Tag>
         )}
       </div>
-      <p> Date de candidature : {candidatureDate}</p>
+      <p> Date de candidature : {createdAt}</p>
       <Modal
         title="Motif du refus"
         visible={modalVisible}

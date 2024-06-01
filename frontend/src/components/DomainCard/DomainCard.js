@@ -5,8 +5,8 @@ import { Tag } from "antd";
 import "./DomainCard.css";
 
 const DomainCard = ({
-  domainName,
-  competences,
+  name,
+  skills,
   handleEdit,
   handleDelete,
 }) => {
@@ -14,15 +14,15 @@ const DomainCard = ({
     <div className="domain-card">
       <div className="domain-info">
         <FaRegLightbulb className="domain-icon" />
-        <div className="domain-name">{domainName}</div>
+        <div className="domain-name">{name}</div>
       </div>
       <div className="competences">
-        {competences.map((competence, index) => (
+        {skills.map((skillItem) => (
           <Tag
-            key={index}
+            key={skillItem.skill._id}
             className="competence-tag"
           >
-            {competence}
+            {skillItem.skill.name}
           </Tag>
         ))}
       </div>

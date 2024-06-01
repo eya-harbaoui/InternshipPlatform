@@ -1,71 +1,52 @@
 import React, { useState, useEffect } from "react";
-import { Select, Row, Col, Modal, DatePicker, Input, Radio,Button } from "antd";
+import { Select, Row, Col, Modal, Input, Button } from "antd";
 import { FaRegUser } from "react-icons/fa";
-import { BsCalendar, BsPersonCheck, BsPersonDash } from "react-icons/bs";
+import { BsPersonCheck, BsPersonDash } from "react-icons/bs";
 import CandidatsCard from "../../components/CandidatsCard/CandidatsCard";
 import ListeCandidatureCard from "../../components/CandidatureCard/ListeCandidatureCard";
 import { VTNavbarLinks } from "../../components/Navbar/VTNavbarLinks";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { competenceLevelsMapping } from "../../components/OffresCard/SkillsLevel";
+import { skillLevelsMapping } from "../../components/OffresCard/SkillsLevel";
 import { refuseReasons } from "../../components/CandidatureCard/refuseReasons";
 import CompetenceDetails from "../../components/CandidatureCard/CompetenceDetails";
+import getUserIdFromLocalStorage from "../../UserAuth.js";
+
 const ListeCandidaturesVT = () => {
+  const { role, userId } = getUserIdFromLocalStorage() || {};
+
   const { Option } = Select;
   const [candidatures, setCandidatures] = useState({});
   const [candidats, setCandidats] = useState([]);
   const [selectedCandidature, setSelectedCandidature] = useState(null);
-  const { id } = useParams();
   const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isCandidatureFileModalOpen, setIsCandidatureFileModalOpen] =
     useState(false);
+  const [isFicheModelOpen, setIsFicheModelOpen] = useState(false);
 
   const [isRefuseModalOpen, setIsRefuseModalOpen] = useState(false);
   const [acceptMessage, setAcceptMessage] = useState("");
   const [refuseMessage, setRefuseMessage] = useState("");
   const [acquiredLevels, setAcquiredLevels] = useState({});
   const [adequacyPercentage, setAdequacyPercentage] = useState(0);
-  const [competencesCandidat, setCompetencesCandidat] = useState([]);
+  const [skillsCandidat, setskillsCandidat] = useState([]);
   const getStudentApplicationsForOffer = async () => {
-    console.log(id, "idddddddddd");
     try {
       const response = await axios.get(
-        `http://localhost:8000/Student_Application?technicalValidatorId=${id}`
+        `http://localhost:8000/application/candidatures_by_interviewer/${userId}`
       );
 
-      const candidatsWithInfo = await Promise.all(
-        response.data.map(async (candidature) => {
-          const studentResponse = await axios.get(
-            `http://localhost:8000/Students/${candidature.studentId}`
-          );
-
-          const interviewResponse = await axios.get(
-            `http://localhost:8000/Interviews?CandidatureId=${candidature.id}`
-          );
-          const offerResponse = await axios.get(
-            `http://localhost:8000/offers?id=${candidature.OfferId}`
-          );
-
-          return {
-            CandidatureInfos: { ...candidature },
-            StudentInfos: { ...studentResponse.data },
-            InterviewInfos: { ...interviewResponse.data[0] },
-            OfferInfos: { ...offerResponse.data[0] },
-          };
-        })
-      );
+      const candidatsWithInfo = response.data;
 
       console.log("Candidats avec informations:", candidatsWithInfo);
 
       const countByStatus = candidatsWithInfo.reduce((acc, curr) => {
-        acc[curr.CandidatureInfos.candidatureStatus] =
-          (acc[curr.CandidatureInfos.candidatureStatus] || 0) + 1;
+        acc[curr.status] = (acc[curr.status] || 0) + 1;
         return acc;
       }, {});
 
-      console.log("Nombre de candidatures par statut:", countByStatus);
+      //console.log("Nombre de candidatures par statut:", countByStatus);
 
       setCandidats(candidatsWithInfo);
       setCandidatures(countByStatus);
@@ -79,6 +60,7 @@ const ListeCandidaturesVT = () => {
 
   useEffect(() => {
     getStudentApplicationsForOffer();
+    console.log(skillsCandidat, "skills Candidat");
   });
 
   const acceptCandidate = (candidat) => {
@@ -89,12 +71,13 @@ const ListeCandidaturesVT = () => {
   const handleAcceptModalOk = async () => {
     try {
       const updatedCandidature = {
-        ...selectedCandidature["CandidatureInfos"],
-        candidatureStatus: "entretien technique confirmé",
+        ...selectedCandidature,
+        status: "entretien technique confirmé",
+        validationComment: acceptMessage,
       };
 
       await axios.put(
-        `http://localhost:8000/Student_Application/${selectedCandidature["CandidatureInfos"].id}`,
+        `http://localhost:8000/application/update_candidature/${selectedCandidature._id}`,
         updatedCandidature
       );
 
@@ -116,11 +99,11 @@ const ListeCandidaturesVT = () => {
   const handleRefuseModalOk = async () => {
     try {
       await axios.put(
-        `http://localhost:8000/Student_Application/${selectedCandidature["CandidatureInfos"].id}`,
+        `http://localhost:8000/application/update_candidature/${selectedCandidature._id}`,
         {
-          ...selectedCandidature["CandidatureInfos"],
-          candidatureStatus: "refusé",
-          refuseReason: refuseMessage,
+          ...selectedCandidature,
+          status: "refusé",
+          rejectionReason: refuseMessage,
         }
       );
       setIsRefuseModalOpen(false);
@@ -142,24 +125,28 @@ const ListeCandidaturesVT = () => {
     setIsProfileModalOpen(false);
   };
 
+  const handleFicheModelClose = () => {
+    setIsFicheModelOpen(false);
+  };
+
   const viewCandidatureFile = async (candidat) => {
-    console.log("cand", candidat);
+    //console.log("cand", candidat);
     setSelectedCandidature(candidat);
     setIsCandidatureFileModalOpen(true);
+    setIsFicheModelOpen(true);
   };
   const endInterviewFunc = async () => {
     setIsCandidatureFileModalOpen(false);
     try {
       const updatedCandidatureData = {
-        ...selectedCandidature["CandidatureInfos"],
-        competencesCandidat: competencesCandidat,
+        applicantSkills: skillsCandidat,
         adequacyPercentage: adequacyPercentage,
         technicallyEvaluated: true,
       };
 
       // Effectuez la requête PUT vers le backend pour mettre à jour la candidature
       await axios.put(
-        `http://localhost:8000/Student_Application/${selectedCandidature["CandidatureInfos"].id}`,
+        `http://localhost:8000/application/update_candidature/${selectedCandidature._id}`,
         updatedCandidatureData
       );
 
@@ -170,105 +157,114 @@ const ListeCandidaturesVT = () => {
   };
   const viewCandidatureFileCancel = () => {
     setIsCandidatureFileModalOpen(false);
+    setskillAdequacyPercentages({});
+    setAdequacyPercentage(0);
+    setAcquiredLevels({});
   };
   const actions = (candidat) => [
     {
       name: "Fiche candidature",
       onClick: () => viewCandidatureFile(candidat),
-      disabled: candidat["CandidatureInfos"].candidatureStatus === "en cours",
+      disabled: candidat.status === "en cours",
       Icon: FaRegUser,
     },
     {
       name: "accepter",
       onClick: () => acceptCandidate(candidat),
-      disabled: candidat["CandidatureInfos"].candidatureStatus === "refusé",
+      disabled:
+        candidat.status === "refusé" ||
+        candidat.technicallyEvaluated === false ||
+        candidat.status === "entretien technique confirmé",
       Icon: BsPersonCheck,
     },
     {
       name: "refuser",
       onClick: () => refuseCandidate(candidat),
-      disabled: candidat["CandidatureInfos"].candidatureStatus === "accepté",
+      disabled:
+        candidat.status === "accepté" ||
+        candidat.technicallyEvaluated === false ||
+        candidat.status === "entretien RH programmé" ||
+        candidat.status === "entretien technique confirmé",
       Icon: BsPersonDash,
     },
   ];
-  const handleLevelChange = (competence, value) => {
+  const handleLevelChange = (skill, value) => {
     setAcquiredLevels((prevState) => ({
       ...prevState,
-      [competence]: value,
+      [skill]: value,
     }));
+    //console.log(acquiredLevels, "acuiredlevels");
   };
   // Ajoutez un état local pour stocker les pourcentages d'adéquation pour chaque compétence
-  const [competenceAdequacyPercentages, setCompetenceAdequacyPercentages] =
-    useState({});
+  const [skillAdequacyPercentages, setskillAdequacyPercentages] = useState({});
 
   // la fonction calculateAdequacyPercentage pour calculer les pourcentages d'adéquation pour chaque compétence
-  
-const calculateAdequacyPercentage = () => {
-  if (!selectedCandidature || !selectedCandidature["OfferInfos"]) return;
 
-  const competencePercentages = {};
-  const newCompetencesCandidat = [];
+  const calculateAdequacyPercentage = () => {
+    if (!selectedCandidature || !selectedCandidature.offer) return;
 
-  Object.entries(selectedCandidature["OfferInfos"].competences).forEach(
-    ([competence, niveau]) => {
-      if (acquiredLevels[competence]) {
+    const skillPercentages = {};
+    const newskillsCandidat = [];
+
+    selectedCandidature.offer.skills.map((skillItem) => {
+      if (acquiredLevels[skillItem.skill._id]) {
         const acquiredLevel =
-          competenceLevelsMapping[acquiredLevels[competence]];
-        const demandedLevel = competenceLevelsMapping[niveau];
+          skillLevelsMapping[acquiredLevels[skillItem.skill._id]];
+        const demandedLevel = skillLevelsMapping[skillItem.level];
 
         if (!isNaN(acquiredLevel) && !isNaN(demandedLevel)) {
           const percentage = ((acquiredLevel / demandedLevel) * 100).toFixed(2);
-          newCompetencesCandidat.push({
-            nom: competence,
-            niveauDemande: niveau,
-            niveauAcquis: acquiredLevels[competence],
-            pourcentageAdequation: percentage,
+          newskillsCandidat.push({
+            skill: skillItem.skill._id,
+            levelRequired: skillItem.level,
+            levelAcquired: acquiredLevels[skillItem.skill._id],
+            adequacyPercentage: percentage,
           });
-          competencePercentages[competence] = percentage;
+          skillPercentages[skillItem.skill._id] = percentage;
         }
       }
-    }
-  );
+    });
 
-  setCompetenceAdequacyPercentages(competencePercentages);
+    setskillAdequacyPercentages(skillPercentages);
 
-  let total = 0;
-  let count = 0;
+    let total = 0;
+    let count = 0;
 
-  Object.values(competencePercentages).forEach((percentage) => {
-    total += parseFloat(percentage);
-    count++;
-  });
+    Object.values(skillPercentages).forEach((percentage) => {
+      total += parseFloat(percentage);
+      count++;
+    });
 
-  const average = count > 0 ? total / count : 0;
-  const globalPercentage = average.toFixed(2);
-  const globalPercentageNumber = parseFloat(globalPercentage);
-  setAdequacyPercentage(
-    isNaN(globalPercentageNumber) ? 0 : globalPercentageNumber
-  );
-  setCompetencesCandidat(newCompetencesCandidat);
-};
+    const average = count > 0 ? total / count : 0;
+    const globalPercentage = average.toFixed(2);
+    const globalPercentageNumber = parseFloat(globalPercentage);
+    setAdequacyPercentage(
+      isNaN(globalPercentageNumber) ? 0 : globalPercentageNumber
+    );
+    setskillsCandidat(newskillsCandidat);
+    //console.log(skillsCandidat, "skills Candidat");
+  };
 
   return (
     <div className="offres-page">
-      <Navbar links={VTNavbarLinks(id)} />
+      <Navbar links={VTNavbarLinks(userId)} />
       <h3 className="title-offre">Liste des candidats assignés</h3>
       <FaRegUser className="icon-offre" />
       <Row gutter={[16, 16]}>
         {Object.entries(candidatures).map(([status, count]) => (
           <Col key={status} xs={24} sm={12} md={8} lg={6}>
-            <CandidatsCard candidatureStatus={status} nombreCandidats={count} />
+            <CandidatsCard status={status} nombreCandidats={count} />
           </Col>
         ))}
       </Row>
       {candidats.map((candidat) => (
         <ListeCandidatureCard
-          key={candidat["CandidatureInfos"].id}
-          Title={`${candidat["StudentInfos"].firstName} ${candidat["StudentInfos"].lastName}`}
-          candidatureStatus={candidat["CandidatureInfos"].candidatureStatus}
-          candidatureDate={candidat["CandidatureInfos"].candidatureDate}
+          key={candidat._id}
+          title={`${candidat.applicant.firstName} ${candidat.applicant.lastName}`}
+          status={candidat.status}
+          createdAt={candidat.createdAt}
           actions={actions(candidat)}
-          statusRefusePopover={candidat["CandidatureInfos"].refuseReason}
+          statusRefusePopover={candidat.refuseReason}
           onClickTitle={() => {
             viewProfile(candidat);
           }}
@@ -290,31 +286,29 @@ const calculateAdequacyPercentage = () => {
           <div>
             <p>
               <strong>Nom et prénom: </strong>{" "}
-              {selectedCandidature["StudentInfos"].firstName}{" "}
-              {selectedCandidature["StudentInfos"].lastName}
+              {selectedCandidature.applicant.firstName}{" "}
+              {selectedCandidature.applicant.lastName}
             </p>
             <p>
-              <strong>Email: </strong>{" "}
-              {selectedCandidature["StudentInfos"].email}
+              <strong>Email: </strong> {selectedCandidature.applicant.email}
             </p>
             <p>
               <strong>Téléphone: </strong>{" "}
-              {selectedCandidature["StudentInfos"].phoneNumber}
+              {selectedCandidature.applicant.phoneNumber}
             </p>
             <p>
-              <strong>Niveau: </strong>{" "}
-              {selectedCandidature["StudentInfos"].studyLevel}
+              <strong>level: </strong>{" "}
+              {selectedCandidature.applicant.studyLevel}
             </p>
             <p>
               <strong>Etablissement: </strong>{" "}
-              {selectedCandidature["StudentInfos"].establishment}
+              {selectedCandidature.applicant.establishment}
             </p>
             <p>
-              <strong>CV: </strong> {selectedCandidature["StudentInfos"].CV}
+              <strong>CV: </strong> {selectedCandidature.applicant.cv}
             </p>
             <p>
-              <strong>Adresse: </strong>{" "}
-              {selectedCandidature["StudentInfos"].address}
+              <strong>Adresse: </strong> {selectedCandidature.applicant.address}
             </p>
             <label htmlFor="stageDescription">
               <strong>Lettre de recommendation :</strong>
@@ -323,64 +317,59 @@ const calculateAdequacyPercentage = () => {
               type="text"
               placeholder="Lettre de recommendation"
               className="textarea-design"
-              value={selectedCandidature["StudentInfos"].recommendationLetter}
+              value={selectedCandidature.applicant.recommendationLetter}
             />
           </div>
         </Modal>
       )}
-      {isCandidatureFileModalOpen && (
-        <Modal
-          title="Fiche de candidature"
-          visible={isCandidatureFileModalOpen}
-          onOk={endInterviewFunc}
-          onCancel={viewCandidatureFileCancel}
-          okText="Sauvegarder"
-          cancelText="Annuler"
-        >
-          <div>
-            <p>
-              <strong>Nom et prénom du candidat: </strong>{" "}
-              {selectedCandidature["StudentInfos"].firstName}{" "}
-              {selectedCandidature["StudentInfos"].lastName}
-            </p>
-            <p>
-              <strong>Titre de stage:</strong>{" "}
-              {selectedCandidature["OfferInfos"].stageTitle}
-            </p>
-            <p>
-              <strong>Date de candidature:</strong>{" "}
-              {selectedCandidature["CandidatureInfos"].candidatureDate}
-            </p>
-            <p>
-              <strong>Statut de candidature:</strong>{" "}
-              {selectedCandidature["CandidatureInfos"].candidatureStatus}
-            </p>
-            <p>
-              <strong>Date de l'entretien:</strong>{" "}
-              {selectedCandidature["InterviewInfos"].date}
-            </p>
-            <p>
-              <strong>Heure de l'entretien:</strong>{" "}
-              {selectedCandidature["InterviewInfos"].heure}
-            </p>
-            {!selectedCandidature["CandidatureInfos"].technicallyEvaluated && (
+      {isCandidatureFileModalOpen &&
+        selectedCandidature.technicallyEvaluated === false && (
+          <Modal
+            title="Fiche de candidature"
+            visible={isCandidatureFileModalOpen}
+            onOk={endInterviewFunc}
+            onCancel={viewCandidatureFileCancel}
+            okText="Sauvegarder et confirmer l'entretien"
+            cancelText="Annuler"
+          >
+            <div>
+              <p>
+                <strong>Nom et prénom du candidat: </strong>{" "}
+                {selectedCandidature.applicant.firstName}{" "}
+                {selectedCandidature.applicant.lastName}
+              </p>
+              <p>
+                <strong>Titre de stage:</strong>{" "}
+                {selectedCandidature.offer.title}
+              </p>
+              <p>
+                <strong>Date de candidature:</strong>{" "}
+                {selectedCandidature.createdAt}
+              </p>
+              <p>
+                <strong>Statut de candidature:</strong>{" "}
+                {selectedCandidature.status}
+              </p>
+              <p>
+                <strong>Date et heure de l'entretien:</strong>{" "}
+                {selectedCandidature.interviewDateTime}
+              </p>
+
               <div>
-                <h3>Liste des compétences : </h3>
-                {Object.entries(
-                  selectedCandidature["OfferInfos"].competences
-                ).map(([competence, niveau]) => (
-                  <div key={competence} className="competence-container">
+                <h4>Liste des compétences : </h4>
+                {selectedCandidature.offer.skills.map((skillItem) => (
+                  <div key={skillItem.skill._id} className="skill-container">
                     <p>
-                      <strong>{competence}</strong>
+                      <strong>{skillItem.skill.name}</strong>
                     </p>
-                    <p>Niveau demandé: {niveau}</p>
+                    <p>niveau demandé: {skillItem.level}</p>
                     <p>
-                      Niveau acquis:
+                      niveau acquis:
                       <Select
-                        defaultValue="aucune compétence"
                         style={{ width: 200 }}
+                        placeholder="Evaluez le candidat"
                         onChange={(value) =>
-                          handleLevelChange(competence, value)
+                          handleLevelChange(skillItem.skill._id, value)
                         }
                       >
                         <Option value="aucune compétence">
@@ -399,7 +388,7 @@ const calculateAdequacyPercentage = () => {
                     </p>
                     <p>
                       Pourcentage d'adéquation :{" "}
-                      {competenceAdequacyPercentages[competence] || "N/A"}%
+                      {skillAdequacyPercentages[skillItem.skill._id] || 0}%
                     </p>
                   </div>
                 ))}
@@ -415,17 +404,49 @@ const calculateAdequacyPercentage = () => {
                   {adequacyPercentage && adequacyPercentage.toFixed(2)}%
                 </p>
               </div>
-            )}
-            {selectedCandidature["CandidatureInfos"].technicallyEvaluated && (
+            </div>
+          </Modal>
+        )}
+
+      {isFicheModelOpen &&
+        selectedCandidature.technicallyEvaluated === true && (
+          <Modal
+            title="Fiche de candidature"
+            visible={isFicheModelOpen}
+            onOk={handleFicheModelClose}
+            okText={"Fermer"}
+            cancelButtonProps={{ style: { display: "none" } }}
+          >
+            <div>
+              <p>
+                <strong>Nom et prénom du candidat: </strong>{" "}
+                {selectedCandidature.applicant.firstName}{" "}
+                {selectedCandidature.applicant.lastName}
+              </p>
+              <p>
+                <strong>Titre de stage:</strong>{" "}
+                {selectedCandidature.offer.title}
+              </p>
+              <p>
+                <strong>Date de candidature:</strong>{" "}
+                {selectedCandidature.createdAt}
+              </p>
+              <p>
+                <strong>Statut de candidature:</strong>{" "}
+                {selectedCandidature.status}
+              </p>
+              <p>
+                <strong>Date et heure de l'entretien:</strong>{" "}
+                {selectedCandidature.interviewDateTime}
+              </p>
               <div>
                 <CompetenceDetails
-                  candidatureId={selectedCandidature["CandidatureInfos"].id}
+                  candidatureId={selectedCandidature._id}
                 ></CompetenceDetails>
               </div>
-            )}
-          </div>
-        </Modal>
-      )}
+            </div>
+          </Modal>
+        )}
       {/* Modal pour accepter un candidat */}
       {isAcceptModalOpen && (
         <Modal

@@ -25,12 +25,12 @@ module.exports.sendCodeConfirmationEmail = (email, confirmationCode) => {
   });
 };
 // Fonction pour envoyer la confirmation du postule par e-mail
-module.exports.sendapplicationConfirmationEmail = (email) => {
+module.exports.sendapplicationConfirmationEmail = (email, offer) => {
   const mailOptions = {
     from: 'sgce.plateform@gmail.com',
     to: email,
     subject: 'Confirmation de candidature',
-    text: 'Votre candidature a été enregistrée avec succès. Merci de postuler avec nous.',
+    text: `Votre candidature pour le poste ${offer} a été envoyée avec succès. Nous l'examinerons attentivement et vous contacterons prochainement avec une réponse.`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -44,16 +44,21 @@ module.exports.sendapplicationConfirmationEmail = (email) => {
 module.exports.sendinterviewConfirmationEmail = (
   email,
   interviewDateTime,
-  interviewLocation
+  interviewMode,
+  interviewLink,
+  interviewLocation,
+  interviewType
 ) => {
   // Contenu de l'e-mail
   const mailOptions = {
     from: 'sgce.plateform@gmail.com',
     to: email, // Adresse e-mail du destinataire (candidat)
-    subject: 'Entretien programmé',
-    text: `Cher candidat,\n\nVotre entretien a été programmé pour le ${interviewDateTime} à ${interviewLocation}. Nous avons hâte de vous rencontrer!\n\nCordialement,\nL'équipe RH`,
+    subject: `Entretien ${interviewType} ${interviewMode} programmé`,
+    text:
+      interviewMode === 'présentiel'
+        ? `Cher candidat,\n\nVotre entretien a été programmé pour le ${interviewDateTime} à : ${interviewLocation}. Nous avons hâte de vous rencontrer!\n\nCordialement,\nL'équipe RH`
+        : `Cher candidat,\n\nVotre entretien a été programmé pour le ${interviewDateTime} en ligne .\n\n Merci de nous rejoindre via ce lien : ${interviewLink}. Nous avons hâte de vous rencontrer!\n\nCordialement,\nL'équipe RH`,
   };
-
   // Envoi de l'e-mail
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {

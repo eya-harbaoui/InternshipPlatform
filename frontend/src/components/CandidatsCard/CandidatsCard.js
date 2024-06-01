@@ -4,8 +4,8 @@ import { FaRegUser } from "react-icons/fa";
 import { getStatusTag } from "../../components/CandidatureCard/statusUtils";
 import "./CandidatsCard.css";
 
-const MaCarte = ({ candidatureStatus, nombreCandidats }) => {
-const { tagColor, tagText } = getStatusTag(candidatureStatus);
+const MaCarte = ({ status, nombreCandidats }) => {
+const { tagColor, tagText } = getStatusTag(status);
 
   return (
     <div className="ma-carte">

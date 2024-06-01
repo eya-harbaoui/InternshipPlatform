@@ -39,6 +39,7 @@ const offerSchema = new mongoose.Schema(
         level: {
           type: String,
           enum: [
+            'aucune compétence',
             'connaissance théorique',
             'connaissance pratique',
             'débutant',

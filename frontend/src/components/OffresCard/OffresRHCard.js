@@ -34,6 +34,8 @@ const OffresRHCard = ({
   const [domainOptions, setDomainOptions] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState({});
+  const [selectedOfferInitial, setSelectedOfferInitial] = useState({});
+
   const [domaineSelectionne, setDomaineSelectionne] = useState();
   const [skillsDomaine, setskillsDomaine] = useState();
   const [changeskills, setChangeskills] = useState(false);
@@ -55,7 +57,9 @@ const OffresRHCard = ({
         const selectedOfferData = response.data;
         //console.log(selectedOfferData, "jjjjjj");
         setSelectedOffer(selectedOfferData);
+        setSelectedOfferInitial(selectedOfferData);
         setDomaineSelectionne(selectedOfferData.domain);
+        console.log();
       }
     } catch (error) {
       console.error(
@@ -75,45 +79,20 @@ const OffresRHCard = ({
     fetchDomains();
   });
 
-  //liste des compétences
-  const fetchSkills = async (_id) => {
-    try {
-      const response = await axios.get(`http://localhost:8000/skill/${_id}`);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
   //liste des domaines avec leurs compétences
   const fetchDomains = async () => {
     try {
       const response = await axios.get("http://localhost:8000/domain");
-      if (response.data) {
-        const domainsMapped = response.data.map((domain) => {
-          // Mapper les compétences du domaine avec leurs noms et IDs
-          const mappedSkills = domain.skills.map((skillId) => {
-            const skill = fetchSkills(skillId);
-            //console.log("skill",skill);
-            return skill
-              ? { _id: skill._id, name: skill.name }
-              : { _id: skillId, name: "" };
-          });
-          return {
-            ...domain,
-            skills: mappedSkills,
-          };
-        });
 
-        // Stocker les domaines avec les compétences formatées dans l'état
-        setDomainsWithSkillNames(domainsMapped);
-        //console.log(domainsWithSkillNames);
-        // Créer les options pour le menu déroulant de sélection de domaine
-        const domainOptions = domainsWithSkillNames.map((domain) => ({
-          value: domain._id, // Utiliser l'ID du domaine comme valeur
-          label: domain.name,
-        }));
-        setDomainOptions(domainOptions);
-      }
+      // Stocker les domaines avec les compétences formatées dans l'état
+      setDomainsWithSkillNames(response.data);
+      console.log("res", response.data);
+      // Créer les options pour le menu déroulant de sélection de domaine
+      const domainOptions = domainsWithSkillNames.map((domain) => ({
+        value: domain._id, // Utiliser l'ID du domaine comme valeur
+        label: domain.name,
+      }));
+      setDomainOptions(domainOptions);
     } catch (error) {
       console.error(
         "Erreur lors de la récupération des informations de profil :",
@@ -125,6 +104,8 @@ const OffresRHCard = ({
   const handleCancel = () => {
     setIsModalOpen(false);
     setChangeskills(false);
+    setSelectedOffer(selectedOfferInitial);
+    setDomaineSelectionne(selectedOfferInitial.domain);
   };
   const navigate = useNavigate();
   let { tagColor, tagText } = getStatusTag(status);
@@ -147,7 +128,7 @@ const OffresRHCard = ({
 
   const handleEditClick = async () => {
     try {
-      //console.log(selectedOffer, "selectedOffer puuuuut");
+      console.log(selectedOffer, "selectedOffer puuuuut");
       await axios.put(
         `http://localhost:8000/offre/${selectedOffer._id}`,
         selectedOffer
@@ -204,7 +185,7 @@ const OffresRHCard = ({
 
   const handleDomaineChange = (domaine) => {
     setDomaineSelectionne(domaine);
-    //console.log("domaineSelectionneé", domaineSelectionne);
+    console.log("domaineSelectionneé", domaineSelectionne);
     setSelectedOffer({
       ...selectedOffer,
       domain: domaine,
@@ -219,13 +200,36 @@ const OffresRHCard = ({
   };
 
   //modifier les compétences et leurs niveaux d'une offre
-  const handleskillChange = (skill, level) => {
-    const updatedskills = {
-      ...selectedOffer.skills,
-      [skill]: level,
-    };
-    //console.log(updatedskills, "uuuuuuuuuuup");
-    setSelectedOffer({ ...selectedOffer, skills: updatedskills });
+
+  const handleskillChange = (skillId, level) => {
+    // Vérifier si la compétence existe déjà dans la liste des compétences de l'offre
+    const existingSkillIndex = selectedOffer.skills.findIndex(
+      (skill) => skill.skill === skillId
+    );
+
+    if (existingSkillIndex !== -1) {
+      // Si la compétence existe déjà, mettre à jour son niveau de compétence
+      const updatedSkills = [...selectedOffer.skills];
+      updatedSkills[existingSkillIndex].level = level;
+
+      // Mettre à jour l'état de l'offre avec les compétences mises à jour
+      setSelectedOffer((prevOffer) => ({
+        ...prevOffer,
+        skills: updatedSkills,
+      }));
+    } else {
+      // Si la compétence n'existe pas, ajouter une nouvelle compétence à la liste
+      const newSkill = {
+        skill: skillId,
+        level: level,
+      };
+
+      // Mettre à jour l'état de l'offre en ajoutant la nouvelle compétence
+      setSelectedOffer((prevOffer) => ({
+        ...prevOffer,
+        skills: [...prevOffer.skills, newSkill],
+      }));
+    }
   };
 
   useEffect(() => {
@@ -331,7 +335,7 @@ const OffresRHCard = ({
                 placeholder="Domaine de stage"
                 className="modal-input"
                 style={{ width: "100%" }}
-                value={domaineSelectionne}
+                value={domaineSelectionne?._id || domaineSelectionne}
                 onChange={handleDomaineChange}
               >
                 {domainOptions.map((option) => (
@@ -386,8 +390,8 @@ const OffresRHCard = ({
                 {!changeskills &&
                   selectedOffer.skills &&
                   selectedOffer.skills.map((skillItem) => (
-                    <p key={skillItem._id}>
-                      {skillItem.name}: {skillItem.level}
+                    <p key={skillItem.skill._id}>
+                      {skillItem.skill.name}: {skillItem.level}
                     </p>
                   ))}
                 {changeskills &&
