@@ -343,7 +343,15 @@ module.exports = {
       // Récupérer les offres archivées ou précédemment publiées
       const historicalOffers = await Offer.find({
         status: { $in: ['archivé', 'publié'] },
-      });
+      })
+        .populate({
+          path: 'domain',
+          select: 'name',
+        })
+        .populate({
+          path: 'skills.skill',
+          select: 'name',
+        });
 
       res.status(200).json(historicalOffers);
     } catch (error) {

@@ -41,7 +41,7 @@ function Login() {
           navigate("/Admin/dashboard");
           break;
         case "Manager":
-          navigate(`/manager_validation/${userId}`);
+          navigate(`/Validation_des_offres/${userId}`);
           break;
         case "Assistant RH":
           navigate(`/RH_Offres/${userId}`);

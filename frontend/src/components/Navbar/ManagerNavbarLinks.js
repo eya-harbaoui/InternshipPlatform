@@ -1,12 +1,12 @@
 export const ManagerNavbarLinks = (id) => [
   {
     title: "Offres",
-    url: "/Liste_des_Offres",
+    url: `/Historique_des_offres/${id}`,
     cName: "nav-links",
   },
   {
     title: " Validation des Offres",
-    url: `/manager_validation/${id}`,
+    url: `/Validation_des_offres/${id}`,
     cName: "nav-links",
   },
 

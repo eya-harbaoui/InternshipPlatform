@@ -77,7 +77,7 @@ const Domstages = () => {
       const response = await axios.get("http://localhost:8000/domain");
 
       setData(response.data);
-      //console.log(data, "data");
+      console.log(data, "data");
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -86,7 +86,6 @@ const Domstages = () => {
   useEffect(() => {
     fetchSkills();
     fetchDomains();
-    //console.log(addingCompetences);
   });
 
   const handleCompetenceChange = (value) => {
