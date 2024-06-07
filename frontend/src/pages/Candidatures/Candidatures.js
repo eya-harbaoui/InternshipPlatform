@@ -80,7 +80,9 @@ const Candidatures = () => {
               <CandidatureCard
                 candidatureDate={candidature.createdAt}
                 candidatureStatus={candidature.status}
-                Title={candidature.offer.title}
+                createdAt={candidature.createdAt}
+                title={candidature.offer.title}
+                status={candidature.status}
                 onClickTitle={() =>
                   handleTitleClick(
                     candidature.offer._id,
