@@ -84,7 +84,7 @@ function Login() {
           <div className="password-input-container">
             <input
               className="input-password-signup-right"
-              type={showPassword ? "text" : "password"}
+              type="password"
               name="password"
               value={password}
               onChange={(e) => {
@@ -92,17 +92,6 @@ function Login() {
               }}
               placeholder="Mot de passe"
             />
-            {showPassword ? (
-              <FaEye
-                className="eye-icon"
-                onClick={() => setShowPassword(!showPassword)}
-              />
-            ) : (
-              <FaEyeSlash
-                className="eye-icon"
-                onClick={() => setShowPassword(!showPassword)}
-              />
-            )}
           </div>
 
           <button className="login-btn" onClick={handleSubmit}>

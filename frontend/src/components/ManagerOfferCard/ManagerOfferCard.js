@@ -143,7 +143,7 @@ const ManagerOfferCard = ({
                 <strong>Durée de stage : </strong> {period + " Mois"}{" "}
               </p>
               <p>
-                <strong>Nature de stage : </strong> {period + " Mois"}{" "}
+                <strong>Nature de stage : </strong> {nature}{" "}
               </p>
 
               <div className="skills-container">

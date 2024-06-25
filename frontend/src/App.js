@@ -45,7 +45,7 @@ const roleToRoutes = {
     { path: "/RH_Offres/:id", element: <OffresRH /> },
     { path: "/liste_candidatures/:id", element: <ListeCandidaturesRH /> },
   ],
-  "Manager": [
+  Manager: [
     { path: "/Validation_des_offres/:id", element: <ManagerValidation /> },
     { path: "/Historique_des_offres/:id", element: <ManagerHistoryOffers /> },
     { path: "/Domaines/:id", element: <ManagerDomains /> },
@@ -55,10 +55,10 @@ const roleToRoutes = {
       element: <ListeCandidatureManager />,
     },
   ],
-  "Validator": [
+  Validator: [
     { path: "/Candidatures_Assignées/:id", element: <ListeCandidaturesVT /> },
   ],
-  "student": [
+  student: [
     { path: "/Mes_candidatures/:id", element: <Candidatures /> },
     { path: "/UserDetails/:id", element: <InternDetails /> },
   ],

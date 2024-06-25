@@ -15,7 +15,6 @@ const Signup = () => {
     password: "",
     passwordRetyped: "",
     phoneNumber: "",
-    role: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showRetypedPassword, setShowRetypedPassword] = useState(false);
@@ -36,7 +35,6 @@ const Signup = () => {
       password,
       passwordRetyped,
       phoneNumber,
-      role,
     } = formData;
 
     // Vérifier si tous les champs sont remplis
@@ -46,8 +44,7 @@ const Signup = () => {
       !email ||
       !password ||
       !passwordRetyped ||
-      !phoneNumber ||
-      !role
+      !phoneNumber
     ) {
       toast.error("Veuillez remplir tous les champs");
       return;
@@ -76,7 +73,6 @@ const Signup = () => {
         email,
         password,
         phoneNumber,
-        role,
       })
       .then((response) => {
         if (response.data.error) {
@@ -135,62 +131,23 @@ const Signup = () => {
           <div className="password-input-container">
             <input
               className="input-password-signup-right"
-              type={showPassword ? "text" : "password"}
+              type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
               placeholder="Mot de passe"
             />
-            {showPassword ? (
-              <FaEye
-                className="eye-icon"
-                onClick={() => setShowPassword(!showPassword)}
-              />
-            ) : (
-              <FaEyeSlash
-                className="eye-icon"
-                onClick={() => setShowPassword(!showPassword)}
-              />
-            )}
           </div>
           <div className="password-input-container">
             <input
               className="input-password-signup-right"
-              type={showRetypedPassword ? "text" : "password"}
+              type="password"
               name="passwordRetyped"
               value={formData.passwordRetyped}
               onChange={handleChange}
               placeholder="Retapez le mot de passe"
             />
-            {showRetypedPassword ? (
-              <FaEye
-                className="eye-icon"
-                onClick={() => setShowRetypedPassword(!showRetypedPassword)}
-              />
-            ) : (
-              <FaEyeSlash
-                className="eye-icon"
-                onClick={() => setShowRetypedPassword(!showRetypedPassword)}
-              />
-            )}
           </div>
-
-          {/* Menu déroulant pour le rôle */}
-          <select
-            className="input-signup-right"
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-          >
-            <option value="">Choisir un rôle</option>
-            <option value="Admin">Admin</option>
-            <option value="Manager">Manager</option>
-            <option value="Assistant RH">Assistant RH</option>
-            <option value="Responsable RH">Responsable RH</option>
-            <option value="Validator">Validator</option>
-            <option value="Student">Student</option>
-          </select>
-          {/* Fin du menu déroulant pour le rôle */}
 
           <button className="btn-signup" onClick={handleSubmit}>
             S'inscrire

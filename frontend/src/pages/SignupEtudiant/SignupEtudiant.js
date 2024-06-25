@@ -204,44 +204,22 @@ const SignupEtudiant = () => {
             <div className="password-input-etudiant-container">
               <input
                 className="input-password-signup-etudiant-right"
-                type={showPassword ? "text" : "password"}
+                type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Mot de passe"
               />
-              {showPassword ? (
-                <FaEye
-                  className="eye-icon"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              ) : (
-                <FaEyeSlash
-                  className="eye-icon"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              )}
             </div>
             <div className="password-input-container-etudiant">
               <input
                 className="input-password-signup-right"
-                type={showRetypedPassword ? "text" : "password"}
+                type="password"
                 name="passwordRetyped"
                 value={formData.passwordRetyped}
                 onChange={handleChange}
                 placeholder="Retapez le mot de passe"
               />
-              {showRetypedPassword ? (
-                <FaEye
-                  className="eye-icon"
-                  onClick={() => setShowRetypedPassword(!showRetypedPassword)}
-                />
-              ) : (
-                <FaEyeSlash
-                  className="eye-icon"
-                  onClick={() => setShowRetypedPassword(!showRetypedPassword)}
-                />
-              )}
             </div>
           </div>
           <div className="student-form-row">

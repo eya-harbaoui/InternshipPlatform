@@ -28,6 +28,7 @@ const EditableCell = ({
   ...restProps
 }) => {
   const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
+
   return (
     <td {...restProps}>
       {editing ? (
