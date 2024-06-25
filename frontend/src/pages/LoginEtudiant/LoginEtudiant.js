@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Ajouter navigate
-import "./login.css";
+import "../Login/login.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode"; // Changer l'import de jwt-decode
 
-function Login() {
+function LoginEtudiant() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -38,7 +38,7 @@ function Login() {
       // Redirection en fonction du rôle de l'utilisateur
       switch (role) {
         case "Admin":
-          navigate(`/Admin/dashboard/${userId}`);
+          navigate("/Admin/dashboard");
           break;
         case "Manager":
           navigate(`/Validation_des_offres/${userId}`);
@@ -110,7 +110,8 @@ function Login() {
           </button>
 
           <p className="login-text">
-            Vous n'avez pas de compte ? <Link to="/signup">Inscrivez-vous</Link>
+            Vous n'avez pas de compte ?{" "}
+            <Link to="/signup_student">Inscrivez-vous</Link>
           </p>
           {/*<p className="login-text">
             Mot de passe oublié ?{" "}
@@ -122,4 +123,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginEtudiant;

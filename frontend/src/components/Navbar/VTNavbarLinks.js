@@ -4,9 +4,4 @@ export const VTNavbarLinks = (id) => [
     url: `/Candidatures_Assignées/${id}`,
     cName: "nav-links",
   },
-  {
-    title: "Mon Profil",
-    url: "/VT_details",
-    cName: "nav-links",
-  },
 ];

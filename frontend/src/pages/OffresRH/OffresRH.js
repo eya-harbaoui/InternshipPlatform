@@ -15,7 +15,6 @@ import { RHNavbarLinks } from "../../components/Navbar/RHNavbarLinks"; // Liens 
 import { toast } from "react-toastify"; // Bibliothèque pour les notifications
 import { SkillsLevel } from "../../components/OffresCard/SkillsLevel.js"; //liste des compétences recquises
 import getUserIdFromLocalStorage from "../../UserAuth.js";
-import { useParams } from "react-router-dom";
 const { Option } = Select; // Option de sélection pour Ant Design
 const { TextArea } = Input;
 
@@ -34,7 +33,6 @@ const OffresRH = () => {
   const [data, setData] = useState([]); // État pour stocker les données des offres
   const [domainOptions, setDomainOptions] = useState([]); // Options de domaine pour les filtres
   const [skillsWithNames, setSkillsWithNames] = useState([]); // État pour stocker les domaines
-  const [skills, setSkills] = useState([]); // État pour stocker les domaines
   const [domainsWithSkillNames, setDomainsWithSkillNames] = useState([]); // État pour stocker les domaines
 
   const [offer, setOffer] = useState({

@@ -88,6 +88,7 @@ const ManagerOfferCard = ({
           buttonName={"Valider Offre"}
           handleButtonFunction={handlePublishClick}
           status={status}
+          viewButton={true}
         />
         <div className="actions">
           <span className="action" onClick={showModal}>

@@ -36,6 +36,7 @@ const ListeCandidaturesRH = () => {
   const [isRefuseModalOpen, setIsRefuseModalOpen] = useState(false); // Déclaration de l'état pour le modal de refus de candidat
   const [acceptMessage, setAcceptMessage] = useState(""); // Déclaration de l'état pour le message d'acceptation de candidat
   const [refuseMessage, setRefuseMessage] = useState(""); // Déclaration de l'état pour le message de refus de candidat
+  const [startDate, setStartDate] = useState(null);
   const [interview, setInterview] = useState({
     // Déclaration de l'état pour les détails de l'entretien
     id: "",
@@ -118,6 +119,10 @@ const ListeCandidaturesRH = () => {
     });
   };
 
+  const handleStartInternDateChange = (value) => {
+    setStartDate(value.format("YYYY-MM-DD HH:mm:ss"));
+  };
+
   // Fonction pour gérer la programmation d'un entretien
   const handleProgramInterview = (candidat) => {
     setSelectedCandidature(candidat);
@@ -183,14 +188,13 @@ const ListeCandidaturesRH = () => {
   // Fonction pour traiter l'acceptation d'un candidat
   const handleAcceptModalOk = async () => {
     try {
-      const status =
-        selectedCandidature.status === "entretien RH programmé"
-          ? "entretien RH confirmé"
-          : "accepté";
+      const status = "accepté";
       const updatedCandidature = {
         ...selectedCandidature,
         status: status,
         validationComment: acceptMessage,
+        startDate: startDate,
+        email: selectedCandidature.applicant.email,
       };
 
       // Mise à jour de la candidature sur le serveur après acceptation
@@ -225,21 +229,7 @@ const ListeCandidaturesRH = () => {
           ...selectedCandidature,
           status: "refusé",
           rejectionReason: refuseMessage,
-        }
-      );
-      setIsRefuseModalOpen(false); // Fermeture du modal après le refus du candidat
-    } catch (error) {
-      console.error("Erreur lors du refus du candidat", error);
-    }
-  };
-
-  const confirmRHInterview = async () => {
-    try {
-      await axios.put(
-        `http://localhost:8000/application/update_candidature/${selectedCandidature._id}`,
-        {
-          ...selectedCandidature,
-          status: "entretien RH confirmé",
+          email: selectedCandidature.applicant.email,
         }
       );
       setIsRefuseModalOpen(false); // Fermeture du modal après le refus du candidat
@@ -422,7 +412,11 @@ const ListeCandidaturesRH = () => {
 
             <h3>Date et heure de l'entretien</h3>
 
-            <DatePicker showTime onChange={handleDateChange} />
+            <DatePicker
+              placeholder="Date de l'entretien"
+              showTime
+              onChange={handleDateChange}
+            />
 
             <h3>Mode de l'entretien</h3>
             <Radio.Group
@@ -491,11 +485,18 @@ const ListeCandidaturesRH = () => {
           okText="Accepter"
           cancelText="Annuler"
         >
-          <Input
-            placeholder="Ajouter un message personnalisé"
-            value={acceptMessage}
-            onChange={(e) => setAcceptMessage(e.target.value)}
-          />
+          <div>
+            <Input
+              placeholder="Ajouter un message personnalisé"
+              value={acceptMessage}
+              onChange={(e) => setAcceptMessage(e.target.value)}
+            />
+            <DatePicker
+              placeholder="Date de début de stage"
+              showTime
+              onChange={handleStartInternDateChange}
+            />
+          </div>
         </Modal>
       )}
       {/* Affichage du modal pour le refus d'un candidat*/}

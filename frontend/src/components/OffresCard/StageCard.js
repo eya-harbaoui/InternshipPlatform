@@ -16,6 +16,7 @@ const StageCard = ({
   student,
   buttonName,
   handleButtonFunction,
+  viewButton,
 }) => {
   const maxWords = 20; // Nombre maximum de mots à afficher initialement
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -33,9 +34,12 @@ const StageCard = ({
     <>
       <div className="title-and-publish">
         <h2>{title}</h2>
-        <button className="small-button" onClick={handleButtonFunction}>
-          {buttonName}
-        </button>
+
+        {viewButton && (
+          <button className="small-button" onClick={handleButtonFunction}>
+            {buttonName}
+          </button>
+        )}
       </div>
       <div className="content">
         <p>{nature}</p>
@@ -67,7 +71,7 @@ const StageCard = ({
             <FiHome /> {mode}
           </div>
           <div className="tag">
-            <FaRegCalendarAlt /> {period +" Mois"}
+            <FaRegCalendarAlt /> {period + " Mois"}
           </div>
           {student && (
             <div className="tag">

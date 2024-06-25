@@ -1,20 +1,33 @@
 // Navbar.js
 import React, { useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { GrClose } from "react-icons/gr";
 import { AiOutlineBars, AiOutlineLogout } from "react-icons/ai";
+import logo from "./IMcoding.png";
 import "./Navbar.css";
-function Navbar({ links }) {
+import getUserIdFromLocalStorage from "../../UserAuth.js";
+
+function Navbar({ links, page }) {
   const [clicked, setClicked] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate(); // Hook pour la navigation
+  const { role, userId } = getUserIdFromLocalStorage() || {};
 
   const handleClick = () => {
     setClicked(!clicked);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Supprimer le token du localStorage
+    navigate("/"); // Rediriger vers la page d'accueil
+  };
+
   return (
     <nav className="NavbarItems">
-      <h2 className="navbar-logo">Internship App</h2>
+      <div className="entete">
+        <img src={logo} alt="logoImcoding" className="logoIMcoding" />
+        <h2 className="navbar-logo">IM CODING</h2>
+      </div>
 
       <div className="menu-icons" onClick={handleClick}>
         {clicked ? (
@@ -36,10 +49,13 @@ function Navbar({ links }) {
           </li>
         ))}
         <li>
-          <button className="logout-button">
-            <AiOutlineLogout className="icon-nav" />
-            Logout
-          </button>
+          {page !== "acceuil" &&
+            userId && (
+              <button className="logout-button" onClick={handleLogout}>
+                <AiOutlineLogout className="icon-nav" />
+                Logout
+              </button>
+            )}
         </li>
       </ul>
     </nav>

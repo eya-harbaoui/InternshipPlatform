@@ -68,3 +68,30 @@ module.exports.sendinterviewConfirmationEmail = (
     }
   });
 };
+module.exports.sendFinalDecisionForApplication = (
+  email,
+  validationComment,
+  rejectionReason,
+  status,
+  startDate
+) => {
+  // Contenu de l'e-mail
+  const mailOptions = {
+    from: 'sgce.plateform@gmail.com',
+    to: email, // Adresse e-mail du destinataire (candidat)
+    subject: `Résultat Finale de votre candidature`,
+    text:
+      status === 'accepté'
+        ? `Nous avons le plaisir de vous informer que votre candidature a été acceptée.Votre stage commencera le ${startDate}\n\nCordialement,\nL'équipe RH`
+        : `Nous vous remercions d'avoir postulé au stage au sein de notre entreprise. Après une analyse attentive de votre candidature, nous avons le regret de vous informer que nous ne donnerons pas une suite favorable à votre demande.\n\nCordialement,\nL'équipe RH`,
+  };
+  // Envoi de l'e-mail
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('E-mail sent: ' + info.response);
+    }
+  });
+};
+

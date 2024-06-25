@@ -95,7 +95,7 @@ const Offres = () => {
 
   return (
     <div className="offres-page">
-      <Navbar links={NavbarLinks} />
+      <Navbar links={NavbarLinks()} />
       <h2 className="title-offre">Nos offres de stage</h2>
       <MdOutlineContentPasteSearch className="icon-offre" />
       <Filter
@@ -122,6 +122,7 @@ const Offres = () => {
                   stage.skills
                 )
               }
+              viewButton={true}
             />
           </div>
         ))}

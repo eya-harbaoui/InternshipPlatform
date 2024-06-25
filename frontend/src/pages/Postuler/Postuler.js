@@ -32,7 +32,6 @@ const Postuler = () => {
   });
   const [fileInputKey, setFileInputKey] = useState(null);
   const [editing, setEditing] = useState(false);
-  const [skillNames, setSkillNames] = useState({});
   const [selectedFileName, setSelectedFileName] = useState("");
 
   //Récupérer les infos de l'etudiant
@@ -172,7 +171,7 @@ const Postuler = () => {
 
   return (
     <div className="postuler">
-      <Navbar links={NavbarLinks} />
+      <Navbar links={NavbarLinks()} />
       <div className="centered-container">
         <h2 className="title-postuler">Postuler vers cette offre !</h2>
         <GrDocumentUser className="icon-postuler" />

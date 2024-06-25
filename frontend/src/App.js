@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import Signup from "./pages/Signup/signup";
 import Login from "./pages/Login/login";
 import { ToastContainer } from "react-toastify";
@@ -24,53 +24,116 @@ import SignupEtudiant from "./pages/SignupEtudiant/SignupEtudiant";
 import EmailConfirmation from "./pages/EmailConfirmation/EmailConfirmation";
 import ManagerCompétences from "./pages/ManagerCompetences/ManagerCompetences";
 import ManagerHistoryOffers from "./pages/ManagerHistoryOffers/ManagerHistoryOffers";
+import Role from "./pages/Role/Role";
+import getUserIdFromLocalStorage from "../src/UserAuth";
+import Indisponible from "./pages/Indisponible/Indisponible";
+import ListeCandidatureManager from "./pages/ListeCandidaturesManager/ListeCandidatureManager";
+import LoginEtudiant from "./pages/LoginEtudiant/LoginEtudiant";
+const roleToRoutes = {
+  Admin: [
+    { path: "/Admin", element: <Portal /> },
+    { path: "/Gestion_Des_Domaines/:id", element: <Domstages /> },
+    { path: "/Gestion_Des_Compétences/:id", element: <CompetencesStages /> },
+    { path: "/dashboard/:id", element: <Dashboard /> },
+    { path: "/users/:id", element: <TabUtilisateurs /> },
+  ],
+  "Assistant RH": [
+    { path: "/RH_Offres/:id", element: <OffresRH /> },
+    { path: "/liste_candidatures/:id", element: <ListeCandidaturesRH /> },
+  ],
+  "Responsable RH": [
+    { path: "/RH_Offres/:id", element: <OffresRH /> },
+    { path: "/liste_candidatures/:id", element: <ListeCandidaturesRH /> },
+  ],
+  "Manager": [
+    { path: "/Validation_des_offres/:id", element: <ManagerValidation /> },
+    { path: "/Historique_des_offres/:id", element: <ManagerHistoryOffers /> },
+    { path: "/Domaines/:id", element: <ManagerDomains /> },
+    { path: "/Compétences/:id", element: <ManagerCompétences /> },
+    {
+      path: "/liste_candidature_manager/:id",
+      element: <ListeCandidatureManager />,
+    },
+  ],
+  "Validator": [
+    { path: "/Candidatures_Assignées/:id", element: <ListeCandidaturesVT /> },
+  ],
+  "student": [
+    { path: "/Mes_candidatures/:id", element: <Candidatures /> },
+    { path: "/UserDetails/:id", element: <InternDetails /> },
+  ],
+};
+
 const App = () => {
+  const { role, userId } = getUserIdFromLocalStorage() || {};
+
+  const allowedRoutes = roleToRoutes[role] || [];
+
   return (
     <BrowserRouter>
       <div>
         <Routes>
-          <Route path="/Home" exact element={<Acceuil />}></Route>
-          <Route path="/signup" exact element={<Signup />} />
-
-          <Route path="/login" exact element={<Login />} />
-          <Route path="/signup_student" exact element={<SignupEtudiant />} />
-          <Route path="/confirm_email" exact element={<EmailConfirmation />} />
-          <Route path="/Offres" exact element={<Offres />} />
+          <Route path="/" element={<Acceuil />} />
+          <Route path="/role" element={<Role />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup_student" element={<SignupEtudiant />} />
+          <Route path="/confirm_email" element={<EmailConfirmation />} />
+          <Route path="/indisponible" element={<Indisponible />}></Route>
+          <Route path="/Offres" element={<Offres />} />
           <Route path="/Offres/:id" element={<Postuler />} />
-          <Route path="/Mes_candidatures" element={<Candidatures />}></Route>
-          <Route path="/UserDetails" element={<InternDetails />}></Route>
-          <Route path="/RH_Offres/:id" element={<OffresRH />}></Route>
+          <Route path="/Mes_candidatures/:id" element={<Candidatures />} />
+          <Route path="/UserDetails/:id" element={<InternDetails />} />
+          <Route path="/RH_Offres/:id" element={<OffresRH />} />
           <Route
             path="/liste_candidatures/:id"
             element={<ListeCandidaturesRH />}
           />
           <Route
-            path="Validation_des_offres/:id"
+            path="/Validation_des_offres/:id"
             element={<ManagerValidation />}
-          ></Route>
+          />
           <Route
-            path="Historique_des_offres/:id"
+            path="/Historique_des_offres/:id"
             element={<ManagerHistoryOffers />}
-          ></Route>
-          <Route path="/Domaines" element={<ManagerDomains />}></Route>
-          <Route path="/Compétences" element={<ManagerCompétences />}></Route>
+          />
           <Route
-            path="Candidatures_Assignées/:id"
-            element={<ListeCandidaturesVT />}
+            path="/liste_candidature_manager/:id"
+            element={<ListeCandidatureManager />}
           ></Route>
+          <Route path="/Domaines/:id" element={<ManagerDomains />} />
+          <Route path="/Compétences/:id" element={<ManagerCompétences />} />
+          <Route
+            path="/Candidatures_Assignées/:id"
+            element={<ListeCandidaturesVT />}
+          />
           <Route path="/Admin" element={<Portal />}>
-            <Route path="Gestion_Des_Domaines" element={<Domstages />} />
+            <Route path="Gestion_Des_Domaines/:id" element={<Domstages />} />
             <Route
-              path="Gestion_Des_Compétences"
+              path="Gestion_Des_Compétences/:id"
               element={<CompetencesStages />}
             />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="users" element={<TabUtilisateurs />} />
+            <Route path="dashboard/:id" element={<Dashboard />} />
+            <Route path="users/:id" element={<TabUtilisateurs />} />
           </Route>
+
+          {allowedRoutes.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element} />
+          ))}
+          {/* Allow access to these routes even if not logged in */}
+          {!userId && (
+            <>
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup_student" element={<SignupEtudiant />} />
+              <Route path="/login_student" element={<LoginEtudiant />}></Route>
+            </>
+          )}
         </Routes>
       </div>
-      <ToastContainer position="top-center"></ToastContainer>
+      <ToastContainer position="top-center" />
     </BrowserRouter>
   );
 };
+
 export default App;

@@ -42,6 +42,7 @@ const OffreHistoryCardManager = ({
   const handleViewOfferClick = () => {
     setIsModalOpen(false);
   };
+
   const maxWords = 20; // Nombre maximum de mots à afficher initialement
   const [showFullDescription, setShowFullDescription] = useState(false);
 
@@ -54,10 +55,33 @@ const OffreHistoryCardManager = ({
     return words.slice(0, maxWords).join(" ");
   };
 
+  const fetchOfferDetails = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/offre/${id}`);
+      if (response.data) {
+        const selectedOfferData = response.data;
+        //console.log(selectedOfferData, "jjjjjj");
+        setSelectedOffer(selectedOfferData);
+        console.log();
+      }
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération des détails de l'offre :",
+        error
+      );
+    }
+  };
+  useEffect(() => {
+    // New useEffect for fetching selected offer details
+    if (_id) {
+      fetchOfferDetails(_id);
+    }
+  }, [_id]);
+
   //Voir les candidature de l'offre sélectionnée
 
   const handleCandidatures = () => {
-    navigate(`/liste_candidatures/${selectedOffer._id}`);
+    navigate(`/liste_candidature_manager/${selectedOffer._id}`);
   };
 
   const navigate = useNavigate();
@@ -75,6 +99,7 @@ const OffreHistoryCardManager = ({
           domain={domain}
           period={period}
           status={status}
+          viewButton={false}
         />
         <div className="actions">
           <span className="action" onClick={showModal}>
@@ -138,7 +163,7 @@ const OffreHistoryCardManager = ({
               <strong>Durée de stage : </strong> {period + " Mois"}{" "}
             </p>
             <p>
-              <strong>Nature de stage : </strong> {period + " Mois"}{" "}
+              <strong>Nature de stage : </strong> {nature}{" "}
             </p>
 
             <div className="skills-container">

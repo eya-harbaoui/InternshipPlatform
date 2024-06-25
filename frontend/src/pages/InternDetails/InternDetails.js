@@ -107,7 +107,7 @@ const InternDetails = () => {
 
   return (
     <div className="intern-details">
-      <Navbar links={NavbarLinks} />
+      <Navbar links={NavbarLinks()} />
       <div className="centered-container-user-intern">
         <h2 className="title-user-intern">Bonjour {formData.firstName}!</h2>
         <FaUserEdit className="icon-user-intern" />

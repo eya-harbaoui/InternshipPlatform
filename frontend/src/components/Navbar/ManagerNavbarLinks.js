@@ -12,12 +12,12 @@ export const ManagerNavbarLinks = (id) => [
 
   {
     title: "Gestion des domaines",
-    url: "/Domaines",
+    url: `/Domaines/${id}`,
     cName: "nav-links",
   },
   {
     title: "Gestion des compétences",
-    url: "/Compétences",
+    url: `/Compétences/${id}`,
     cName: "nav-links",
   },
 ];

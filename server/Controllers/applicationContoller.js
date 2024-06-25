@@ -1,5 +1,6 @@
 const { sendapplicationConfirmationEmail } = require('../config/Nodemailer');
 const { sendinterviewConfirmationEmail } = require('../config/Nodemailer');
+const { sendFinalDecisionForApplication } = require('../config/Nodemailer');
 
 const Application = require('../models/application');
 const Offer = require('../models/offer');
@@ -230,6 +231,13 @@ module.exports = {
         return res.status(404).json({ message: 'application not found' });
       }
       res.json(application);
+      sendFinalDecisionForApplication(
+        req.body.email,
+        req.body.validationComment,
+        req.body.rejectionReason,
+        req.body.status,
+        req.body.startDate
+      );
     } catch (error) {
       res.status(400).json({ message: error.message });
     }

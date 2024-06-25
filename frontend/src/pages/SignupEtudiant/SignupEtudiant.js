@@ -316,7 +316,8 @@ const SignupEtudiant = () => {
             S'inscrire
           </button>
           <p className="text-signup-etudiant">
-            Vous avez déjà un compte ? <Link to="/login">Connectez-vous</Link>
+            Vous avez déjà un compte ?{" "}
+            <Link to="/login_student">Connectez-vous</Link>
           </p>
         </div>
       </div>

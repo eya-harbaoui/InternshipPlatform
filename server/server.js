@@ -46,6 +46,7 @@ const skillRouter = require('./routes/skill.route');
 const domainRouter = require('./routes/domain.route');
 const offerRouter = require('./routes/offer.route');
 const applicationRouter = require('./routes/application.route');
+const statRouter = require('./routes/stat.route');
 
 //routes prefix
 app.use('/users', userRouter);
@@ -54,6 +55,7 @@ app.use('/skill', skillRouter);
 app.use('/domain', domainRouter);
 app.use('/offre', offerRouter);
 app.use('/application', applicationRouter);
+app.use('/stat', statRouter);
 
 //////////////////////////////////////////////////////
 app.get('/', function (req, res) {

@@ -37,68 +37,80 @@ const Candidatures = () => {
     console.log(candidatures, "candidatures");
   }); // Appel uniquement au chargement initial
 
-  const handleTitleClick = (
-    _id,
-    title,
-    nature,
-    details,
-    domain,
-    mode,
-    period,
-    skills,
-    createdAt
-  ) => {
-    const Link = "/Offres/" + _id;
-    navigate(Link, {
-      state: {
-        jobDetails: {
-          _id,
-          title,
-          nature,
-          details,
-          domain,
-          mode,
-          period,
-          skills,
-          createdAt,
-        },
+const handleTitleClick = (
+  _id,
+  title,
+  nature,
+  details,
+  domain,
+  mode,
+  period,
+  skills,
+  createdAt,
+  status
+) => {
+  if (status !== "publié") {
+    navigate("/indisponible");
+    return;
+  }
+
+  const Link = "/Offres/" + _id;
+  navigate(Link, {
+    state: {
+      jobDetails: {
+        _id,
+        title,
+        nature,
+        details,
+        domain,
+        mode,
+        period,
+        skills,
+        createdAt,
+        status,
       },
-    });
-  };
+    },
+  });
+};
 
   return (
     <div className="candidatures-page">
-      <Navbar links={NavbarLinks} />
+      <Navbar links={NavbarLinks()} />
       <h2 className="title-candidature">Mes candidatures</h2>
       <MdOutlineWorkHistory className="candidature-icon" />
       <div className="candidature-cards">
         {loading ? (
           <p>Loading...</p>
         ) : (
-          candidatures.map((candidature, index) => (
-            <div className="candidature-card" key={index}>
-              <CandidatureCard
-                candidatureDate={candidature.createdAt}
-                candidatureStatus={candidature.status}
-                createdAt={candidature.createdAt}
-                title={candidature.offer.title}
-                status={candidature.status}
-                onClickTitle={() =>
-                  handleTitleClick(
-                    candidature.offer._id,
-                    candidature.offer.title,
-                    candidature.offer.nature,
-                    candidature.offer.details,
-                    candidature.offer.domain,
-                    candidature.offer.mode,
-                    candidature.offer.period,
-                    candidature.offer.skills,
-                    candidature.offer.createdAt
-                  )
-                }
-              />
-            </div>
-          ))
+          candidatures.map(
+            (candidature, index) =>
+              candidature &&
+              candidature.offer && (
+                <div className="candidature-card" key={index}>
+                  <CandidatureCard
+                    candidatureStatus={candidature.status}
+                    createdAt={candidature.createdAt}
+                    title={candidature.offer.title}
+                    status={candidature.status}
+                    statusRefusePopover={candidature.rejectionReason}
+                    onClickTitle={() =>
+                      handleTitleClick(
+                        candidature.offer._id,
+                        candidature.offer.title,
+                        candidature.offer.nature,
+                        candidature.offer.details,
+                        candidature.offer.domain,
+                        candidature.offer.mode,
+                        candidature.offer.period,
+                        candidature.offer.skills,
+                        candidature.offer.createdAt,
+                        candidature.offer.status
+                      )
+                    }
+                  />
+                </div>
+              )
+          )
         )}
       </div>
     </div>

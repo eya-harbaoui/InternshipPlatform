@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Select, Row, Col, Modal, Input, Button } from "antd";
+import { Select, Row, Col, Modal, Input, Button, Radio } from "antd";
 import { FaRegUser } from "react-icons/fa";
 import { BsPersonCheck, BsPersonDash } from "react-icons/bs";
 import CandidatsCard from "../../components/CandidatsCard/CandidatsCard";
@@ -31,6 +31,8 @@ const ListeCandidaturesVT = () => {
   const [acquiredLevels, setAcquiredLevels] = useState({});
   const [adequacyPercentage, setAdequacyPercentage] = useState(0);
   const [skillsCandidat, setskillsCandidat] = useState([]);
+  const [refuseOption, setRefuseOption] = useState("");
+
   const getStudentApplicationsForOffer = async () => {
     try {
       const response = await axios.get(
@@ -474,18 +476,34 @@ const ListeCandidaturesVT = () => {
           okText="Refuser"
           cancelText="Annuler"
         >
-          <Select
-            placeholder="Motif de refus"
-            style={{ width: "100%" }}
-            onChange={(value) => setRefuseMessage(value)}
-            value={refuseMessage}
+          <Radio.Group
+            onChange={(e) => setRefuseOption(e.target.value)}
+            value={refuseOption}
           >
-            {refuseReasons.map((reason) => (
-              <Option key={reason} value={reason}>
-                {reason}
-              </Option>
-            ))}
-          </Select>
+            <Radio value="personalMessage">Tapez un message personnel</Radio>
+            <Radio value="selectReason">Sélectionner une raison</Radio>
+          </Radio.Group>
+          {refuseOption === "personalMessage" ? (
+            <Input
+              placeholder="Motif de refus"
+              style={{ width: "100%" }}
+              onChange={(e) => setRefuseMessage(e.target.value)}
+              value={refuseMessage}
+            />
+          ) : (
+            <Select
+              placeholder="Motif de refus"
+              style={{ width: "100%" }}
+              onChange={(value) => setRefuseMessage(value)}
+              value={refuseMessage}
+            >
+              {refuseReasons.map((reason) => (
+                <Option key={reason} value={reason}>
+                  {reason}
+                </Option>
+              ))}
+            </Select>
+          )}
         </Modal>
       )}
     </div>

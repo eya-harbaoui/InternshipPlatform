@@ -252,6 +252,7 @@ const OffresRHCard = ({
           buttonName={"publier"}
           handleButtonFunction={handlePublishClick}
           status={status}
+          viewButton={true}
         />
         <div className="actions">
           <span

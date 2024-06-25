@@ -1,8 +1,13 @@
 export const AcceuilNavbarLinks = [
-  { title: "Home", url: "/Home", cName: "nav-links" },
+  { title: "Acceuil", url: "/", cName: "nav-links" },
   {
     title: "Se Connecter",
-    url: "/login",
+    url: "/role",
+    cName: "nav-links",
+  },
+  {
+    title: "Offres de stage",
+    url: "/Offres",
     cName: "nav-links",
   },
 ];

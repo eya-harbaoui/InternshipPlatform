@@ -1,54 +1,296 @@
-.homepage {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+.divcontainerhome p {
+  font-size: 0.2rem;
 }
-
-.section {
+.divhome {
   display: flex;
-  margin-bottom: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-
-.text {
-  flex: 1;
-  padding: 20px;
-  background-color: #f0f0f0;
+.imgbackground {
+  width: 50%;
 }
-
-.image {
-  flex: 1;
-  padding: 20px;
-  background-color: #f9f9f9;
+.imgbackground img {
+  width: 100%;
 }
-
-.testimonials {
+.hellotext {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.testimonial {
-  flex: 1;
-  padding: 20px;
-  background-color: #f0f0f0;
-  margin-right: 10px;
-}
-
-.cta {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  margin-bottom: 20px;
+  width: 100%;
+  height: 100%;
+  margin-top: 100px;
+  font-size: 1rem;
+}
+.hellotext h1 {
+  color: #ff735c;
+  font-weight: bold;
+  width: 100%; /* Pour que le texte h1 soit centré */
+}
+@media screen and (max-width: 1100px) {
+  .hellotext {
+    font-size: 1.5rem;
+  }
+}
+@media screen and (max-width: 700px) {
+  .hellotext {
+    font-size: 1rem;
+  }
+}
+@media screen and (max-width: 400px) {
+  .hellotext {
+    font-size: 0.5rem;
+  }
 }
 
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+.divcontainerhome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.divcards {
+  padding-left: 2%;
+  width: 90%;
 }
 
-footer {
-  text-align: center;
-  background-color: #f0f0f0;
-  padding: 10px;
+.cardclass {
+  width: 100%;
+  height: 10rem;
+  display: flex !important;
+  align-items: center !important;
+  flex-direction: column !important;
+  border: #ff735c solid 2px;
+}
+.logocard {
+  width: 60px;
+  height: 60px;
+}
+.titrecards h1 {
+  font-size: 1.7rem;
+  color: #ffc107;
+}
+
+.cardcontainer {
+  display: flex !important;
+  align-items: center !important;
+  flex-direction: column !important;
+}
+.cardcontainer h1 {
+  font-size: 1.2rem;
+  color: black;
+}
+
+.cardcontainer:hover h1 {
+  color: #ff735c;
+}
+@media screen and (max-width: 1100px) {
+  .cardcontainer h1 {
+    font-size: 1rem;
+    color: black;
+  }
+  .logocard {
+    width: 60px;
+    height: 60px;
+  }
+}
+@media screen and (max-width: 700px) {
+  .cardcontainer h1 {
+    font-size: 0.7rem;
+    color: black;
+  }
+  .logocard {
+    width: 50px;
+    height: 50px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .cardcontainer h1 {
+    font-size: 0.4rem;
+    color: black;
+  }
+  .logocard {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.imgbackground3 {
+  float: right;
+  width: 35%;
+}
+.imgbackground3 img {
+  width: 100%;
+}
+.hellotext3 {
+  float: left;
+  width: 50%;
+  font-size: 1rem;
+  margin-top: 6rem;
+}
+
+.imgbackground2 {
+  float: left;
+  width: 35%;
+}
+.imgbackground2 img {
+  width: 100%;
+}
+.hellotext2 {
+  float: right;
+  width: 50%;
+  margin-top: 10rem;
+
+  font-size: 1rem;
+}
+.imgbackground1 {
+  float: right;
+  width: 35%;
+}
+.imgbackground1 img {
+  width: 100%;
+}
+.hellotext1 {
+  float: left;
+  width: 50%;
+  font-size: 1rem;
+}
+.divphotos {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8rem;
+  width: 90%;
+}
+.hellotext3 h1 {
+  color: #ff735c;
+  font-weight: bold;
+}
+.hellotext2 h1 {
+  color: #ff735c;
+  font-weight: bold;
+}
+.hellotext1 h1 {
+  color: #ff735c;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 1100px) {
+  .hellotext1 {
+    font-size: 1.3rem;
+  }
+  .hellotext2 {
+    font-size: 1.3rem;
+  }
+  .hellotext3 {
+    font-size: 1.3rem;
+  }
+  .titrecards h1 {
+    font-size: 1.5rem;
+    color: #ffc107;
+  }
+}
+@media screen and (max-width: 700px) {
+  .hellotext1 {
+    font-size: 1rem;
+  }
+  .hellotext2 {
+    font-size: 1rem;
+  }
+  .hellotext3 {
+    font-size: 1rem;
+  }
+  .imgbackground2 {
+    float: left;
+    width: 40%;
+    margin-top: 3%;
+  }
+  .titrecards h1 {
+    font-size: 1.3rem;
+    color: #ffc107;
+  }
+}
+@media screen and (max-width: 400px) {
+  .hellotext1 {
+    font-size: 0.5rem;
+  }
+  .hellotext2 {
+    font-size: 0.5rem;
+  }
+  .hellotext3 {
+    font-size: 0.5rem;
+  }
+  .titrecards h1 {
+    font-size: 0.5rem;
+    color: #ffc107;
+  }
+}
+.loginfromhome {
+  color: rgb(255, 255, 255);
+  background: linear-gradient(120deg, #ff735c, #f2b3b3);
+  width: 15rem;
+  height: 2.9rem;
+  border: 2px solid #ff735c;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.loginfromhome:hover {
+  background: white;
+  color: rgb(0, 0, 0);
+  border: 2px solid black;
+}
+.divcontainerhome p {
+  font-size: 1.6rem;
+}
+@media screen and (max-width: 1100px) {
+  .loginfromhome {
+    color: rgb(255, 255, 255);
+    background: linear-gradient(120deg, #ff735c, #f2b3b3);
+    width: 10rem;
+    height: 2.4rem;
+    border: 2px solid #ff735c;
+
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  .divcontainerhome p {
+    font-size: 1rem;
+  }
+}
+@media screen and (max-width: 700px) {
+  .loginfromhome {
+    color: rgb(255, 255, 255);
+    background: linear-gradient(120deg, #ff735c, #f2b3b3);
+    width: 7rem;
+    height: 2rem;
+    border: 2px solid #ff735c;
+
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+  .divcontainerhome p {
+    font-size: 0.7rem;
+  }
+}
+@media screen and (max-width: 400px) {
+  .loginfromhome {
+    color: rgb(255, 255, 255);
+    background: linear-gradient(120deg, #ff735c, #f2b3b3);
+    width: 5rem;
+    height: 1rem;
+    border: 2px solid #ff735c;
+
+    font-size: 0.44rem;
+    font-weight: bold;
+  }
+  .loginfromhome:hover {
+    background: white;
+    color: rgb(0, 0, 0);
+    border: 2px solid black;
+  }
+  .divcontainerhome p {
+    font-size: 0.5rem;
+  }
 }

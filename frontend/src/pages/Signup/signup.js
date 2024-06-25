@@ -1,10 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./signup.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import "./signup.css";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -16,10 +15,10 @@ const Signup = () => {
     password: "",
     passwordRetyped: "",
     phoneNumber: "",
+    role: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showRetypedPassword, setShowRetypedPassword] = useState(false);
-  const [role, setRole] = useState("Student");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +36,7 @@ const Signup = () => {
       password,
       passwordRetyped,
       phoneNumber,
-      role
+      role,
     } = formData;
 
     // Vérifier si tous les champs sont remplis
@@ -47,7 +46,8 @@ const Signup = () => {
       !email ||
       !password ||
       !passwordRetyped ||
-      !phoneNumber
+      !phoneNumber ||
+      !role
     ) {
       toast.error("Veuillez remplir tous les champs");
       return;
@@ -97,11 +97,7 @@ const Signup = () => {
       <h2 className="heading-signup">Bienvenue ! Créer un nouveau compte</h2>
       <div className="signup-form-container">
         <div className="left-signup">
-          <img
-            className="img-signup"
-            src="./images/SignUp.jpg"
-            alt="signup"
-          />
+          <img className="img-signup" src="./images/SignUp.jpg" alt="signup" />
         </div>
         <div className="right-signup">
           <input
@@ -178,6 +174,23 @@ const Signup = () => {
               />
             )}
           </div>
+
+          {/* Menu déroulant pour le rôle */}
+          <select
+            className="input-signup-right"
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+          >
+            <option value="">Choisir un rôle</option>
+            <option value="Admin">Admin</option>
+            <option value="Manager">Manager</option>
+            <option value="Assistant RH">Assistant RH</option>
+            <option value="Responsable RH">Responsable RH</option>
+            <option value="Validator">Validator</option>
+            <option value="Student">Student</option>
+          </select>
+          {/* Fin du menu déroulant pour le rôle */}
 
           <button className="btn-signup" onClick={handleSubmit}>
             S'inscrire
