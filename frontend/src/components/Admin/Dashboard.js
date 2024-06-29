@@ -160,22 +160,20 @@ function Dashboard() {
               },
             }}
             data={{
-              labels: ["Publiées", "Refusées", "Acceptées", "Reçues"],
+              labels: ["Refusées", "Acceptées", "Reçues"],
               datasets: [
                 {
                   data: [
-                    averageApplicationsByMonth,
                     averageRejectedApplicationsByMonth,
                     averageAcceptedApplicationsByMonth,
                     averageReceivedApplicationsByMonth,
                   ],
                   backgroundColor: [
                     "rgb(255, 99, 132)",
-                    "rgb(54, 162, 235)",
                     "lightgreen",
-                    "rgb(200, 200, 5)",
+                    "rgb(54, 162, 235)",
                   ],
-                  hoverOffset: 4,
+                  hoverOffset: 3,
                 },
               ],
             }}
