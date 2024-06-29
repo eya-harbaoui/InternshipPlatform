@@ -13,6 +13,8 @@ import {
 import {PlusOutlined } from "@ant-design/icons";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const { Option } = Select;
 
@@ -152,14 +154,28 @@ const TabUtilisateurs = () => {
   const handleModalOk = async () => {
     try {
       const values = await form.validateFields();
+
+      // Check if the email already exists
+      const existingUser = data.find((user) => user.email === values.email);
+      if (existingUser) {
+        throw new Error("Cet utilisateur existe déjà.");
+      }
+
+      // Proceed with adding the user if not already existing
       await axios.post("http://localhost:8000/users", values);
       setIsModalVisible(false);
       form.resetFields();
-      fetchData();
+      fetchData(); // Refresh the data after adding new user
     } catch (errorInfo) {
       console.error("Validation failed:", errorInfo);
+      // Display error message using toast
+      toast.error(
+        errorInfo.message ||
+          "Une erreur est survenue lors de l'ajout de l'utilisateur."
+      );
     }
   };
+
 
   const handleModalCancel = () => {
     setIsModalVisible(false);
