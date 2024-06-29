@@ -14,7 +14,6 @@ import {
   LineElement,
 } from "chart.js";
 import "./sb-admin-2.min.css";
-const BASE_URL = "http://localhost:8000";
 
 Chart.register(
   ArcElement,
@@ -38,78 +37,114 @@ function Dashboard() {
   const [receivedApplicationsByMonth, setReceivedApplicationsByMonth] =
     useState([]);
 
+  const fetchData = async () => {
+    try {
+      const offersByYearResponse = await axios.get(
+        "http://localhost:8000/stat/offers/by-year"
+      );
+      setPublishedOffersByYear(offersByYearResponse.data);
+
+      const offersByMonthResponse = await axios.get(
+        "http://localhost:8000/stat/offers/by-month"
+      );
+      setPublishedOffersByMonth(offersByMonthResponse.data);
+
+      const applicationsByMonthResponse = await axios.get(
+        "http://localhost:8000/stat/applications/by-month"
+      );
+      setApplicationsByMonth(applicationsByMonthResponse.data);
+
+      const rejectedApplicationsByMonthResponse = await axios.get(
+        "http://localhost:8000/stat/applications/rejected/by-month"
+      );
+      setRejectedApplicationsByMonth(rejectedApplicationsByMonthResponse.data);
+
+      const acceptedApplicationsByMonthResponse = await axios.get(
+        "http://localhost:8000/stat/applications/accepted/by-month"
+      );
+      setAcceptedApplicationsByMonth(acceptedApplicationsByMonthResponse.data);
+
+      const receivedApplicationsByMonthResponse = await axios.get(
+        "http://localhost:8000/stat/applications/received/by-month"
+      );
+      setReceivedApplicationsByMonth(receivedApplicationsByMonthResponse.data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const offersByYearResponse = await axios.get(
-          `${BASE_URL}/offers/by-year`
-        );
-        setPublishedOffersByYear(offersByYearResponse.data);
-
-        const offersByMonthResponse = await axios.get(
-          `${BASE_URL}/offers/by-month`
-        );
-        setPublishedOffersByMonth(offersByMonthResponse.data);
-
-        const applicationsByMonthResponse = await axios.get(
-          `${BASE_URL}/applications/by-month`
-        );
-        setApplicationsByMonth(applicationsByMonthResponse.data);
-
-        const rejectedApplicationsByMonthResponse = await axios.get(
-          `${BASE_URL}/applications/rejected/by-month`
-        );
-        setRejectedApplicationsByMonth(
-          rejectedApplicationsByMonthResponse.data
-        );
-
-        const acceptedApplicationsByMonthResponse = await axios.get(
-          `${BASE_URL}/applications/accepted/by-month`
-        );
-        setAcceptedApplicationsByMonth(
-          acceptedApplicationsByMonthResponse.data
-        );
-
-        const receivedApplicationsByMonthResponse = await axios.get(
-          `${BASE_URL}/applications/received/by-month`
-        );
-        setReceivedApplicationsByMonth(
-          receivedApplicationsByMonthResponse.data
-        );
-      } catch (error) {
-        console.error("Erreur lors de la récupération des données:", error);
-      }
-    };
-
     fetchData();
-  }, []);
+    console.log("published offers by month", publishedOffersByMonth);
+    console.log("published offers by year", publishedOffersByYear);
+    console.log("applications by month", applicationsByMonth);
+    console.log("rejected applications by month", rejectedApplicationsByMonth);
+    console.log("accepted apps by month", acceptedApplicationsByMonth);
+    console.log("received apps by month", receivedApplicationsByMonth);
+  });
+
+  // Calculate average offers per month and per year
+  const calculateAverage = (data) => {
+    const totalItems = data.reduce(
+      (total, current) =>
+        total + parseInt(current.split(": ")[1].split(" ")[0]),
+      0
+    );
+    return parseInt((totalItems / data.length).toFixed(2));
+  };
+
+  const averageOffersByMonth = calculateAverage(publishedOffersByMonth);
+  const averageOffersByYear = calculateAverage(publishedOffersByYear);
+  const averageApplicationsByMonth = calculateAverage(applicationsByMonth);
+  const averageRejectedApplicationsByMonth = calculateAverage(
+    rejectedApplicationsByMonth
+  );
+  const averageAcceptedApplicationsByMonth = calculateAverage(
+    acceptedApplicationsByMonth
+  );
+  const averageReceivedApplicationsByMonth = calculateAverage(
+    receivedApplicationsByMonth
+  );
+
+  // Extract labels and data for the Line chart
+  const extractLabelsAndData = (data) => {
+    const labels = data.map((item) => item.split(": ")[0]);
+    const values = data.map((item) =>
+      parseInt(item.split(": ")[1].split(" ")[0])
+    );
+    return { labels, values };
+  };
+
+  const { labels, values: receivedValues } = extractLabelsAndData(
+    receivedApplicationsByMonth
+  );
 
   return (
     <>
       <div className="row">
         <Card
           title="Stage publié /mois"
-          value={publishedOffersByMonth.length}
+          value={averageOffersByMonth}
           color="primary"
         />
         <Card
           title="Stage publié /An"
-          value={publishedOffersByYear.length}
+          value={averageOffersByYear}
           color="success"
         />
         <Card
           title="Candidatures refusées /mois"
-          value={rejectedApplicationsByMonth.length}
+          value={averageRejectedApplicationsByMonth}
           color="warning"
         />
         <Card
           title="Candidatures acceptées /mois"
-          value={acceptedApplicationsByMonth.length}
+          value={averageAcceptedApplicationsByMonth}
           color="info"
         />
         <Card
           title="Candidatures reçues /mois"
-          value={receivedApplicationsByMonth.length}
+          value={averageReceivedApplicationsByMonth}
           color="success"
         />
       </div>
@@ -129,10 +164,10 @@ function Dashboard() {
               datasets: [
                 {
                   data: [
-                    applicationsByMonth.length,
-                    rejectedApplicationsByMonth.length,
-                    acceptedApplicationsByMonth.length,
-                    receivedApplicationsByMonth.length,
+                    averageApplicationsByMonth,
+                    averageRejectedApplicationsByMonth,
+                    averageAcceptedApplicationsByMonth,
+                    averageReceivedApplicationsByMonth,
                   ],
                   backgroundColor: [
                     "rgb(255, 99, 132)",
@@ -161,19 +196,11 @@ function Dashboard() {
               },
             }}
             data={{
-              labels: [
-                "Janvier",
-                "Février",
-                "Mars",
-                "Avril",
-                "Mai",
-                "Juin",
-                "Juillet",
-              ],
+              labels: labels,
               datasets: [
                 {
-                  label: "Nombre de candidatures",
-                  data: applicationsByMonth.map((item) => item.count),
+                  label: "Nombre de candidatures reçues",
+                  data: receivedValues,
                   fill: false,
                   borderColor: "rgb(75, 192, 192)",
                   tension: 0.1,
