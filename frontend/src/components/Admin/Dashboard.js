@@ -75,22 +75,31 @@ function Dashboard() {
 
   useEffect(() => {
     fetchData();
+  }, []);
+
+  useEffect(() => {
     console.log("published offers by month", publishedOffersByMonth);
     console.log("published offers by year", publishedOffersByYear);
     console.log("applications by month", applicationsByMonth);
     console.log("rejected applications by month", rejectedApplicationsByMonth);
     console.log("accepted apps by month", acceptedApplicationsByMonth);
     console.log("received apps by month", receivedApplicationsByMonth);
-  });
+  }, [
+    publishedOffersByMonth,
+    publishedOffersByYear,
+    applicationsByMonth,
+    rejectedApplicationsByMonth,
+    acceptedApplicationsByMonth,
+    receivedApplicationsByMonth,
+  ]);
 
-  // Calculate average offers per month and per year
   const calculateAverage = (data) => {
-    const totalItems = data.reduce(
-      (total, current) =>
-        total + parseInt(current.split(": ")[1].split(" ")[0]),
-      0
-    );
-    return parseInt((totalItems / data.length).toFixed(2));
+    if (!data || data.length === 0) return 0;
+    const totalItems = data.reduce((total, current) => {
+      const value = parseInt(current.split(": ")[1].split(" ")[0]);
+      return total + (isNaN(value) ? 0 : value);
+    }, 0);
+    return Math.round(totalItems / data.length) || 0;
   };
 
   const averageOffersByMonth = calculateAverage(publishedOffersByMonth);
@@ -106,12 +115,13 @@ function Dashboard() {
     receivedApplicationsByMonth
   );
 
-  // Extract labels and data for the Line chart
   const extractLabelsAndData = (data) => {
+    if (!data || data.length === 0) return { labels: [], values: [] };
     const labels = data.map((item) => item.split(": ")[0]);
-    const values = data.map((item) =>
-      parseInt(item.split(": ")[1].split(" ")[0])
-    );
+    const values = data.map((item) => {
+      const value = parseInt(item.split(": ")[1].split(" ")[0]);
+      return isNaN(value) ? 0 : value;
+    });
     return { labels, values };
   };
 

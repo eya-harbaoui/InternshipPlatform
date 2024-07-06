@@ -47,7 +47,7 @@ const domainRouter = require('./routes/domain.route');
 const offerRouter = require('./routes/offer.route');
 const applicationRouter = require('./routes/application.route');
 const statRouter = require('./routes/stat.route');
-
+const downloadRoutes = require('./routes/download.route');
 //routes prefix
 app.use('/users', userRouter);
 app.use('/students', studentRouter);
@@ -56,7 +56,7 @@ app.use('/domain', domainRouter);
 app.use('/offre', offerRouter);
 app.use('/application', applicationRouter);
 app.use('/stat', statRouter);
-
+app.use('/download', downloadRoutes);
 //////////////////////////////////////////////////////
 app.get('/', function (req, res) {
   sc.createtype(req, res);

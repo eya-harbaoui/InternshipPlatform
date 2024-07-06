@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Select, Row, Col, Modal, Input, Button, Radio } from "antd";
 import { FaRegUser } from "react-icons/fa";
 import { BsPersonCheck, BsPersonDash } from "react-icons/bs";
+import { FaDownload } from "react-icons/fa";
 import CandidatsCard from "../../components/CandidatsCard/CandidatsCard";
 import ListeCandidatureCard from "../../components/CandidatureCard/ListeCandidatureCard";
 import { VTNavbarLinks } from "../../components/Navbar/VTNavbarLinks";
@@ -11,6 +12,8 @@ import { skillLevelsMapping } from "../../components/OffresCard/SkillsLevel";
 import { refuseReasons } from "../../components/CandidatureCard/refuseReasons";
 import CompetenceDetails from "../../components/CandidatureCard/CompetenceDetails";
 import getUserIdFromLocalStorage from "../../UserAuth.js";
+import fileDownload from "js-file-download";
+import { toast } from "react-toastify";
 
 const ListeCandidaturesVT = () => {
   const { role, userId } = getUserIdFromLocalStorage() || {};
@@ -41,7 +44,7 @@ const ListeCandidaturesVT = () => {
 
       const candidatsWithInfo = response.data;
 
-      console.log("Candidats avec informations:", candidatsWithInfo);
+      //console.log("Candidats avec informations:", candidatsWithInfo);
 
       const countByStatus = candidatsWithInfo.reduce((acc, curr) => {
         acc[curr.status] = (acc[curr.status] || 0) + 1;
@@ -62,7 +65,7 @@ const ListeCandidaturesVT = () => {
 
   useEffect(() => {
     getStudentApplicationsForOffer();
-    console.log(skillsCandidat, "skills Candidat");
+    //console.log(skillsCandidat, "skills Candidat");
   });
 
   const acceptCandidate = (candidat) => {
@@ -163,13 +166,48 @@ const ListeCandidaturesVT = () => {
     setAdequacyPercentage(0);
     setAcquiredLevels({});
   };
+
+  const downloadCV = async (candidat) => {
+    if (!candidat.applicant.cv) {
+      console.error("No CV available for this candidate");
+      return;
+    }
+
+    try {
+      const response = await axios({
+        url: `http://localhost:8000/download/cv/${candidat.applicant.cv}`,
+        method: "GET",
+        responseType: "blob",
+      });
+
+      fileDownload(
+        response.data,
+        `${candidat.applicant.firstName}_${candidat.applicant.lastName}_CV.pdf`
+      );
+    } catch (error) {
+      console.error("Error downloading CV:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+      }
+      toast.error("Le fichier n'a pas pu être téléchargé");
+    }
+  };
+
   const actions = (candidat) => [
+    {
+      name: "Télécharger CV",
+      onClick: () => downloadCV(candidat),
+      disabled: !candidat.applicant.cv,
+      Icon: FaDownload,
+    },
     {
       name: "Fiche candidature",
       onClick: () => viewCandidatureFile(candidat),
       disabled: candidat.status === "en cours",
       Icon: FaRegUser,
     },
+
     {
       name: "accepter",
       onClick: () => acceptCandidate(candidat),
