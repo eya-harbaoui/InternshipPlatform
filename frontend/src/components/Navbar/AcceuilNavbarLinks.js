@@ -2,7 +2,7 @@ export const AcceuilNavbarLinks = [
   { title: "Acceuil", url: "/", cName: "nav-links" },
   {
     title: "Se Connecter",
-    url: "/role",
+    url: "/login",
     cName: "nav-links",
   },
   {
