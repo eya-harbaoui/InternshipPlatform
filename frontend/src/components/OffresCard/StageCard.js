@@ -64,9 +64,11 @@ const StageCard = ({
           )}
         </p>
         <div className="tags">
-          <div className="tag">
-            <FaRegLightbulb /> {domain.name}
-          </div>
+          {domain && (
+            <div className="tag">
+              <FaRegLightbulb /> {domain.name}
+            </div>
+          )}
           <div className="tag">
             <FiHome /> {mode}
           </div>
