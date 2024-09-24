@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Doughnut, Line } from "react-chartjs-2";
+import { Doughnut, Line, Bar } from "react-chartjs-2";
 import Card from "./Card";
 import axios from "axios";
 import {
@@ -12,6 +12,7 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
 } from "chart.js";
 import "./sb-admin-2.min.css";
 
@@ -23,7 +24,8 @@ Chart.register(
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement
+  LineElement,
+  BarElement
 );
 
 function Dashboard() {
@@ -36,6 +38,7 @@ function Dashboard() {
     useState([]);
   const [receivedApplicationsByMonth, setReceivedApplicationsByMonth] =
     useState([]);
+  const [offersByDomain, setOffersByDomain] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -68,6 +71,12 @@ function Dashboard() {
         "http://localhost:8000/stat/applications/received/by-month"
       );
       setReceivedApplicationsByMonth(receivedApplicationsByMonthResponse.data);
+
+      const offersByDomainResponse = await axios.get(
+        "http://localhost:8000/stat/offers/by-domain"
+      );
+      console.log("Offers by Domain:", offersByDomainResponse.data); // Vérifiez les données
+      setOffersByDomain(offersByDomainResponse.data);
     } catch (error) {
       console.error("Erreur lors de la récupération des données:", error);
     }
@@ -84,6 +93,7 @@ function Dashboard() {
     console.log("rejected applications by month", rejectedApplicationsByMonth);
     console.log("accepted apps by month", acceptedApplicationsByMonth);
     console.log("received apps by month", receivedApplicationsByMonth);
+    console.log("offers by domain", offersByDomain);
   }, [
     publishedOffersByMonth,
     publishedOffersByYear,
@@ -91,6 +101,7 @@ function Dashboard() {
     rejectedApplicationsByMonth,
     acceptedApplicationsByMonth,
     receivedApplicationsByMonth,
+    offersByDomain,
   ]);
 
   const calculateAverage = (data) => {
@@ -116,18 +127,32 @@ function Dashboard() {
   );
 
   const extractLabelsAndData = (data) => {
-    if (!data || data.length === 0) return { labels: [], values: [] };
-    const labels = data.map((item) => item.split(": ")[0]);
-    const values = data.map((item) => {
-      const value = parseInt(item.split(": ")[1].split(" ")[0]);
-      return isNaN(value) ? 0 : value;
+    if (!data || data.length === 0)
+      return { labels: ["Aucun domaine"], values: [0] };
+
+    const labels = [];
+    const values = [];
+
+    data.forEach((item) => {
+      const parts = item.split(": ");
+      if (parts.length === 2) {
+        const domain = parts[0];
+        const count = parseInt(parts[1].split(" ")[0], 10);
+        labels.push(domain);
+        values.push(isNaN(count) ? 0 : count);
+      }
     });
+
     return { labels, values };
   };
 
-  const { labels, values: receivedValues } = extractLabelsAndData(
-    receivedApplicationsByMonth
-  );
+  // Préparer les données pour le graphique des candidatures reçues
+  const { labels: receivedLabels, values: receivedValues } =
+    extractLabelsAndData(receivedApplicationsByMonth);
+
+  // Préparer les données pour le graphique des domaines
+  const { labels: domainLabels, values: domainValues } =
+    extractLabelsAndData(offersByDomain);
 
   return (
     <>
@@ -204,14 +229,42 @@ function Dashboard() {
               },
             }}
             data={{
-              labels: labels,
+              labels: receivedLabels, // Assurez-vous que receivedLabels est défini ici
               datasets: [
                 {
                   label: "Nombre de candidatures reçues",
-                  data: receivedValues,
+                  data: receivedValues, // Assurez-vous que receivedValues est défini ici
                   fill: false,
                   borderColor: "rgb(75, 192, 192)",
                   tension: 0.1,
+                },
+              ],
+            }}
+          />
+        </div>
+        <div className="col-xl-12">
+          <Bar
+            options={{
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: "top",
+                },
+                title: {
+                  display: true,
+                  text: "Nombre de stages par domaine",
+                },
+              },
+            }}
+            data={{
+              labels: domainLabels, // Assurez-vous que domainLabels est défini ici
+              datasets: [
+                {
+                  label: "Nombre de stages",
+                  data: domainValues, // Assurez-vous que domainValues est défini ici
+                  backgroundColor: "rgba(75, 192, 192, 0.2)",
+                  borderColor: "rgb(75, 192, 192)",
+                  borderWidth: 1,
                 },
               ],
             }}
