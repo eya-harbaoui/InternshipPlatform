@@ -168,14 +168,14 @@ const ListeCandidaturesVT = () => {
   };
 
   const downloadCV = async (candidat) => {
-    if (!candidat.applicant.cv) {
+    if (!candidat.applicant?.cv) {
       console.error("No CV available for this candidate");
       return;
     }
 
     try {
       const response = await axios({
-        url: `http://localhost:8000/download/cv/${candidat.applicant.cv}`,
+        url: `http://localhost:8000/download/cv/${candidat.applicant?.cv}`,
         method: "GET",
         responseType: "blob",
       });
@@ -198,7 +198,7 @@ const ListeCandidaturesVT = () => {
     {
       name: "Télécharger CV",
       onClick: () => downloadCV(candidat),
-      disabled: !candidat.applicant.cv,
+      disabled: !candidat.applicant?.cv,
       Icon: FaDownload,
     },
     {
@@ -291,25 +291,36 @@ const ListeCandidaturesVT = () => {
       <h3 className="title-offre">Liste des candidats assignés</h3>
       <FaRegUser className="icon-offre" />
       <Row gutter={[16, 16]}>
-        {Object.entries(candidatures).map(([status, count]) => (
-          <Col key={status} xs={24} sm={12} md={8} lg={6}>
-            <CandidatsCard status={status} nombreCandidats={count} />
+        {Object.entries(candidatures).length > 0 ? (
+          Object.entries(candidatures).map(([status, count]) => (
+            <Col key={status} xs={24} sm={12} md={8} lg={6}>
+              <CandidatsCard status={status} nombreCandidats={count} />
+            </Col>
+          ))
+        ) : (
+          <Col xs={24}>
+            <p>Aucune candidature disponible.</p>
           </Col>
-        ))}
+        )}
       </Row>
-      {candidats.map((candidat) => (
-        <ListeCandidatureCard
-          key={candidat._id}
-          title={`${candidat.applicant.firstName} ${candidat.applicant.lastName}`}
-          status={candidat.status}
-          createdAt={candidat.createdAt}
-          actions={actions(candidat)}
-          statusRefusePopover={candidat.refuseReason}
-          onClickTitle={() => {
-            viewProfile(candidat);
-          }}
-        />
-      ))}
+      {candidats.length > 0 ? (
+        candidats.map((candidat) => (
+          <ListeCandidatureCard
+            key={candidat._id}
+            title={`${candidat.applicant?.firstName} ${candidat.applicant?.lastName}`}
+            status={candidat.status}
+            createdAt={candidat.createdAt}
+            actions={actions(candidat)}
+            statusRefusePopover={candidat.refuseReason}
+            onClickTitle={() => {
+              viewProfile(candidat);
+            }}
+          />
+        ))
+      ) : (
+        <p>Aucun candidat disponible.</p>
+      )}
+
       {/* Affichage du modal pour visualiser le profil d'un candidat*/}
       {isProfileModalOpen && (
         <Modal
@@ -323,43 +334,49 @@ const ListeCandidaturesVT = () => {
             </Button>,
           ]}
         >
-          <div>
-            <p>
-              <strong>Nom et prénom: </strong>{" "}
-              {selectedCandidature.applicant.firstName}{" "}
-              {selectedCandidature.applicant.lastName}
-            </p>
-            <p>
-              <strong>Email: </strong> {selectedCandidature.applicant.email}
-            </p>
-            <p>
-              <strong>Téléphone: </strong>{" "}
-              {selectedCandidature.applicant.phoneNumber}
-            </p>
-            <p>
-              <strong>level: </strong>{" "}
-              {selectedCandidature.applicant.studyLevel}
-            </p>
-            <p>
-              <strong>Etablissement: </strong>{" "}
-              {selectedCandidature.applicant.establishment}
-            </p>
-            <p>
-              <strong>CV: </strong> {selectedCandidature.applicant.cv}
-            </p>
-            <p>
-              <strong>Adresse: </strong> {selectedCandidature.applicant.address}
-            </p>
-            <label htmlFor="stageDescription">
-              <strong>Lettre de recommendation :</strong>
-            </label>
-            <textarea
-              type="text"
-              placeholder="Lettre de recommendation"
-              className="textarea-design"
-              value={selectedCandidature.applicant.recommendationLetter}
-            />
-          </div>
+          {selectedCandidature && selectedCandidature.applicant ? (
+            <div>
+              <p>
+                <strong>Nom et prénom du candidat: </strong>
+                {selectedCandidature.applicant.firstName}{" "}
+                {selectedCandidature.applicant.lastName}
+              </p>
+
+              <p>
+                <strong>Email: </strong> {selectedCandidature.applicant.email}
+              </p>
+              <p>
+                <strong>Téléphone: </strong>{" "}
+                {selectedCandidature.applicant.phoneNumber}
+              </p>
+              <p>
+                <strong>level: </strong>{" "}
+                {selectedCandidature.applicant.studyLevel}
+              </p>
+              <p>
+                <strong>Etablissement: </strong>{" "}
+                {selectedCandidature.applicant.establishment}
+              </p>
+              <p>
+                <strong>CV: </strong> {selectedCandidature.applicant?.cv}
+              </p>
+              <p>
+                <strong>Adresse: </strong>{" "}
+                {selectedCandidature.applicant.address}
+              </p>
+              <label htmlFor="stageDescription">
+                <strong>Lettre de recommendation :</strong>
+              </label>
+              <textarea
+                type="text"
+                placeholder="Lettre de recommendation"
+                className="textarea-design"
+                value={selectedCandidature.applicant.recommendationLetter}
+              />
+            </div>
+          ) : (
+            <div>Aucun candidat</div>
+          )}
         </Modal>
       )}
       {isCandidatureFileModalOpen &&
@@ -372,79 +389,83 @@ const ListeCandidaturesVT = () => {
             okText="Sauvegarder et confirmer l'entretien"
             cancelText="Annuler"
           >
-            <div>
-              <p>
-                <strong>Nom et prénom du candidat: </strong>{" "}
-                {selectedCandidature.applicant.firstName}{" "}
-                {selectedCandidature.applicant.lastName}
-              </p>
-              <p>
-                <strong>Titre de stage:</strong>{" "}
-                {selectedCandidature.offer.title}
-              </p>
-              <p>
-                <strong>Date de candidature:</strong>{" "}
-                {selectedCandidature.createdAt}
-              </p>
-              <p>
-                <strong>Statut de candidature:</strong>{" "}
-                {selectedCandidature.status}
-              </p>
-              <p>
-                <strong>Date et heure de l'entretien:</strong>{" "}
-                {selectedCandidature.interviewDateTime}
-              </p>
-
+            {selectedCandidature && selectedCandidature.applicant ? (
               <div>
-                <h4>Liste des compétences : </h4>
-                {selectedCandidature.offer.skills.map((skillItem) => (
-                  <div key={skillItem.skill._id} className="skill-container">
-                    <p>
-                      <strong>{skillItem.skill.name}</strong>
-                    </p>
-                    <p>niveau demandé: {skillItem.level}</p>
-                    <p>
-                      niveau acquis:
-                      <Select
-                        style={{ width: 200 }}
-                        placeholder="Evaluez le candidat"
-                        onChange={(value) =>
-                          handleLevelChange(skillItem.skill._id, value)
-                        }
-                      >
-                        <Option value="aucune compétence">
-                          Aucune compétence
-                        </Option>
-                        <Option value="connaissance théorique">
-                          Connaissance théorique
-                        </Option>
-                        <Option value="connaissance pratique">
-                          Connaissance pratique
-                        </Option>
-                        <Option value="débutant">Débutant</Option>
-                        <Option value="intermédiaire">Intermédiaire</Option>
-                        <Option value="maîtrise">Maîtrise</Option>
-                      </Select>
-                    </p>
-                    <p>
-                      Pourcentage d'adéquation :{" "}
-                      {skillAdequacyPercentages[skillItem.skill._id] || 0}%
-                    </p>
-                  </div>
-                ))}
-                <Button
-                  onClick={() => {
-                    calculateAdequacyPercentage();
-                  }}
-                >
-                  Calculer pourcentage d'adéquation
-                </Button>
                 <p>
-                  Pourcentage d'adéquation globale:{" "}
-                  {adequacyPercentage && adequacyPercentage.toFixed(2)}%
+                  <strong>Nom et prénom du candidat :</strong>{" "}
+                  {selectedCandidature.applicant.firstName}{" "}
+                  {selectedCandidature.applicant.lastName}
                 </p>
+                <p>
+                  <strong>Titre du stage :</strong>{" "}
+                  {selectedCandidature.offer.title}
+                </p>
+                <p>
+                  <strong>Date de candidature :</strong>{" "}
+                  {selectedCandidature.createdAt}
+                </p>
+                <p>
+                  <strong>Statut de la candidature :</strong>{" "}
+                  {selectedCandidature.status}
+                </p>
+                <p>
+                  <strong>Date et heure de l'entretien :</strong>{" "}
+                  {selectedCandidature.interviewDateTime}
+                </p>
+
+                <div>
+                  <h4>Liste des compétences :</h4>
+                  {selectedCandidature.offer.skills.map((skillItem) => (
+                    <div key={skillItem.skill._id} className="skill-container">
+                      <p>
+                        <strong>{skillItem.skill.name}</strong>
+                      </p>
+                      <p>Niveau demandé : {skillItem.level}</p>
+                      <p>
+                        Niveau acquis :
+                        <Select
+                          style={{ width: 200 }}
+                          placeholder="Évaluez le candidat"
+                          onChange={(value) =>
+                            handleLevelChange(skillItem.skill._id, value)
+                          }
+                        >
+                          <Option value="aucune compétence">
+                            Aucune compétence
+                          </Option>
+                          <Option value="connaissance théorique">
+                            Connaissance théorique
+                          </Option>
+                          <Option value="connaissance pratique">
+                            Connaissance pratique
+                          </Option>
+                          <Option value="débutant">Débutant</Option>
+                          <Option value="intermédiaire">Intermédiaire</Option>
+                          <Option value="maîtrise">Maîtrise</Option>
+                        </Select>
+                      </p>
+                      <p>
+                        Pourcentage d'adéquation :{" "}
+                        {skillAdequacyPercentages[skillItem.skill._id] || 0}%
+                      </p>
+                    </div>
+                  ))}
+                  <Button
+                    onClick={() => {
+                      calculateAdequacyPercentage();
+                    }}
+                  >
+                    Calculer le pourcentage d'adéquation
+                  </Button>
+                  <p>
+                    Pourcentage d'adéquation global :{" "}
+                    {adequacyPercentage && adequacyPercentage.toFixed(2)}%
+                  </p>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div>Aucun candidat</div>
+            )}
           </Modal>
         )}
 
@@ -458,32 +479,38 @@ const ListeCandidaturesVT = () => {
             cancelButtonProps={{ style: { display: "none" } }}
           >
             <div>
-              <p>
-                <strong>Nom et prénom du candidat: </strong>{" "}
-                {selectedCandidature.applicant.firstName}{" "}
-                {selectedCandidature.applicant.lastName}
-              </p>
-              <p>
-                <strong>Titre de stage:</strong>{" "}
-                {selectedCandidature.offer.title}
-              </p>
-              <p>
-                <strong>Date de candidature:</strong>{" "}
-                {selectedCandidature.createdAt}
-              </p>
-              <p>
-                <strong>Statut de candidature:</strong>{" "}
-                {selectedCandidature.status}
-              </p>
-              <p>
-                <strong>Date et heure de l'entretien:</strong>{" "}
-                {selectedCandidature.interviewDateTime}
-              </p>
-              <div>
-                <CompetenceDetails
-                  candidatureId={selectedCandidature._id}
-                ></CompetenceDetails>
-              </div>
+              {selectedCandidature && selectedCandidature.applicant ? (
+                <>
+                  <p>
+                    <strong>Nom et prénom du candidat : </strong>{" "}
+                    {selectedCandidature.applicant.firstName}{" "}
+                    {selectedCandidature.applicant.lastName}
+                  </p>
+                  <p>
+                    <strong>Titre de stage : </strong>{" "}
+                    {selectedCandidature.offer.title}
+                  </p>
+                  <p>
+                    <strong>Date de candidature : </strong>{" "}
+                    {selectedCandidature.createdAt}
+                  </p>
+                  <p>
+                    <strong>Statut de candidature : </strong>{" "}
+                    {selectedCandidature.status}
+                  </p>
+                  <p>
+                    <strong>Date et heure de l'entretien : </strong>{" "}
+                    {selectedCandidature.interviewDateTime}
+                  </p>
+                  <div>
+                    <CompetenceDetails
+                      candidatureId={selectedCandidature._id}
+                    />
+                  </div>
+                </>
+              ) : (
+                <div>Aucun candidat</div>
+              )}
             </div>
           </Modal>
         )}
