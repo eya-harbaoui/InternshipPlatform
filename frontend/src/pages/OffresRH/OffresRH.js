@@ -131,6 +131,8 @@ const OffresRH = () => {
     }
   };
 
+  
+
   useEffect(() => {
     fetchDomains();
     fetchData();

@@ -4,6 +4,7 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 import { GrClose } from "react-icons/gr";
 import { AiOutlineBars, AiOutlineLogout } from "react-icons/ai";
 import logo from "./IMcoding.png";
+import logo2 from "./TENOVARGroup.jpeg";
 import "./Navbar.css";
 import getUserIdFromLocalStorage from "../../UserAuth.js";
 
@@ -25,8 +26,9 @@ function Navbar({ links, page }) {
   return (
     <nav className="NavbarItems">
       <div className="entete">
-        <img src={logo} alt="logoImcoding" className="logoIMcoding" />
-        <h2 className="navbar-logo">IM CODING</h2>
+        {/*<img src={logo} alt="logoImcoding" className="logoIMcoding" />*/}
+        <img src={logo2} alt="tenovarGroup" className="logoIMcoding" />
+        {/*<h2 className="navbar-logo">TENOVAR GROUP</h2>*/}
       </div>
 
       <div className="menu-icons" onClick={handleClick}>
@@ -49,13 +51,12 @@ function Navbar({ links, page }) {
           </li>
         ))}
         <li>
-          {page !== "acceuil" &&
-            userId && (
-              <button className="logout-button" onClick={handleLogout}>
-                <AiOutlineLogout className="icon-nav" />
-                Logout
-              </button>
-            )}
+          {page !== "acceuil" && userId && (
+            <button className="logout-button" onClick={handleLogout}>
+              <AiOutlineLogout className="icon-nav" />
+              Logout
+            </button>
+          )}
         </li>
       </ul>
     </nav>

@@ -1,5 +1,6 @@
 const Application = require('../models/application');
 const Offer = require('../models/offer');
+const Domain = require('../models/domain');
 
 async function getApplicationsByMonth(req, res) {
   try {
@@ -124,5 +125,45 @@ module.exports = {
 
   getReceivedApplicationsByMonth: async (req, res) => {
     await getApplicationsByMonth(req, res);
+  },
+
+  getOffersByDomain: async (req, res) => {
+    try {
+      // Récupérer les offres groupées par domaine
+      const offersByDomain = await Offer.aggregate([
+        { $match: { domain: { $ne: null } } }, // Filtrer les offres sans domaine
+        {
+          $group: {
+            _id: '$domain', // Grouper par domaine
+            count: { $sum: 1 }, // Compter le nombre d'offres par domaine
+          },
+        },
+        { $sort: { count: -1 } }, // Trier par nombre d'offres
+      ]);
+
+      // Peupler les résultats
+      const populatedResults = await Promise.all(
+        offersByDomain.map(async (item) => {
+          const domain = await Domain.findById(item._id).select('name').exec();
+          return {
+            _id: domain ? domain.name : 'Domaine non défini',
+            count: item.count,
+          };
+        })
+      );
+
+      // Ajouter un log pour vérifier si les résultats sont peuplés correctement
+      console.log('Populated Results:', populatedResults);
+
+      // Formater les résultats
+      const formattedResults = populatedResults.map((item) => {
+        return `${item._id}: ${item.count} offres`;
+      });
+
+      res.json(formattedResults);
+    } catch (error) {
+      console.error('Erreur détaillée:', error);
+      res.status(500).json({ error: 'Erreur serveur', details: error.message });
+    }
   },
 };

@@ -20,5 +20,5 @@ router.get(
   '/applications/received/by-month',
   statController.getReceivedApplicationsByMonth
 );
-
+router.get('/offers/by-domain', statController.getOffersByDomain);
 module.exports = router;

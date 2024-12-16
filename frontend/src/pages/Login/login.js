@@ -98,10 +98,10 @@ function Login() {
             Se Connecter
           </button>
 
-          <p className="login-text">
+          {/*<p className="login-text">
             Vous n'avez pas de compte ? <Link to="/signup">Inscrivez-vous</Link>
           </p>
-          {/*<p className="login-text">
+          <p className="login-text">
             Mot de passe oublié ?{" "}
             <Link to="/reset">Réinitialiser votre mot de passe</Link>
           </p>*/}

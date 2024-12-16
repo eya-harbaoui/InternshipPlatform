@@ -118,6 +118,9 @@ const OffresRHCard = ({
         ...selectedOffer,
         status: "en cours de validation",
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000); // 3000 millisecondes = 2 secondes
       toast.success("Offre en cours de validation");
     } catch (error) {
       console.error("Erreur lors de la publication de l'offre :", error);
@@ -135,7 +138,12 @@ const OffresRHCard = ({
       );
       setChangeskills(false);
       setIsModalOpen(false);
-      toast.success("Offre modifiée");
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000); // 3000 millisecondes = 2 secondes
+            toast.success("Offre modifiée");
+
     } catch (error) {
       console.error(
         "Erreur lors de l'envoi des informations de profil :",
@@ -149,6 +157,9 @@ const OffresRHCard = ({
   const handleDeleteClick = async () => {
     try {
       await axios.delete(`http://localhost:8000/offre/${selectedOffer._id}`);
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000); // 3000 millisecondes = 2 secondes      
       toast.success("Offre supprimée");
     } catch (error) {
       console.error("Erreur lors de la suppression de l'offre :", error);
@@ -163,6 +174,9 @@ const OffresRHCard = ({
         ...selectedOffer,
         status: "archivé",
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000); // 3000 millisecondes = 2 secondes      
       toast.success("Offre archivée avec succès");
     } catch (error) {
       console.error("Erreur lors de l'archivage de l'offre :", error);
@@ -175,6 +189,9 @@ const OffresRHCard = ({
         ...selectedOffer,
         status: "brouillon",
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000); // 3000 millisecondes = 2 secondes
       toast.success("Offre Mise en brouillon avec succès");
     } catch (error) {
       console.error("Erreur lors de la mise en brouillon de l'offre :", error);
