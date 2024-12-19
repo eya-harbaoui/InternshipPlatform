@@ -4,9 +4,9 @@ async function connectDB() {
     try {
         mongoose.set('strictQuery', false); // Supprimer l'avertissement de dépréciation
 
-        await mongoose.connect('mongodb://localhost:27017/pfe-rh', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+        await mongoose.connect('mongodb://127.0.0.1:27017/pfe-rh', {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
         });
         console.log('Connected to the database');
     } catch (error) {
