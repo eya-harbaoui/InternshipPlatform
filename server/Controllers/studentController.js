@@ -1,6 +1,6 @@
 const Student = require('../models/user');
 const { sendCodeConfirmationEmail } = require('../config/Nodemailer');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 module.exports = {
   getProfile: async (req, res) => {
     try {

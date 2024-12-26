@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./SignupEtudiant.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaTrash, FaUpload } from "react-icons/fa";
+import signupImage from "./SignUp.jpg";
 
 const SignupEtudiant = () => {
   const navigate = useNavigate();
@@ -156,11 +157,7 @@ const SignupEtudiant = () => {
       </h2>
       <div className="signup-etudiant-form-container">
         <div className="left-signup-etudiant">
-          <img
-            className="img-signup-etudiant"
-            src="./images/SignUp.jpg"
-            alt="signup"
-          />
+          <img className="img-signup-etudiant" src={signupImage} alt="signup" />
         </div>
         <div className="right-signup-etudiant">
           <div className="student-form-row">

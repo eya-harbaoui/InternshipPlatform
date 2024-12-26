@@ -70,7 +70,7 @@ app.use(function (req, res) {
 }); // response upon wrong http
 
 // Create a Server
-let server = app.listen('8000', 'localhost', function () {
+let server = app.listen('8000', '0.0.0.0', function () {
   let host = server.address().address;
   let port = server.address().port;
   let msg = 'App listening at http://' + host + ':' + port;

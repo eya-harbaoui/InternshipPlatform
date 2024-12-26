@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode"; // Changer l'import de jwt-decode
-
+import loginImage from "./Login.jpg";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -71,7 +71,7 @@ function Login() {
       </h2>
       <div className="login-form-container">
         <div className="login-left">
-          <img className="login-img" src="./images/Login.jpg" alt="login" />{" "}
+          <img className="login-img" src={loginImage} alt="login" />{" "}
         </div>
         <div className="login-right">
           <input

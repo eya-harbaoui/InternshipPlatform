@@ -1,0 +1,32 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    networks:
+      - mern
+
+  backend:
+    build: ./server
+    ports:
+      - "8000:8000"
+    networks:
+      - mern
+    depends_on:
+      - mongo
+  
+  mongo:
+    image: mongo:7.0.9
+    ports:
+      - "27017:27017"
+    networks:
+      - mern
+    volumes:
+      - mongo-data:/data/db
+      
+networks:
+  mern:
+    driver: bridge
+
+volumes:
+  mongo-data:
