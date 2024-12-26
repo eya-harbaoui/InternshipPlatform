@@ -21,7 +21,7 @@ FROM nginx:alpine
 
 # Step 8: Copy the build output from the previous build stage to the nginx directory
 COPY --from=build /app/build /usr/share/nginx/html
-
+COPY nginx.conf /etc/nginx/nginx.conf
 # Step 9: Expose the port that nginx will listen on
 EXPOSE 80
 

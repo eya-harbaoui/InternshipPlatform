@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./signup.css";
+import signupImage from "./SignUp.jpg";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -93,7 +94,7 @@ const Signup = () => {
       <h2 className="heading-signup">Bienvenue ! Créer un nouveau compte</h2>
       <div className="signup-form-container">
         <div className="left-signup">
-          <img className="img-signup" src="./images/SignUp.jpg" alt="signup" />
+          <img className="img-signup" src={signupImage} alt="signup" />
         </div>
         <div className="right-signup">
           <input

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const UserController = require('../controllers/usersController');
+const UserController = require('../Controllers/usersController');
 const { IsAdmin } = require('../middlewares/middleware');
 
 // Routes for CRUD operations on users

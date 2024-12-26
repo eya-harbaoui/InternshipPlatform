@@ -7,6 +7,7 @@ WORKDIR /app
 # Step 3: Copy the package.json file into the container
 COPY package.json ./
 
+
 # Step 4: Install dependencies
 RUN npm install
 
